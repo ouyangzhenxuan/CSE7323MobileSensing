@@ -24,7 +24,7 @@
     
     if(!_myImageModel)
         _myImageModel =[ImageModel sharedInstance];
-//    NSLog(@"%@", _myImageMode.)
+    
     return _myImageModel;
 }
 

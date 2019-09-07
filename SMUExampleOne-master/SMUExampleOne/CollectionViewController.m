@@ -10,8 +10,6 @@
 #import "ImageModel.h"
 #import "CollectionViewCell.h"
 
-#import <objc/runtime.h>
-
 @interface CollectionViewController ()
 
 
@@ -69,12 +67,7 @@ static NSString * const reuseIdentifier = @"ImageCollectCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    NSArray *arr = [self.myImageModel valueForKey:@"imageNames"];
-//    NSInteger result = arr.count;
-//    NSLog(@"hello");
-    
-    return [self.myImageModel getNumbersOfImages];
-    
+    return self.myImageModel.imageNames.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,8 +75,7 @@ static NSString * const reuseIdentifier = @"ImageCollectCell";
     
     // Configure the cell
     cell.backgroundColor = [UIColor blueColor];
-    cell.imageView.image = [self.myImageModel getImageWithName:[self.myImageModel getImageNameByIndex:indexPath.row]];
-//    cell.imageView.image =[self.myImageModel getImageWithName:[self.myImageModel valueForKey:@"imageNames"][indexPath.row]];
+    cell.imageView.image = [self.myImageModel getImageWithName:self.myImageModel.imageNames[indexPath.row]];
     
     return cell;
 }
