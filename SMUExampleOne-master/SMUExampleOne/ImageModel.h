@@ -17,4 +17,6 @@
 
 -(UIImage*)getImageWithName:(NSString*)name;
 
+-(NSInteger)getNumberOfImages;
+
 @end
