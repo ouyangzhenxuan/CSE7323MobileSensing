@@ -1,0 +1,24 @@
+//
+//  ImageModel.h
+//  SMUExampleOne
+//
+//  Created by Eric Larson on 1/21/15.
+//  Copyright (c) 2015 Eric Larson. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@interface ImageModel : NSObject
+
+//@property (strong,nonatomic) NSArray* imageNames;
+
++(ImageModel*) sharedInstance;
+
+-(UIImage*)getImageWithName:(NSString*)name;
+
+-(NSString*)getImageNameByIndex:(NSInteger) atIndex;
+
+-(NSInteger)getNumbersOfImages;
+
+@end
