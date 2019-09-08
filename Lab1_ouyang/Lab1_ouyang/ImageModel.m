@@ -53,19 +53,6 @@
     return _imageNames;
 }
 
-//- (NSArray *)imageDescription{
-//    if(!_imageDescription){
-//        if(!_dictionary){
-//            NSLog(@"Dictionary is not nil!");
-//            for(NSString *item in _dictionary.allKeys){
-//                NSLog(@"%@", [_imageDescription objectAtIndex:0]);
-//                [_imageDescription addObject:_dictionary[item][@"Discount"]];
-//            }
-//        }
-//    }
-//    return _imageDescription;
-//}
-
 +(ImageModel*)sharedInstance{
     static ImageModel * _sharedInstance = nil;
     

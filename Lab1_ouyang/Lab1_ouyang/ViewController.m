@@ -23,9 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    _imageArray = [[NSArray alloc] initWithObjects:@"Eric1",@"Eric2",@"Eric3",@"Eric4",@"Eric5",@"Eric6",@"Eric7",@"Eric8",@"Eric9", nil];
-//    _labelArray = [[NSArray alloc] initWithObjects:@"E1",@"E2",@"E3",@"E4",@"E5",@"E6",@"E7",@"E8",@"E9", nil];
-    
     
 }
 
@@ -49,11 +46,13 @@
     UIImageView* imageView = (UIImageView*)[cell viewWithTag:100];
     UILabel* labelView = (UILabel*)[cell viewWithTag:101];
     
-//    imageView.image = [UIImage imageNamed:[_imageArray objectAtIndex:indexPath.row]];
+    // load content inside the view
     imageView.image = [self.myImageModel getImageWithName:self.myImageModel.imageNames[indexPath.row]];
-//    labelView.text = [_labelArray objectAtIndex:indexPath.row];
     labelView.text = [self.myImageModel.imageDescription objectAtIndex:indexPath.row];
+    
     cell.backgroundColor = UIColor.blackColor;
+    
+    // always allow verticala scroller
     collectionView.alwaysBounceVertical = YES;
     return cell;
     
