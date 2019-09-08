@@ -45,7 +45,6 @@
                 }
             }else{
                 [_imageDescription addObject:[_dictionary[item][@"Discount"] stringByAppendingString:@" off"]];
-//                [_dictionary[item][@"Discount"] stringByAppendingString:@" off"]
             }
             NSLog(@"%@", [_imageNames objectAtIndex:0]);
         }
