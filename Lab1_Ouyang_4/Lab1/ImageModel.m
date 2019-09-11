@@ -10,13 +10,27 @@
 
 @interface ImageModel()
 
-@property (strong, nonatomic) NSDictionary *dictionary;
+//@property (strong, nonatomic) NSDictionary *dictionary;
 
 @end
 
 @implementation ImageModel
 @synthesize imageNames = _imageNames;
 @synthesize imageDescription = _imageDescription;
+@synthesize dictionary = _dictionary;
+
+- (NSDictionary *)dictionary{
+    if(!_dictionary){
+        // read json file data
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"document" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingUncached error:nil];
+        
+        // dictionary or array
+        _dictionary = [[NSDictionary alloc]init];
+        _dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    }
+    return _dictionary;
+}
 
 -(NSArray*)imageNames{
     
@@ -46,7 +60,7 @@
                     [_imageDescription addObject:@"Discount inside!"];
                 }
             }else{
-                [_imageDescription addObject:[_dictionary[item][@"Discount"] stringByAppendingString:@" off"]];
+                [_imageDescription addObject:_dictionary[item][@"Discount"]];
             }
             NSLog(@"%@", [_imageNames objectAtIndex:0]);
         }

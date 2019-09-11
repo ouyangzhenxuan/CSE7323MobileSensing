@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray* imageDescription;
 @property (strong,nonatomic) NSMutableArray* imageTitle;
 
+@property (strong, nonatomic) NSDictionary *dictionary;
+
 +(ImageModel*) sharedInstance;
 
 -(UIImage*)getImageWithName:(NSString*)name;
