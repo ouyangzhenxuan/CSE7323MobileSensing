@@ -88,6 +88,7 @@
     self.steppers.minimumValue =1;
     self.steppers.value = 8;
     
+    [self.switchs setOn:false];
     [self.switchs setOnTintColor:[UIColor redColor]];
     [self.sliders setTintColor:[UIColor redColor]];
     [self.steppers setTintColor:[UIColor redColor]];

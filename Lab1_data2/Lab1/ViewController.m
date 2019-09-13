@@ -45,21 +45,12 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.timer=[NSTimer scheduledTimerWithTimeInterval:1.0f
+    self.timer=[NSTimer scheduledTimerWithTimeInterval:3.0f
                                                 target:self selector:@selector(changePicture:) userInfo:nil repeats:YES];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.timer=[NSTimer scheduledTimerWithTimeInterval:3.0f
-//                                     target:self selector:@selector(changePicture:) userInfo:nil repeats:YES];
-//    self.scrollView.delegate = self;
-
-//    self.scrollView_detail = [[UIScrollView alloc]initWithFrame:self.view.bounds];
-//    contentView = [[UIView alloc]initWithFrame:self.view.bounds];
-//    scrollView_detail = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.title2Label.frame.size.height + self.imageView.frame.size.height + 100, self.view.frame.size.width, self.view.frame.size.height)];
-    
-    
     
     self.imageView.image=[UIImage imageNamed:[self.product[@"Pictures"] objectAtIndex:self.pictureState]];
     self.titleLabel.text=self.product[@"Name"];
@@ -98,21 +89,6 @@
     [self.scrollView_detail addSubview:self.discountLabel];
     [self.scrollView_detail addSubview:self.publisherLabel];
     [self.scrollView_detail addSubview:self.rainbowLabel];
-    
-//    [contentView addSubview:self.titleLabel];
-//    [contentView addSubview:self.imageView];
-//    [contentView addSubview:self.title2Label];
-//    [contentView addSubview:self.priceLabel];
-//    [contentView addSubview:self.spaceLabel];
-//    [contentView addSubview:self.playerLabel];
-//    [contentView addSubview:self.releaseLabel];
-//    [contentView addSubview:self.categoryLabel];
-//    [contentView addSubview:self.discountLabel];
-//    [contentView addSubview:self.publisherLabel];
-//    [contentView addSubview:self.rainbowLabel];
-    
-//    [scrollView_detail addSubview:contentView];
-//    [self.view addSubview:contentView];
     
     self.scrollView_detail.delegate = self;
     self.scrollView_detail.maximumZoomScale = 0;
