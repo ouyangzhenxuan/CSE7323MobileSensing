@@ -34,10 +34,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化滚动视图
+    // initialize the scrollview
     scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:scrollView];
     
     //初始化imageview，设置图片
+    // initialize the imageView
     self.imageView = [[UIImageView alloc]init];
     NSString* oneTime=self.imageName;
     self.imageView.image = [UIImage imageNamed:oneTime];
@@ -45,11 +47,13 @@
     [scrollView addSubview:self.imageView];
     
     //设置代理,设置最大缩放和虽小缩放（*一定要有这句话）
+    // set up the delegating, and zoomInScale and zoomOutScale
     scrollView.delegate = self;
     scrollView.maximumZoomScale = 5;
     scrollView.minimumZoomScale = 0.3;
     
     //设置UIScrollView的滚动范围和图片的真实尺寸一致
+    // set the scrolling scale and make it equal to the size of imageViwe
     scrollView.contentSize = self.imageView.image.size;
 }
 
