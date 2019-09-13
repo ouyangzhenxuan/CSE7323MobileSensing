@@ -35,6 +35,7 @@
     [super viewDidLoad];
     //初始化滚动视图
     scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+    
     [self.view addSubview:scrollView];
     
     //初始化imageview，设置图片
@@ -50,8 +51,70 @@
     scrollView.minimumZoomScale = 0.3;
     
     //设置UIScrollView的滚动范围和图片的真实尺寸一致
-    scrollView.contentSize = self.imageView.image.size;
+//    scrollView.contentSize = self.imageView.image.size;
+    scrollView.contentSize = CGSizeMake(self.imageView.frame.size.width*3, self.imageView.frame.size.height*3);
+    
+    
 }
+
+//-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//    printf("willTransition");
+//    NSLog(@"willTransition");
+//    printf("%ld", (long)UIDevice.currentDevice.orientation);
+//
+//    // best call super just in case
+//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//
+//    // will execute before rotation
+//    printf("willTransition");
+//    NSLog(@"willTransition");
+//    printf("%ld", [UIDevice.currentDevice orientation]);
+//
+//    [coordinator animateAlongsideTransition:^(id  _Nonnull context) {
+//
+//        // will execute during rotation
+//        printf("willTransition");
+//        NSLog(@"willTransition");
+//        printf("%ld", (long)UIDevice.currentDevice.orientation);
+//
+//    } completion:^(id  _Nonnull context) {
+//
+//        // will execute after rotation
+//        printf("willTransition");
+//        NSLog(@"willTransition");
+//        printf("%ld", (long)UIDevice.currentDevice.orientation);
+//
+//    }];
+//
+//}
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+    CGRect scrollFrame;
+    scrollFrame.origin = scrollView.frame.origin;
+    scrollFrame.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    scrollView.frame = scrollFrame;
+    
+//    scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+//    [self.view addSubview:scrollView];
+//
+//    //初始化imageview，设置图片
+//    self.imageView = [[UIImageView alloc]init];
+//    NSString* oneTime=self.imageName;
+//    self.imageView.image = [UIImage imageNamed:oneTime];
+//    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.height, self.imageView.image.size.width);
+//    [scrollView addSubview:self.imageView];
+//
+//    //设置代理,设置最大缩放和虽小缩放（*一定要有这句话）
+//    scrollView.delegate = self;
+//    scrollView.maximumZoomScale = 5;
+//    scrollView.minimumZoomScale = 0.3;
+//
+//    //设置UIScrollView的滚动范围和图片的真实尺寸一致
+//    //    scrollView.contentSize = self.imageView.image.size;
+//    scrollView.contentSize = CGSizeMake(self.imageView.frame.size.height*3, self.imageView.frame.size.height*3);
+}
+
 
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return self.imageView;
