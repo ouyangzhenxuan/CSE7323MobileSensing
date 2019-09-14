@@ -59,7 +59,8 @@
 }
 - (void)setSliderValue:(NSNumber *)sliderValue{
     _sliderValue = sliderValue;
-    self.sliderValueLabel.text = [NSString stringWithFormat:@"$%@", _sliderValue];
+    double priceN = [_sliderValue doubleValue];
+    self.sliderValueLabel.text = [NSString stringWithFormat:@"$%.2f", priceN];
 }
 
 - (IBAction)sliderChange:(UISlider *)sender {
@@ -88,6 +89,7 @@
     self.steppers.minimumValue =1;
     self.steppers.value = 8;
     
+    [self.switchs setOn:false];
     [self.switchs setOnTintColor:[UIColor redColor]];
     [self.sliders setTintColor:[UIColor redColor]];
     [self.steppers setTintColor:[UIColor redColor]];
@@ -101,7 +103,7 @@
 
 - (NSArray*) tagArray{
     if(!_tagArray){
-        _tagArray =@[@"Racing",@"Platformer",@"Mutiplayer",@"Sports",@"Arcade",@"Action",@"Adventure",@"Strategy",@"Role-Playing",@"Lifestyle",@"Simulation"];
+        _tagArray =@[@"Racing",@"Platformer",@"Multiplayer",@"Sports",@"Arcade",@"Action",@"Adventure",@"Strategy",@"Role-Playing",@"Lifestyle",@"Simulation"];
     }
     return _tagArray;
 }
