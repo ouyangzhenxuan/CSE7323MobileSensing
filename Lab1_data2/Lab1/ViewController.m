@@ -117,7 +117,6 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"why?");
     [self.timer invalidate];
     self.timer = nil;
     

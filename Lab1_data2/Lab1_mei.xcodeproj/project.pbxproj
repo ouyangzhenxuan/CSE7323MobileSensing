@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		160D0156232752CF00F76A25 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160D0155232752CF00F76A25 /* ImageViewController.m */; };
 		164D301123288E38001015B0 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D301023288E38001015B0 /* FilterViewController.m */; };
-		1662B270232457BA00071C1C /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662B26F232457B900071C1C /* ProductModel.m */; };
 		1662B27523246A5500071C1C /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662B27423246A5500071C1C /* ProductTableViewCell.m */; };
 		1662B278232486A700071C1C /* NewProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662B277232486A600071C1C /* NewProductTableViewCell.m */; };
 		1662B27B2324A74200071C1C /* ComingProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662B27A2324A74200071C1C /* ComingProductTableViewCell.m */; };
@@ -22,7 +21,6 @@
 		1687C4DD232442F60094575A /* Lab1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1687C4DC232442F60094575A /* Lab1Tests.m */; };
 		1687C4E8232442F60094575A /* Lab1UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1687C4E7232442F60094575A /* Lab1UITests.m */; };
 		1687C4F7232444A20094575A /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1687C4F6232444A20094575A /* TableViewController.m */; };
-		30C0A5732325E5190091A507 /* Ouyang.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0A5722325E5190091A507 /* Ouyang.storyboard */; };
 		30C0A5762325E7560091A507 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0A5752325E7560091A507 /* CollectionViewController.m */; };
 		30C0A5792325E9080091A507 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0A5782325E9080091A507 /* StartViewController.m */; };
 		30C0A57C2325EC470091A507 /* ImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0A57B2325EC470091A507 /* ImageModel.m */; };
@@ -53,8 +51,6 @@
 		164D300F23288E38001015B0 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		164D301023288E38001015B0 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		164D30122328A044001015B0 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
-		1662B26E232457B900071C1C /* ProductModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductModel.h; sourceTree = "<group>"; };
-		1662B26F232457B900071C1C /* ProductModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductModel.m; sourceTree = "<group>"; };
 		1662B27323246A5500071C1C /* ProductTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductTableViewCell.h; sourceTree = "<group>"; };
 		1662B27423246A5500071C1C /* ProductTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewCell.m; sourceTree = "<group>"; };
 		1662B276232486A600071C1C /* NewProductTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewProductTableViewCell.h; sourceTree = "<group>"; };
@@ -79,7 +75,6 @@
 		1687C4E9232442F60094575A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1687C4F5232444A20094575A /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		1687C4F6232444A20094575A /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
-		30C0A5722325E5190091A507 /* Ouyang.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Ouyang.storyboard; sourceTree = "<group>"; };
 		30C0A5742325E7560091A507 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		30C0A5752325E7560091A507 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		30C0A5782325E9080091A507 /* StartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
@@ -155,9 +150,6 @@
 				30C0A5782325E9080091A507 /* StartViewController.m */,
 				30C0A5742325E7560091A507 /* CollectionViewController.h */,
 				30C0A5752325E7560091A507 /* CollectionViewController.m */,
-				30C0A5722325E5190091A507 /* Ouyang.storyboard */,
-				1662B26E232457B900071C1C /* ProductModel.h */,
-				1662B26F232457B900071C1C /* ProductModel.m */,
 				1687C4F5232444A20094575A /* TableViewController.h */,
 				1687C4F6232444A20094575A /* TableViewController.m */,
 				1662B276232486A600071C1C /* NewProductTableViewCell.h */,
@@ -295,7 +287,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				30C0A57E232772810091A507 /* Resource in Resources */,
-				30C0A5732325E5190091A507 /* Ouyang.storyboard in Resources */,
 				30C0A5802327730C0091A507 /* document.json in Resources */,
 				1687C4D0232442F60094575A /* LaunchScreen.storyboard in Resources */,
 				1687C4CD232442F60094575A /* Assets.xcassets in Resources */,
@@ -329,7 +320,6 @@
 				1687C4D3232442F60094575A /* main.m in Sources */,
 				164D301123288E38001015B0 /* FilterViewController.m in Sources */,
 				1662B278232486A700071C1C /* NewProductTableViewCell.m in Sources */,
-				1662B270232457BA00071C1C /* ProductModel.m in Sources */,
 				30C0A57C2325EC470091A507 /* ImageModel.m in Sources */,
 				160D0156232752CF00F76A25 /* ImageViewController.m in Sources */,
 				1662B27523246A5500071C1C /* ProductTableViewCell.m in Sources */,

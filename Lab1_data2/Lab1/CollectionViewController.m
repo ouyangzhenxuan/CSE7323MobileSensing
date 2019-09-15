@@ -56,9 +56,6 @@
             [names addObject:i];
         }
     }
-    //
-    NSLog(@"laolaolao%lu", (unsigned long)[self.myImageModel.getInfo count]);
-    NSLog(@"laolaolao%lu", (unsigned long)[names count]);
     NSString* name=[names objectAtIndex:indexPath.row];
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell_ID" forIndexPath:indexPath];
@@ -76,8 +73,6 @@
     }else if([self.myImageModel.getInfo[name][@"Type"] isEqualToString:@"ComingSoon"]){
         labelView.backgroundColor= [UIColor greenColor];
     }else{
-        NSLog(@"nmd%@", self.myImageModel.getInfo[name][@"Type"]);
-        
         labelView.backgroundColor= [UIColor redColor];
     }
     cell.backgroundColor = UIColor.blackColor;

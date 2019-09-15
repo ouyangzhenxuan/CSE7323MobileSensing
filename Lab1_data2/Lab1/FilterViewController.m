@@ -157,11 +157,7 @@
     NSArray* modalData=@[self.tagLabel.text, self.stepperValueLabel.text, [self.sliderValue stringValue],switchValue];
     [self.delegate delegateData:modalData];
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"%@",@"?");
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"%@",@"yesyes");
-}
 
 @end

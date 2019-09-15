@@ -12,12 +12,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageModel : NSObject
-@property (strong,nonatomic) NSMutableArray* imageNames;
-@property (strong,nonatomic) NSMutableArray* imageDescription;
+
 @property (strong,nonatomic) NSMutableArray* imageTitle;
 @property (assign,nonatomic) NSInteger activeItemNumber;
 @property (strong,nonatomic) NSMutableDictionary* activeState;
-//@property (strong,nonatomic) NSMutableDictionary* dictionary;
 
 +(ImageModel*) sharedInstance;
 

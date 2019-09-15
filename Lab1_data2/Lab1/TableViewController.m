@@ -22,11 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    self.num=9;
-    FilterViewController*controller = [[FilterViewController alloc] init];
-    controller.delegate=self;
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -44,11 +39,6 @@
 
 - (NSDictionary*)dict{
     if(!_dict){
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"document"
-//                                                         ofType:@"json"];
-//        NSData* data = [NSData dataWithContentsOfFile:path options:NSDataReadingUncached error:nil];
-//        // dictionary or array
-//        _dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         _dict=[self.myImageModel getInfo];
     }
     return _dict;
@@ -62,7 +52,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"ideide%ld", (long)self.myImageModel.activeItemNumber);
 #warning Incomplete implementation, return the number of rows
     return self.myImageModel.activeItemNumber;
     
@@ -82,8 +71,6 @@
         if([self.myImageModel.activeState[i]isEqualToString:@"true"]){
             [names addObject:i];
         }
-//        NSLog(@"%@", self.myImageModel.activeState);
-        
     }
 
     NSString* name=[names objectAtIndex:indexPath.row];
@@ -110,33 +97,17 @@
         ComingProductTableViewCell* cell3 = (ComingProductTableViewCell *)[tableView dequeueReusableCellWithIdentifier:custom3TableIdentifier];
         cell3.titleLabel.text = self.dict[name][@"Name"];
         cell3.priceLabel.text = self.dict[name][@"Price"];
-        NSLog(@"%@", self.dict[name][@"Price"]);
         cell3.imageView.image=[UIImage imageNamed:self.dict[name][@"Logo"]];
         cell3.dateLabel.text=self.dict[name][@"Release_Date"];
         cell=cell3;
     }
-    
-//    if (cell == nil)
-//    {
-//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SimpleTableCell" owner:self options:nil];
-//        cell = [nib objectAtIndex:0];
-//    }
-    
-    
-    
     return cell;
 
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-//    BOOL isVC = [[segue destinationViewController] isKindOfClass:[ViewController class]];
-//
-//    if(isVC){
-        UITableViewCell* cell = (UITableViewCell*)sender;
-        ViewController *vc = [segue destinationViewController];
-    
-        //        vc.imageName = cell.textLabel.text;
+    UITableViewCell* cell = (UITableViewCell*)sender;
+    ViewController *vc = [segue destinationViewController];
     NSMutableArray* activeItems=[[NSMutableArray alloc]init];
     for (NSString* i in self.myImageModel.imageTitle){
         if([self.myImageModel.activeState[i]isEqualToString:@"true"]){
@@ -146,8 +117,6 @@
 
     NSIndexPath *indexPath=[self.tableView indexPathForCell:cell];
     vc.product= self.myImageModel.getInfo[[activeItems objectAtIndex:indexPath.row]];
-//    }
-    
 }
 
 

@@ -55,17 +55,7 @@
 }
 
 - (void)delegateData:(NSArray*)sender{
-    NSLog(@"%@",sender);
-    
-    
     for(NSString* i in self.myImageModel.getInfo){
-//        for(NSString* gameName in i){
-//            if(![i[@"Category"] containsObject:[sender objectAtIndex:0]]&&(![[sender objectAtIndex:0] isEqualToString:@"Tags"])){
-//                i[@"active"]==false;
-//                self.myImageModel.activeItemNumber-=1;
-//                break;
-//            }
-//        }
         if([self.myImageModel.activeState[i]isEqualToString:@"false"]){
             [self.myImageModel.activeState removeObjectForKey:i];
             [self.myImageModel.activeState setObject:@"true" forKey:i];
@@ -73,10 +63,8 @@
         }
         if(![[sender objectAtIndex:0] isEqualToString:@"Tags"]){
             if(![self.myImageModel.getInfo[i][@"Category"] containsObject:[sender objectAtIndex:0]]){
-//                self.myImageModel.activeState[i]=@"false";
                 [self.myImageModel.activeState removeObjectForKey:i];
                 [self.myImageModel.activeState setObject:@"false" forKey:i];
-//                NSLog(@"This is bad%@",self.myImageModel.activeState);
                 self.myImageModel.activeItemNumber-=1;
                 continue;
             }
@@ -87,12 +75,10 @@
             self.myImageModel.activeItemNumber-=1;
             continue;
         }
-//        NSLog(@"lalalal%f",[self.myImageModel.getInfo[i][@"Price"] doubleValue]);
         if([[sender objectAtIndex:2] doubleValue] < [[self.myImageModel.getInfo[i][@"Price"] substringFromIndex:1]doubleValue]){
             [self.myImageModel.activeState removeObjectForKey:i];
             [self.myImageModel.activeState setObject:@"false" forKey:i];
             self.myImageModel.activeItemNumber-=1;
-            NSLog(@"myl%ld", (long)self.myImageModel.activeItemNumber);
             continue;
         }
         if([[sender objectAtIndex:3] isEqualToString:@"YES"]){
@@ -104,9 +90,6 @@
             }
         }
     }
-//    self.myImageModel.activeItemNumber=3;
-    
-    NSLog(@"myo%ld", (long)self.myImageModel.activeItemNumber);
     [self.tableController.tableView reloadData];
     [self.collectionController.collectionView reloadData];
     
