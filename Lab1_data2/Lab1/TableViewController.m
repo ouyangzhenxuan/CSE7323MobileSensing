@@ -44,11 +44,7 @@
 
 - (NSDictionary*)dict{
     if(!_dict){
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"document"
-//                                                         ofType:@"json"];
-//        NSData* data = [NSData dataWithContentsOfFile:path options:NSDataReadingUncached error:nil];
-//        // dictionary or array
-//        _dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
         _dict=[self.myImageModel getInfo];
     }
     return _dict;
@@ -57,13 +53,13 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"ideide%ld", (long)self.myImageModel.activeItemNumber);
-#warning Incomplete implementation, return the number of rows
+//    NSLog(@"ideide%ld", (long)self.myImageModel.activeItemNumber);
+
     return self.myImageModel.activeItemNumber;
     
 
@@ -110,19 +106,10 @@
         ComingProductTableViewCell* cell3 = (ComingProductTableViewCell *)[tableView dequeueReusableCellWithIdentifier:custom3TableIdentifier];
         cell3.titleLabel.text = self.dict[name][@"Name"];
         cell3.priceLabel.text = self.dict[name][@"Price"];
-        NSLog(@"%@", self.dict[name][@"Price"]);
         cell3.imageView.image=[UIImage imageNamed:self.dict[name][@"Logo"]];
         cell3.dateLabel.text=self.dict[name][@"Release_Date"];
         cell=cell3;
     }
-    
-//    if (cell == nil)
-//    {
-//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SimpleTableCell" owner:self options:nil];
-//        cell = [nib objectAtIndex:0];
-//    }
-    
-    
     
     return cell;
 
@@ -133,10 +120,9 @@
 //    BOOL isVC = [[segue destinationViewController] isKindOfClass:[ViewController class]];
 //
 //    if(isVC){
-        UITableViewCell* cell = (UITableViewCell*)sender;
-        ViewController *vc = [segue destinationViewController];
+    UITableViewCell* cell = (UITableViewCell*)sender;
+    ViewController *vc = [segue destinationViewController];
     
-        //        vc.imageName = cell.textLabel.text;
     NSMutableArray* activeItems=[[NSMutableArray alloc]init];
     for (NSString* i in self.myImageModel.imageTitle){
         if([self.myImageModel.activeState[i]isEqualToString:@"true"]){
@@ -146,7 +132,6 @@
 
     NSIndexPath *indexPath=[self.tableView indexPathForCell:cell];
     vc.product= self.myImageModel.getInfo[[activeItems objectAtIndex:indexPath.row]];
-//    }
     
 }
 
