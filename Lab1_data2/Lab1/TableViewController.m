@@ -116,10 +116,7 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-//    BOOL isVC = [[segue destinationViewController] isKindOfClass:[ViewController class]];
-//
-//    if(isVC){
+
     UITableViewCell* cell = (UITableViewCell*)sender;
     ViewController *vc = [segue destinationViewController];
     

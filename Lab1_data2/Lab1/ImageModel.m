@@ -15,8 +15,6 @@
 @end
 
 @implementation ImageModel
-@synthesize imageNames = _imageNames;
-@synthesize imageDescription = _imageDescription;
 
 -(NSMutableDictionary*)activeState{
     if(!_activeState){
@@ -51,40 +49,6 @@
     return _dictionary;
 }
 
-//-(NSArray*)imageNames{
-//
-//    if(!_imageNames){
-//
-//        // allocate memory to mutable array
-//        _imageNames = [[NSMutableArray alloc]init];
-//        _imageDescription = [[NSMutableArray alloc]init];
-//        _imageTitle=[[NSMutableArray alloc]init];
-//
-//        // read json file data
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"document" ofType:@"json"];
-//        NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingUncached error:nil];
-//
-//        // dictionary or array
-//        _dictionary = [[NSMutableDictionary alloc]init];
-//        _dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//
-//        // store data into local variable
-//        for(NSString* item in _dictionary.allKeys){
-//            [_imageNames addObject:_dictionary[item][@"Logo"]];
-//            [_imageTitle addObject:_dictionary[item][@"Name"]];
-//            if([_dictionary[item][@"Discount"] isEqual:@""]){
-//                if([_dictionary[item][@"Type"] isEqual:@"ComingSoon"]){
-//                    [_imageDescription addObject:@"Coming soon!"];
-//                }else{
-//                    [_imageDescription addObject:@"Discount inside!"];
-//                }
-//            }else{
-//                [_imageDescription addObject:[_dictionary[item][@"Discount"] stringByAppendingString:@" off"]];
-//            }
-//        }
-//    }
-//    return _imageNames;
-//}
 
 +(ImageModel*)sharedInstance{
     static ImageModel * _sharedInstance = nil;

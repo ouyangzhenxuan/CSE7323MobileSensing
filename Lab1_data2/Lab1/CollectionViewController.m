@@ -76,8 +76,6 @@
     }else if([self.myImageModel.getInfo[name][@"Type"] isEqualToString:@"ComingSoon"]){
         labelView.backgroundColor= [UIColor greenColor];
     }else{
-//        NSLog(@"nmd%@", self.myImageModel.getInfo[name][@"Type"]);
-        
         labelView.backgroundColor= [UIColor redColor];
     }
     cell.backgroundColor = UIColor.blackColor;
