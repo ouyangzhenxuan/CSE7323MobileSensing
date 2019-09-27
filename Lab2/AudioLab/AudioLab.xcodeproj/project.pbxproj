@@ -13,6 +13,7 @@
 		30E7E401233E814700E0E8B0 /* 3000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30E7E400233E814700E0E8B0 /* 3000.wav */; };
 		30E7E403233E818100E0E8B0 /* 1000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30E7E402233E818100E0E8B0 /* 1000.wav */; };
 		30E7E405233E827700E0E8B0 /* 2000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30E7E404233E827700E0E8B0 /* 2000.wav */; };
+		30E7E407233EA84800E0E8B0 /* 6000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30E7E406233EA84800E0E8B0 /* 6000.wav */; };
 		B6BD9E1F1D6E384A0009AB3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E1E1D6E384A0009AB3F /* main.m */; };
 		B6BD9E221D6E384A0009AB3F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E211D6E384A0009AB3F /* AppDelegate.m */; };
 		B6BD9E251D6E384A0009AB3F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E241D6E384A0009AB3F /* ViewController.m */; };
@@ -53,6 +54,7 @@
 		30E7E400233E814700E0E8B0 /* 3000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 3000.wav; sourceTree = "<group>"; };
 		30E7E402233E818100E0E8B0 /* 1000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1000.wav; sourceTree = "<group>"; };
 		30E7E404233E827700E0E8B0 /* 2000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 2000.wav; sourceTree = "<group>"; };
+		30E7E406233EA84800E0E8B0 /* 6000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 6000.wav; sourceTree = "<group>"; };
 		B6BD9E1A1D6E384A0009AB3F /* AudioLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BD9E1E1D6E384A0009AB3F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BD9E201D6E384A0009AB3F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		30E7E3FF233E80D300E0E8B0 /* Tone */ = {
 			isa = PBXGroup;
 			children = (
+				30E7E406233EA84800E0E8B0 /* 6000.wav */,
 				30E7E404233E827700E0E8B0 /* 2000.wav */,
 				30E7E402233E818100E0E8B0 /* 1000.wav */,
 				30E7E400233E814700E0E8B0 /* 3000.wav */,
@@ -310,6 +313,7 @@
 				B6BD9E5B1D6E46790009AB3F /* satisfaction.mp3 in Resources */,
 				30E7E405233E827700E0E8B0 /* 2000.wav in Resources */,
 				30E7E401233E814700E0E8B0 /* 3000.wav in Resources */,
+				30E7E407233EA84800E0E8B0 /* 6000.wav in Resources */,
 				30E7E403233E818100E0E8B0 /* 1000.wav in Resources */,
 				B6BD9E281D6E384A0009AB3F /* Main.storyboard in Resources */,
 				30756415233B19C800574E20 /* 500_2000_Tones.wav in Resources */,

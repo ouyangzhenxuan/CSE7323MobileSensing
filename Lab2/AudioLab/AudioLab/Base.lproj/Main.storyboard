@@ -29,17 +29,47 @@
                                     <action selector="restartSong:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2bj-B2-HmS"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rlM-7n-cqL">
+                                <rect key="frame" x="247" y="97" width="147" height="32"/>
+                                <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="147" id="93M-de-iSe"/>
+                                    <constraint firstAttribute="height" constant="32" id="iQB-4t-2tK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAK-Ws-59f">
+                                <rect key="frame" x="247" y="137" width="147" height="37"/>
+                                <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="147" id="dGN-NZ-YNv"/>
+                                    <constraint firstAttribute="height" constant="37" id="zmh-t4-pf1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="mAK-Ws-59f" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="0Il-NA-H1Y"/>
+                            <constraint firstItem="rlM-7n-cqL" firstAttribute="top" secondItem="q78-pp-GAE" secondAttribute="bottom" constant="8" id="I3M-kZ-tM7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="q78-pp-GAE" secondAttribute="trailing" id="J7C-PW-nVV"/>
+                            <constraint firstItem="mAK-Ws-59f" firstAttribute="top" secondItem="rlM-7n-cqL" secondAttribute="bottom" constant="8" id="nbo-wh-3WX"/>
+                            <constraint firstItem="rlM-7n-cqL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="qfQ-4I-hwv"/>
                             <constraint firstItem="q78-pp-GAE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rlY-qF-urY"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="maxFrequencyLabel" destination="rlM-7n-cqL" id="hko-F6-Oxg"/>
+                        <outlet property="secFrequencyLabel" destination="mAK-Ws-59f" id="8mC-tl-9Xw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="370" y="387"/>
+            <point key="canvasLocation" x="369.56521739130437" y="386.38392857142856"/>
         </scene>
     </scenes>
 </document>
