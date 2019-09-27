@@ -13,7 +13,7 @@
 #import "FFTHelper.h"
 #import "AudioFileReader.h"
 
-#define BUFFER_SIZE 2048*4
+#define BUFFER_SIZE 2048*1
 
 @interface ViewController ()
 @property (strong, nonatomic) Novocaine *audioManager;
@@ -34,8 +34,10 @@
     if(!_fileReader){
         NSURL *inputFileURL = [[NSBundle mainBundle] URLForResource:@"500_2000_Tones" withExtension:@"wav"];
         NSURL *inputFileURL2 = [[NSBundle mainBundle] URLForResource:@"satisfaction" withExtension:@"mp3"];
+        NSURL *inputFileURL3 = [[NSBundle mainBundle] URLForResource:@"500" withExtension:@"wav"];
+        NSURL *inputFileURL4 = [[NSBundle mainBundle] URLForResource:@"3000" withExtension:@"wav"];
         _fileReader = [[AudioFileReader alloc]
-                       initWithAudioFileURL:inputFileURL 
+                       initWithAudioFileURL:inputFileURL4
                        samplingRate:self.audioManager.samplingRate
                        numChannels:self.audioManager.numOutputChannels];
     }
@@ -83,8 +85,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
    
-//    [self.graphHelper setFullScreenBounds];
-//
+    [self.graphHelper setFullScreenBounds];
+//     [self.fileReader play];
 //    __block ViewController * __weak  weakSelf = self;
 //    [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
 //        [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
@@ -94,12 +96,9 @@
     
     
     self.volume = 0.5;
-    
-    
     self.fileReader.currentTime = 0.0;
-    
     __block ViewController * __weak  weakSelf = self; // don't incrememt ARC'
-    
+
     [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
      {
          [weakSelf.fileReader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
@@ -108,7 +107,7 @@
              data[i] = data[i]*weakSelf.volume;
          }
          NSLog(@"Time: %f", weakSelf.fileReader.currentTime);
-         
+
      }];
     [self.fileReader play];
     [self.audioManager play];
@@ -117,20 +116,6 @@
 - (IBAction)restartSong:(UIButton *)sender {
     self.fileReader = nil;
     self.fileReader.currentTime = 0;
-    
-//    __block ViewController * __weak  weakSelf = self; // don't incrememt ARC'
-////    [self.fileReader retrieveFreshAudio:nil numFrames:0 numChannels:0];
-//
-//    [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-//     {
-//         [weakSelf.fileReader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
-//         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
-//         for(int i=0;i<numFrames*numChannels;i++){
-//             data[i] = data[i]*weakSelf.volume;
-//         }
-//         NSLog(@"Time: %f", weakSelf.fileReader.currentTime);
-//
-//     }];
 }
 
 #pragma mark GLK Inherited Functions
@@ -152,8 +137,6 @@
     // take forward FFT
     [self.fftHelper performForwardFFTWithData:arrayData
                    andCopydBMagnitudeToBuffer:fftMagnitude];
-    
-    NSLog(@"nihao %d", fftMagnitude);
     
     // graph the FFT Data
     [self.graphHelper setGraphData:fftMagnitude
