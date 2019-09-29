@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Restart song"/>
                                 <connections>
-                                    <action selector="restartSong:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2bj-B2-HmS"/>
+                                    <action selector="restartSong:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cZd-SI-99I"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rlM-7n-cqL">
@@ -51,12 +51,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hl1-qS-rhn">
+                                <rect key="frame" x="10" y="44" width="116" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="OpenLock"/>
+                                <connections>
+                                    <action selector="openLockMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g8u-da-9LD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZeH-Pe-TPu">
+                                <rect key="frame" x="10" y="91" width="79" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Unlock"/>
+                                <connections>
+                                    <action selector="unlockFrequency:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oRw-bB-znf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="mAK-Ws-59f" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="0Il-NA-H1Y"/>
+                            <constraint firstItem="ZeH-Pe-TPu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="4Wb-bL-BDK"/>
+                            <constraint firstItem="ZeH-Pe-TPu" firstAttribute="top" secondItem="Hl1-qS-rhn" secondAttribute="bottom" constant="3" id="AU8-uf-YMf"/>
                             <constraint firstItem="rlM-7n-cqL" firstAttribute="top" secondItem="q78-pp-GAE" secondAttribute="bottom" constant="8" id="I3M-kZ-tM7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="q78-pp-GAE" secondAttribute="trailing" id="J7C-PW-nVV"/>
+                            <constraint firstItem="Hl1-qS-rhn" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="KEX-em-EDX"/>
+                            <constraint firstItem="Hl1-qS-rhn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Lsa-ga-MPr"/>
                             <constraint firstItem="mAK-Ws-59f" firstAttribute="top" secondItem="rlM-7n-cqL" secondAttribute="bottom" constant="8" id="nbo-wh-3WX"/>
                             <constraint firstItem="rlM-7n-cqL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="qfQ-4I-hwv"/>
                             <constraint firstItem="q78-pp-GAE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rlY-qF-urY"/>
