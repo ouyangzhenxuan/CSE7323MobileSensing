@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30A8BE8223414AB0009E100D /* AudioDSPUtils in Resources */ = {isa = PBXBuildFile; fileRef = 30A8BE8123414AB0009E100D /* AudioDSPUtils */; };
+		30A8BE8523414D87009E100D /* PeakFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A8BE8323414D87009E100D /* PeakFinder.m */; };
+		30A8BE8823415BEE009E100D /* 600_700_sin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30A8BE8623415BEE009E100D /* 600_700_sin.wav */; };
+		30A8BE8923415BEE009E100D /* 800_1000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30A8BE8723415BEE009E100D /* 800_1000.wav */; };
 		30B6027B233ACEB1009F6918 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B60279233ACEB1009F6918 /* AudioFileReader.m */; };
 		B6BD9E1F1D6E384A0009AB3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E1E1D6E384A0009AB3F /* main.m */; };
 		B6BD9E221D6E384A0009AB3F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E211D6E384A0009AB3F /* AppDelegate.m */; };
@@ -41,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30A8BE8123414AB0009E100D /* AudioDSPUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AudioDSPUtils; sourceTree = "<group>"; };
+		30A8BE8323414D87009E100D /* PeakFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeakFinder.m; path = AudioDSPUtils/PeakFinder.m; sourceTree = SOURCE_ROOT; };
+		30A8BE8423414D87009E100D /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeakFinder.h; path = AudioDSPUtils/PeakFinder.h; sourceTree = SOURCE_ROOT; };
+		30A8BE8623415BEE009E100D /* 600_700_sin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 600_700_sin.wav; sourceTree = "<group>"; };
+		30A8BE8723415BEE009E100D /* 800_1000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 800_1000.wav; sourceTree = "<group>"; };
 		30B60279233ACEB1009F6918 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileReader.m; sourceTree = "<group>"; };
 		30B6027A233ACEB1009F6918 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileReader.h; sourceTree = "<group>"; };
 		B6BD9E1A1D6E384A0009AB3F /* AudioLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +107,8 @@
 		30E7E3FF233E80D300E0E8B0 /* Tone */ = {
 			isa = PBXGroup;
 			children = (
+				30A8BE8623415BEE009E100D /* 600_700_sin.wav */,
+				30A8BE8723415BEE009E100D /* 800_1000.wav */,
 			);
 			path = Tone;
 			sourceTree = "<group>";
@@ -105,6 +116,7 @@
 		B6BD9E111D6E384A0009AB3F = {
 			isa = PBXGroup;
 			children = (
+				30A8BE8123414AB0009E100D /* AudioDSPUtils */,
 				B6BD9E501D6E39660009AB3F /* DSPUtils */,
 				30E7E3FF233E80D300E0E8B0 /* Tone */,
 				B6BD9E1C1D6E384A0009AB3F /* AudioLab */,
@@ -127,6 +139,8 @@
 		B6BD9E1C1D6E384A0009AB3F /* AudioLab */ = {
 			isa = PBXGroup;
 			children = (
+				30A8BE8423414D87009E100D /* PeakFinder.h */,
+				30A8BE8323414D87009E100D /* PeakFinder.m */,
 				30B6027A233ACEB1009F6918 /* AudioFileReader.h */,
 				30B60279233ACEB1009F6918 /* AudioFileReader.m */,
 				B6BD9E201D6E384A0009AB3F /* AppDelegate.h */,
@@ -291,8 +305,11 @@
 			files = (
 				B6BD9E2D1D6E384A0009AB3F /* LaunchScreen.storyboard in Resources */,
 				B6BD9E2A1D6E384A0009AB3F /* Assets.xcassets in Resources */,
+				30A8BE8223414AB0009E100D /* AudioDSPUtils in Resources */,
 				B6BD9E5B1D6E46790009AB3F /* satisfaction.mp3 in Resources */,
+				30A8BE8823415BEE009E100D /* 600_700_sin.wav in Resources */,
 				B6BD9E281D6E384A0009AB3F /* Main.storyboard in Resources */,
+				30A8BE8923415BEE009E100D /* 800_1000.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +336,7 @@
 			files = (
 				B6BD9E5E1D6E59880009AB3F /* SMUGraphHelper.m in Sources */,
 				30B6027B233ACEB1009F6918 /* AudioFileReader.m in Sources */,
+				30A8BE8523414D87009E100D /* PeakFinder.m in Sources */,
 				B6BD9E591D6E43140009AB3F /* CircularBuffer.m in Sources */,
 				B6BD9E641D6F4BA90009AB3F /* FFTHelper.m in Sources */,
 				B6BD9E531D6E398F0009AB3F /* Novocaine.m in Sources */,
