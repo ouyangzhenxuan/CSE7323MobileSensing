@@ -14,7 +14,8 @@
 #import "GestureViewController.h"
 
 #define BUFFER_SIZE 2048
-#define DOPPLER 20
+#define FDIFF 25
+#define SDIFF 20
 
 @interface GestureViewController ()
 @property (strong, nonatomic) Novocaine *audioManager;
@@ -35,10 +36,10 @@
 @end
 
 
-
 @implementation GestureViewController
 @synthesize sliderValue = _sliderValue;
 
+// Lazy instantiation for all properties
 - (int)count{
     if(!_count)
         _count=0;
@@ -79,24 +80,11 @@
     return _peakIndex;
 }
 
-
-- (IBAction)sliderChange:(UISlider *)sender {
-    self.sliderValue = @(sender.value);
-    self.countUpdate =0;
-}
-
 -(NSNumber*)sliderValue{
     if(!_sliderValue)
         _sliderValue = @20000.0;
     return _sliderValue;
 }
-
-- (void)setSliderValue:(NSNumber *)sliderValue{
-    _sliderValue = sliderValue;
-    self.sliderValueLabel.text = [NSString stringWithFormat:@"%@", _sliderValue];
-}
-
-
 
 #pragma mark Lazy Instantiation
 -(Novocaine*)audioManager{
@@ -132,30 +120,47 @@
     return _fftHelper;
 }
 
+// When Slider Change, change the content of the label to show new value
+// Also reset the count number to 0 when playing frequency is changed
+- (IBAction)sliderChange:(UISlider *)sender {
+    self.sliderValue = @(sender.value);
+    self.countUpdate =0;
+}
+
+// Label's setter function to set its text as slider's value
+- (void)setSliderValue:(NSNumber *)sliderValue{
+    _sliderValue = sliderValue;
+    self.sliderValueLabel.text = [NSString stringWithFormat:@"%@", _sliderValue];
+}
 
 #pragma mark VC Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
-    
+    // Set countUpdate to 0 so that it starts count when open the view
     self.countUpdate = 0;
+    // Set fft graphs displayed on button half of the screen
     [self.graphHelper setScreenBoundsBottomHalf];
     
+    // Set slider min, max and default value
     self.sliderFrequency.maximumValue = 20000.0;
     self.sliderFrequency.minimumValue = 15000.0;
     self.sliderFrequency.value = 20000.0;
     
+    // Set inputBlock
     __block GestureViewController * __weak  weakSelf = self;
     [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
+        
     }];
     
+    // Set outputBlock to play sine wave based on the slider value
     __block float frequency = self.sliderFrequency.value;
     __block float phase = 0.0;
     __block float samplingRate = self.audioManager.samplingRate;
     
     [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
+        // Whenever slider value change, change the frequency to play corresponding sine wave
         frequency =[self.sliderValue floatValue];
         double phaseIncrement = 2*M_PI*frequency/samplingRate;
         double sineWaveReapteMax= 2*M_PI;
@@ -167,6 +172,7 @@
         }
     }];
     
+    // Play audioManager
     [self.audioManager play];
 }
 
@@ -175,9 +181,8 @@
 }
 
 #pragma mark GLK Inherited Functions
-//  override the GLKViewController update function, from OpenGLES
+//  Update funciton
 - (void)update{
-    // just plot the audio stream
     
     // get audio stream data
     float* arrayData = malloc(sizeof(float)*BUFFER_SIZE);
@@ -194,7 +199,7 @@
     [self.fftHelper performForwardFFTWithData:arrayData
                    andCopydBMagnitudeToBuffer:fftMagnitude];
     
-    
+    // Zoom in the fft graph to the place where frequency is between 15k - 20k Hz
     float* zoomfft =malloc(sizeof(float)*250);
     for(int i =0;i<250;i++){
         zoomfft[i] = fftMagnitude[i+697];
@@ -206,62 +211,13 @@
                      forGraphIndex:1
                  withNormalization:64.0
                      withZeroValue:-60];
-    self.countUpdate ++;
-    if(self.countUpdate ==3){
-        float frequency =[self.sliderValue floatValue];
-        float index= (frequency/(self.audioManager.samplingRate/(float)BUFFER_SIZE) -697.0);
-        self.peakIndex = lroundf(index);
-        
-        
-        self.leftslow =zoomfft[self.peakIndex-2];
-        self.rightslow= zoomfft[self.peakIndex+2];
-        self.leftfast = zoomfft[self.peakIndex-5];
-        self.rightfast = zoomfft[self.peakIndex+5];
-        
-        
-    }
     
-    if(self.countUpdate >3){
-        float leftChange = zoomfft[self.peakIndex-2]-self.leftslow;
-        float rightChange= zoomfft[self.peakIndex+2]-self.rightslow;
-        float leftChange2 = zoomfft[self.peakIndex-5]-self.leftfast;
-        float rightChange2= zoomfft[self.peakIndex+5]-self.rightfast;
-        
-        //      NSLog(@"%f %f",leftChange,rightChange);
-        
-        if(leftChange2>25 || rightChange2>25){
-            if(leftChange2>25){
-                self.gesture.text = @"Away";
-                NSLog(@"Away");
-                self.count = -10;
-            }
-            if(rightChange2>25){
-                self.gesture.text = @"Push";
-                NSLog(@"Push");
-                self.count = -10;
-            }
-        }
-        else{
-            if(leftChange>20){
-                self.gesture.text = @"Away";
-                NSLog(@"Away1");
-                self.count = -10;
-            }
-            if(rightChange>20){
-                self.gesture.text = @"Push";
-                NSLog(@"Push1");
-                self.count = -10;
-            }
-        }
-    }
+    // Call funciton to calculate peak index and get frequency value on both sides
+    [self getOriginalFrequencyValue:zoomfft];
+    // Call function to calculate Doppler Effect to display gesture on the screen
+    [self calculateDopplerEffect:zoomfft];
     
-    
-    self.count ++;
-    if(self.count==0)
-        self.gesture.text = @"";
-    
-    
-    
+    // Graph the Zoom in FFT data
     [self.graphHelper setGraphData:zoomfft
                     withDataLength:250
                      forGraphIndex:2
@@ -269,20 +225,97 @@
                      withZeroValue:-60];
     
     [self.graphHelper update]; // update the graph
+    // Free those arrays
     free(arrayData);
     free(fftMagnitude);
+    free(zoomfft);
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [self.audioManager pause];
-    self.audioManager.outputBlock = nil;
+// Function to get peak index and sides values
+- (void)getOriginalFrequencyValue:(float*)zoomfft{
     
+    // Increment Count
+    if(self.countUpdate<10)
+        self.countUpdate ++;
+    
+    // Because the fft values are unstable when peak frequency just gets played,
+    // we want to get the frequency value 3 updates later
+    // which is a very small time period that human cannot detect
+    if(self.countUpdate ==3){
+        
+        // Get peak frequency
+        float frequency =[self.sliderValue floatValue];
+        
+        // Calculate index and round it
+        float index= (frequency/(self.audioManager.samplingRate/(float)BUFFER_SIZE) -697.0);
+        self.peakIndex = lroundf(index);
+        
+        // Get frequency value on both sides, where the second node is for slow motion,
+        // and the fifth node is for fast motion
+        self.leftslow =zoomfft[self.peakIndex-2];
+        self.rightslow= zoomfft[self.peakIndex+2];
+        self.leftfast = zoomfft[self.peakIndex-5];
+        self.rightfast = zoomfft[self.peakIndex+5];
+    }
+}
+
+// Calcualte Doppler Effect using the data measured from the function above
+- (void)calculateDopplerEffect:(float*)zoomfft{
+    
+    // After measuring the data on both sides of the peak,
+    // calculate the values on those nodes again to see if they change
+    if(self.countUpdate >3){
+        float leftChange = zoomfft[self.peakIndex-2]-self.leftslow;
+        float rightChange= zoomfft[self.peakIndex+2]-self.rightslow;
+        float leftChange2 = zoomfft[self.peakIndex-5]-self.leftfast;
+        float rightChange2= zoomfft[self.peakIndex+5]-self.rightfast;
+        
+        // if their changing differences are greater than default differences,
+        // display those gestures,
+        // also set the count to be -10 for displaying text on the label
+        if(leftChange2>FDIFF || rightChange2>FDIFF){
+            if(leftChange2>FDIFF){
+                self.gesture.text = @"Away";
+                self.count = -10;
+            }
+            if(rightChange2>FDIFF){
+                self.gesture.text = @"Push";
+                self.count = -10;
+            }
+        }
+        else{
+            if(leftChange>SDIFF){
+                self.gesture.text = @"Away";
+                self.count = -10;
+            }
+            if(rightChange>SDIFF){
+                self.gesture.text = @"Push";
+                self.count = -10;
+            }
+        }
+    }
+    
+    // Increment count, after 10 updates, reset the label's text
+    if(self.count<1)
+        self.count ++;
+    if(self.count==0)
+        self.gesture.text = @"";
 }
 
 //  override the GLKView draw function, from OpenGLES
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     [self.graphHelper draw]; // draw the graph
 }
+
+// When close the view, set output block to nil and pause audiomanager
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.audioManager setOutputBlock:nil];
+    [self.audioManager pause];
+    
+}
+
+
 
 
 @end
