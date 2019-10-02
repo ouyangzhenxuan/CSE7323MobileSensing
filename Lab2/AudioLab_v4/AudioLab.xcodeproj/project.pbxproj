@@ -7,18 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		167783FF233EB81900CF63A1 /* 500.wav in Resources */ = {isa = PBXBuildFile; fileRef = 167783FE233EB81900CF63A1 /* 500.wav */; };
-		16778401233EB8AE00CF63A1 /* 3000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16778400233EB8AD00CF63A1 /* 3000.wav */; };
-		16778405233EBA1D00CF63A1 /* 550_500.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16778404233EBA1D00CF63A1 /* 550_500.wav */; };
-		16778407233EBA2400CF63A1 /* 500_550.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16778406233EBA2400CF63A1 /* 500_550.wav */; };
-		16778409233EBB1B00CF63A1 /* audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16778408233EBB1B00CF63A1 /* audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav */; };
-		1677840B233EBCA700CF63A1 /* 600_700_sin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1677840A233EBCA700CF63A1 /* 600_700_sin.wav */; };
-		1677840D233EBF9300CF63A1 /* 2000_2050_sin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1677840C233EBF9300CF63A1 /* 2000_2050_sin.wav */; };
 		16778410234172BA00CF63A1 /* PeakFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677840E234172B900CF63A1 /* PeakFinder.m */; };
 		167784132341CB0F00CF63A1 /* FFTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 167784122341CB0F00CF63A1 /* FFTModel.m */; };
-		16778415234341D400CF63A1 /* 500_2000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16778414234341D400CF63A1 /* 500_2000.wav */; };
 		16B27BC4233A8C5500B07100 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B27BC3233A8C5500B07100 /* TableViewController.m */; };
 		16B27BC7233A9A9D00B07100 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B27BC6233A9A9D00B07100 /* AudioFileReader.m */; };
+		3001F65F23443EF90065B54C /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001F65E23443EF90065B54C /* GestureViewController.m */; };
 		B6BD9E1F1D6E384A0009AB3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E1E1D6E384A0009AB3F /* main.m */; };
 		B6BD9E221D6E384A0009AB3F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E211D6E384A0009AB3F /* AppDelegate.m */; };
 		B6BD9E251D6E384A0009AB3F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD9E241D6E384A0009AB3F /* ViewController.m */; };
@@ -52,22 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		167783FE233EB81900CF63A1 /* 500.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 500.wav; sourceTree = "<group>"; };
-		16778400233EB8AD00CF63A1 /* 3000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 3000.wav; path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/93f9570acc0aa4d25ab87a89f12fea51/Message/MessageTemp/1ec6229b9891fb48d0bd81169c46edb4/File/3000.wav"; sourceTree = "<group>"; };
-		16778404233EBA1D00CF63A1 /* 550_500.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 550_500.wav; path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/93f9570acc0aa4d25ab87a89f12fea51/Message/MessageTemp/1ec6229b9891fb48d0bd81169c46edb4/File/550_500.wav"; sourceTree = "<group>"; };
-		16778406233EBA2400CF63A1 /* 500_550.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 500_550.wav; path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/93f9570acc0aa4d25ab87a89f12fea51/Message/MessageTemp/1ec6229b9891fb48d0bd81169c46edb4/File/500_550.wav"; sourceTree = "<group>"; };
-		16778408233EBB1B00CF63A1 /* audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav"; sourceTree = SOURCE_ROOT; };
-		1677840A233EBCA700CF63A1 /* 600_700_sin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 600_700_sin.wav; path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/93f9570acc0aa4d25ab87a89f12fea51/Message/MessageTemp/1ec6229b9891fb48d0bd81169c46edb4/File/600_700_sin.wav"; sourceTree = "<group>"; };
-		1677840C233EBF9300CF63A1 /* 2000_2050_sin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 2000_2050_sin.wav; path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/93f9570acc0aa4d25ab87a89f12fea51/Message/MessageTemp/1ec6229b9891fb48d0bd81169c46edb4/File/2000_2050_sin.wav"; sourceTree = "<group>"; };
 		1677840E234172B900CF63A1 /* PeakFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeakFinder.m; path = AudioDSPUtils/PeakFinder.m; sourceTree = "<group>"; };
 		1677840F234172B900CF63A1 /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeakFinder.h; path = AudioDSPUtils/PeakFinder.h; sourceTree = "<group>"; };
 		167784112341CB0F00CF63A1 /* FFTModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFTModel.h; sourceTree = "<group>"; };
 		167784122341CB0F00CF63A1 /* FFTModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFTModel.m; sourceTree = "<group>"; };
-		16778414234341D400CF63A1 /* 500_2000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 500_2000.wav; path = ../../../../Downloads/500_2000.wav; sourceTree = "<group>"; };
 		16B27BC2233A8C5500B07100 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		16B27BC3233A8C5500B07100 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		16B27BC5233A9A9D00B07100 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileReader.h; sourceTree = "<group>"; };
 		16B27BC6233A9A9D00B07100 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileReader.m; sourceTree = "<group>"; };
+		3001F65D23443EF90065B54C /* GestureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureViewController.h; sourceTree = "<group>"; };
+		3001F65E23443EF90065B54C /* GestureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
 		B6BD9E1A1D6E384A0009AB3F /* AudioLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BD9E1E1D6E384A0009AB3F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BD9E201D6E384A0009AB3F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -153,6 +140,8 @@
 				16B27BC5233A9A9D00B07100 /* AudioFileReader.h */,
 				16B27BC6233A9A9D00B07100 /* AudioFileReader.m */,
 				B6BD9E261D6E384A0009AB3F /* Main.storyboard */,
+				3001F65D23443EF90065B54C /* GestureViewController.h */,
+				3001F65E23443EF90065B54C /* GestureViewController.m */,
 				16B27BC2233A8C5500B07100 /* TableViewController.h */,
 				16B27BC3233A8C5500B07100 /* TableViewController.m */,
 				B6BD9E291D6E384A0009AB3F /* Assets.xcassets */,
@@ -168,14 +157,6 @@
 		B6BD9E1D1D6E384A0009AB3F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				16778408233EBB1B00CF63A1 /* audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav */,
-				1677840C233EBF9300CF63A1 /* 2000_2050_sin.wav */,
-				1677840A233EBCA700CF63A1 /* 600_700_sin.wav */,
-				16778406233EBA2400CF63A1 /* 500_550.wav */,
-				16778414234341D400CF63A1 /* 500_2000.wav */,
-				16778404233EBA1D00CF63A1 /* 550_500.wav */,
-				16778400233EB8AD00CF63A1 /* 3000.wav */,
-				167783FE233EB81900CF63A1 /* 500.wav */,
 				B6BD9E5A1D6E46790009AB3F /* satisfaction.mp3 */,
 				B6BD9E1E1D6E384A0009AB3F /* main.m */,
 			);
@@ -321,16 +302,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6BD9E2D1D6E384A0009AB3F /* LaunchScreen.storyboard in Resources */,
-				1677840B233EBCA700CF63A1 /* 600_700_sin.wav in Resources */,
-				16778401233EB8AE00CF63A1 /* 3000.wav in Resources */,
 				B6BD9E2A1D6E384A0009AB3F /* Assets.xcassets in Resources */,
-				16778409233EBB1B00CF63A1 /* audiocheck.net_650Hz_-12dBFS_600Hz_-12dBFS_3s.wav in Resources */,
-				1677840D233EBF9300CF63A1 /* 2000_2050_sin.wav in Resources */,
-				16778415234341D400CF63A1 /* 500_2000.wav in Resources */,
 				B6BD9E5B1D6E46790009AB3F /* satisfaction.mp3 in Resources */,
-				16778405233EBA1D00CF63A1 /* 550_500.wav in Resources */,
-				16778407233EBA2400CF63A1 /* 500_550.wav in Resources */,
-				167783FF233EB81900CF63A1 /* 500.wav in Resources */,
 				B6BD9E281D6E384A0009AB3F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3001F65F23443EF90065B54C /* GestureViewController.m in Sources */,
 				B6BD9E5E1D6E59880009AB3F /* SMUGraphHelper.m in Sources */,
 				B6BD9E591D6E43140009AB3F /* CircularBuffer.m in Sources */,
 				B6BD9E641D6F4BA90009AB3F /* FFTHelper.m in Sources */,

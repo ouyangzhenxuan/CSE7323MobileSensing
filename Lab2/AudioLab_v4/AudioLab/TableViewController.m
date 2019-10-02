@@ -10,9 +10,18 @@
 
 @interface TableViewController ()
 
+@property (strong, nonatomic) NSArray *cellName;
+
 @end
 
 @implementation TableViewController
+
+- (NSArray *)cellName{
+    if(!_cellName){
+        _cellName = [[NSArray alloc] initWithObjects:@"Frequency Analysis", @"Gesture", nil];
+    }
+    return _cellName;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +37,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Incomplete implementation, return the number of sections
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -37,9 +46,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
- 
-    cell.text=@"ica2";
+    UITableViewCell *cell = nil;
+    if(indexPath.section==0){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell_frequency" forIndexPath:indexPath];
+        cell.textLabel.text=@"Frequency Analysis";
+        
+    }else if(indexPath.section==1){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell_gesture" forIndexPath:indexPath];
+        cell.textLabel.text=@"Gesture";
+    }
+    
  
     return cell;
 }

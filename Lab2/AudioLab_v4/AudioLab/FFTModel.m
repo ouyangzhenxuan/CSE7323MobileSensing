@@ -125,10 +125,10 @@
 
 -(void) start{
     __block FFTModel * __weak  weakSelf = self; // don't incrememt ARC'
-    [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-     {
-         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
-     }];
+//    [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
+//     {
+//         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
+//     }];
     [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
     }];
