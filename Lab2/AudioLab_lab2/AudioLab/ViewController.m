@@ -14,19 +14,13 @@
 @interface ViewController ()
 @property (strong, nonatomic) SMUGraphHelper *graphHelper;
 @property (strong, nonatomic) AudioFileReader *fileReader;
-//@property (nonatomic) bool isLock;
-//@property (nonatomic) NSInteger lockCount;
-//@property (nonatomic) float lastFrequency;
-//@property (nonatomic) float* floatArray;
+
 @property (nonatomic) float* freqs;
 @property (nonatomic) float* fftMagnitude;
-//@property (nonatomic) float volume;
+
 @property (nonatomic) float max_freq;
 @property (nonatomic) float sec_freq;
-//@property (nonatomic) float pre_max_freq;
-//@property (nonatomic) float pre_sec_freq;
-//@property (nonatomic) float set_max_freq;
-//@property (nonatomic) float set_sec_freq;
+
 @property (strong,nonatomic) FFTModel* fftModel;
 @property (weak, nonatomic) IBOutlet UILabel *maxFrequencyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secFrequencyLabel;
@@ -46,20 +40,6 @@
     return _fftModel;
 }
 
-//-(float)set_max_freq{
-//    if(!_set_max_freq){
-//        _set_max_freq=0;
-//    }
-//    return _set_max_freq;
-//}
-//
-//-(float)set_sec_freq{
-//    if(!_set_sec_freq){
-//        _set_sec_freq=0;
-//    }
-//    return _set_sec_freq;
-//}
-
 -(SMUGraphHelper*)graphHelper{
     if(!_graphHelper){
         _graphHelper = [[SMUGraphHelper alloc]initWithController:self
@@ -74,13 +54,8 @@
 #pragma mark VC Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.volume=1.0;
-//    self.lockCount=0;
-    // Do any additional setup after loading the view, typically from a nib.
-//    [self.fileReader play];
-//    self.fileReader.currentTime = 0.0;
-//    self.isLock=false;
-
+    
+    // initialize two peak frequency
     self.sec_freq=0;
     self.max_freq=0;
     
@@ -114,31 +89,9 @@
     
     // assign the return data to local
     dispatch_async(serialQueue, ^{
-//        self.pre_max_freq=self.max_freq;
-//        self.pre_sec_freq=self.sec_freq;
         self.max_freq=self.freqs[0];
         self.sec_freq=self.freqs[1];
     });
-//    dispatch_async(serialQueue, ^{
-//////        if(!self.set_max_freq){
-//////            self.set_max_freq=self.max_freq;
-//////            self.set_sec_freq=self.sec_freq;
-//////        }else{
-////            if(self.set_max_freq-self.max_freq<3&&self.set_max_freq-self.max_freq>-3){
-////                self.lockCount=0;
-////            }else{
-////                if(self.pre_max_freq-self.max_freq<3&&self.pre_max_freq-self.max_freq>-3){
-//////                    if(self.pre_sec_freq-self.sec_freq<2&&self.pre_sec_freq-self.sec_freq>-2){
-////                        self.lockCount+=1;
-//////                    }else{
-//////                        self.lockCount=0;
-//////                    }
-////                }else{
-////                    self.lockCount=0;
-////                }
-////            }
-//////        }
-//    });
     
     // display the 'lock in' frequency
     dispatch_async(serialQueue, ^{
@@ -155,8 +108,6 @@
                 // update the UILabel text
                 self.maxFrequencyLabel.text=maxFrequency;
                 self.secFrequencyLabel.text=secFrequency;
-//                self.set_max_freq=self.max_freq;
-//                self.set_sec_freq=self.sec_freq;
             });
         }
     });
@@ -170,20 +121,9 @@
     [self.graphHelper draw]; // draw the graph
 }
 
-//- (IBAction)lock:(UIButton *)sender {
-//    //
-////    self.isLock=true;
-////    self.lockCount=0;
-////    NSLog(@"Is lock");
-//}
-//
-//- (IBAction)unlock:(id)sender {
-////    self.isLock=false;
-//}
-
+// deallocate the fftModel object
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    // deallocate the fftModel object
     self.fftModel = nil;
 }
 
