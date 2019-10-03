@@ -112,11 +112,16 @@
 }
 
 +(FFTModel*)sharedInstance{
+    // using sharedInstance to make sure FFTModel object is singleton
     static FFTModel * _sharedInstance = nil;
-    
+
+    // create dispatch_once object
     static dispatch_once_t oncePredicate;
     
+    // execute the block only once in the lifetime of application
     dispatch_once(&oncePredicate,^{
+        
+        // allocate memory and initialize FFTModel object
         _sharedInstance = [[FFTModel alloc] init];
     });
     
@@ -125,10 +130,8 @@
 
 -(void) start{
     __block FFTModel * __weak  weakSelf = self; // don't incrememt ARC'
-//    [self.audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-//     {
-//         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
-//     }];
+
+    // set the audio input
     [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
     }];
@@ -136,6 +139,8 @@
 }
 
 -(float*) fftData{
+    
+    // fetch data from buffer to arrayData
     [self.buffer fetchFreshData:self.arrayData withNumSamples:BUFFER_SIZE];
     [self.fftHelper performForwardFFTWithData:self.arrayData
                    andCopydBMagnitudeToBuffer:self.fftMagnitude];
@@ -143,21 +148,44 @@
 }
 
 -(float*) getFrequencies{
+    // sample rate
     float fs=44100.0;
+    
+    // calculate step size according to sample rate and buffer_size
     float step=fs/((float)BUFFER_SIZE);
-    NSInteger windowSize=36;//38
+    
+    // sliding window size
+    NSInteger windowSize=36;
+    
+    // initialize two peaks
     float peak1=-9999.9;
     float peak2=-9999.9;
+    
+    // initialize two peak indexs
     unsigned long peakIdx1=-1;
     unsigned long peakIdx2=-1;
+    
+    //
     for(int i=500/step;i<BUFFER_SIZE/2-windowSize;i++){
         unsigned long middle;
+        
+        // define the middle position index
         middle = windowSize/2;
+        
+        // max magnitude
         float maxMag;
+        
+        // max index
         unsigned long maxIndex;
+        
+        // calculate the maximum value
         vDSP_maxvi(&(self.fftMagnitude[i]), 1, &maxMag, &maxIndex, windowSize);
-        //maxIndex += i;
+        
+        // when the maxIndex is at the middle of current window, update the peak frequency and index
         if(maxIndex == middle){
+            
+            // if the max magnitude of current window is larger than the current peak, update it to be the peak1,
+            // and also update the previous peak1 to be peak2
             if(maxMag>peak1){
                 peak2=peak1;
                 peakIdx2=peakIdx1;
@@ -165,42 +193,51 @@
                 peakIdx1=maxIndex+i;
                 continue;
             }
+            
+            // if the max magnitude is smaller than current peak1 but larger than current peak2,
+            // update it to be the new peak2
             if(maxMag>peak2){
                 peak2=maxMag;
                 peakIdx2=maxIndex+i;
             }
         }
     }
-    float what=(self.fftMagnitude[peakIdx1+1]-self.fftMagnitude[peakIdx1-1])/((self.fftMagnitude[peakIdx1+1]+self.fftMagnitude[peakIdx1-1]-2*self.fftMagnitude[peakIdx1])*0.5)*step;
-    float what2=(self.fftMagnitude[peakIdx2+1]-self.fftMagnitude[peakIdx2-1])/((self.fftMagnitude[peakIdx2+1]+self.fftMagnitude[peakIdx2-1]-2*self.fftMagnitude[peakIdx2])*0.5)*step;
-//    NSLog(@"Yuanlai:%f",peakIdx1*step);
-//    NSLog(@"Xianzai:%f",what);
+    
     self.peakIdx2=peakIdx2;
     self.peakIdx1=peakIdx1;
+    
+    // Quadratic modification
     float max_freq=((float)peakIdx1-(self.fftMagnitude[peakIdx1+1]-self.fftMagnitude[peakIdx1-1])/((self.fftMagnitude[peakIdx1+1]+self.fftMagnitude[peakIdx1-1]-2*self.fftMagnitude[peakIdx1])*0.5))*step;
     float sec_freq=((float)peakIdx2-(self.fftMagnitude[peakIdx2+1]-self.fftMagnitude[peakIdx2-1])/((self.fftMagnitude[peakIdx2+1]+self.fftMagnitude[peakIdx2-1]-2*self.fftMagnitude[peakIdx2])*0.5))*step;
-//    float max_freq=(float)peakIdx1*step;
-//    float sec_freq=(float)peakIdx2*step;
+
+    // update the return data
     self.returnData[0]=max_freq;
     self.returnData[1]=sec_freq;
+    
     return self.returnData;
 }
 
+// tell the main queue if it should lock and display the frequency
 -(BOOL) shouldLock
 {
+    // if the frequency stays the same, increase the count
     if(self.peakIdx2==self.prePeakIdx2&&self.peakIdx1==self.prePeakIdx1){
         self.count+=1;
     }else{
         self.count=0;
     }
+    
     self.prePeakIdx1=self.peakIdx1;
     self.prePeakIdx2=self.peakIdx2;
+    
+    // when the frequency stay the same for a while, then lock it and return true
     if(self.count>=3){
         return true;
     }
     return false;
 }
 
+// when finishes analyzing, deallocate the memory
 - (void)dealloc
 {
     free(self.arrayData);
