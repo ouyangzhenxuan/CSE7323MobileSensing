@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #define BUFFER_SIZE 2048*4*4
+#define BUFFER_SIZE2 2048
+#define FDIFF 25
+#define SDIFF 15
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,14 +20,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void) start;
 
+-(void) startGesture:(float)frequency;
+
+-(float*) getArrayData;
+
+-(void) changeFrequency:(float)newFrequency;
+
 -(float*) fftData;
+
+-(float*) gestureFFTDATA;
+
+-(float*) getZoomFFT;
 
 -(float*) getFrequencies;
 
--(void) clear;
+-(void) stop;
 
 -(BOOL) shouldLock;
 
+- (void)getOriginalFrequencyValue;
+
+- (NSString*)calculateDopplerEffect;
 @end
 
 NS_ASSUME_NONNULL_END

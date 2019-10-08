@@ -13,20 +13,19 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) SMUGraphHelper *graphHelper;
-@property (strong, nonatomic) AudioFileReader *fileReader;
-
+@property (nonatomic) float* floatArray;
 @property (nonatomic) float* freqs;
 @property (nonatomic) float* fftMagnitude;
-
+@property (nonatomic) float volume;
 @property (nonatomic) float max_freq;
 @property (nonatomic) float sec_freq;
-
 @property (strong,nonatomic) FFTModel* fftModel;
 @property (weak, nonatomic) IBOutlet UILabel *maxFrequencyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secFrequencyLabel;
 
 
 @end
+
 
 
 @implementation ViewController
@@ -54,11 +53,13 @@
 #pragma mark VC Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // initialize two peak frequency
+    // set volue and two max frequencies to 0
+    self.volume=1.0;
+
     self.sec_freq=0;
     self.max_freq=0;
     
+    // call model to start audiomanager
     [self.fftModel start];
     
 }
@@ -66,46 +67,37 @@
 #pragma mark GLK Inherited Functions
 //  override the GLKViewController update function, from OpenGLES
 - (void)update{
-    
-    // create a serialQueue to manage the execution of tasks
+    // initialize serial queue
     dispatch_queue_t serialQueue = dispatch_queue_create("com.blah.queue", DISPATCH_QUEUE_SERIAL);
     
-    // plot the fft graph
-    [self.graphHelper setGraphData:self.fftMagnitude
-                    withDataLength:BUFFER_SIZE/2
-                     forGraphIndex:0
-                 withNormalization:64.0
-                     withZeroValue:-60];
-    
-    // fetch magnitude data from the fftModel, which handle data at the backend
+    // graph fft using seria queue
     dispatch_async(serialQueue, ^{
         self.fftMagnitude = [self.fftModel fftData];
+        [self.graphHelper setGraphData:self.fftMagnitude
+                        withDataLength:BUFFER_SIZE/2
+                         forGraphIndex:0
+                     withNormalization:64.0
+                         withZeroValue:-60];
     });
     
-    // fetch frequency data from the fftModel
+    // get the max frequencies and set to local varianbles
     dispatch_async(serialQueue, ^{
         self.freqs=[self.fftModel getFrequencies];
     });
-    
-    // assign the return data to local
     dispatch_async(serialQueue, ^{
         self.max_freq=self.freqs[0];
         self.sec_freq=self.freqs[1];
     });
     
-    // display the 'lock in' frequency
+    // check whether to lock the numbers and display the result to the labels
     dispatch_async(serialQueue, ^{
-        
-        // check the backend data if it should be locked
         BOOL shouldLock= [self.fftModel shouldLock];
-        
         if(shouldLock){
             dispatch_async(dispatch_get_main_queue(), ^{
 
                 NSString* maxFrequency = [NSString stringWithFormat:@"%.1f", (float)self.max_freq];
                 NSString* secFrequency = [NSString stringWithFormat:@"%.1f", (float)self.sec_freq];
-                
-                // update the UILabel text
+
                 self.maxFrequencyLabel.text=maxFrequency;
                 self.secFrequencyLabel.text=secFrequency;
             });
@@ -121,10 +113,10 @@
     [self.graphHelper draw]; // draw the graph
 }
 
-// deallocate the fftModel object
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.fftModel = nil;
+// stop when leaving the page
+- (void)viewDidDisappear:(BOOL)animated{
+    [self.fftModel stop];
 }
+
 
 @end
