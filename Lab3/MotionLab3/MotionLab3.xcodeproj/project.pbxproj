@@ -50,7 +50,6 @@
 		16993AEE234E8368008A2F63 /* MotionLab3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionLab3UITests.swift; sourceTree = "<group>"; };
 		16993AF0234E8368008A2F63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30BEC3DA234F00F80085FBB2 /* TodayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTableViewCell.swift; sourceTree = "<group>"; };
-		30C3207E234FDA1D00DCFA86 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		527EEFFF9471FC2F9FEC945F /* Pods_MotionLab3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MotionLab3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90990A31580E70E979033DC4 /* Pods-MotionLab3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionLab3.debug.xcconfig"; path = "Target Support Files/Pods-MotionLab3/Pods-MotionLab3.debug.xcconfig"; sourceTree = "<group>"; };
 		B7D35161D79126D2AAACE74A /* Pods-MotionLab3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionLab3.release.xcconfig"; path = "Target Support Files/Pods-MotionLab3/Pods-MotionLab3.release.xcconfig"; sourceTree = "<group>"; };
@@ -109,7 +108,6 @@
 			children = (
 				16993ACE234E8365008A2F63 /* AppDelegate.swift */,
 				16993AD0234E8365008A2F63 /* ViewController.swift */,
-				30C3207E234FDA1D00DCFA86 /* README.md */,
 				16993AD2234E8365008A2F63 /* Main.storyboard */,
 				16993AD5234E8368008A2F63 /* Assets.xcassets */,
 				16993AD7234E8368008A2F63 /* LaunchScreen.storyboard */,

@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var pieView: PieChartView!
     
     var todayStep_entry = PieChartDataEntry(value: 0.0)
-    var yesterdayStep_entry = PieChartDataEntry(value: 0.0)
+    var goalStep_entry = PieChartDataEntry(value: 0.0)
     var numberOfDownloaadsDataEntries = [PieChartDataEntry]()
     
     // MARK: =======Set up pie chart=======
@@ -30,7 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         pieView.isUserInteractionEnabled = true
         pieView.legend.enabled = false
         todayStep_entry.label = "Today's Step"
-        yesterdayStep_entry.label = "Step Goal"
+        goalStep_entry.label = "Step Goal"
         
         // update data in the chart
         updateChart()
@@ -40,10 +40,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // get the step data
         todayStep_entry.value = Double(self.cell_todayStep)
-        yesterdayStep_entry.value = Double(self.stepGoal)
+        goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
+        goalStep_entry.label = "Remaining Goal"
+        
         
         // set up char dataset
-        numberOfDownloaadsDataEntries = [todayStep_entry, yesterdayStep_entry]
+        numberOfDownloaadsDataEntries = [todayStep_entry, goalStep_entry]
         let charDataSet = PieChartDataSet(entries: numberOfDownloaadsDataEntries, label: nil)
         let charData = PieChartData(dataSet: charDataSet)
         
@@ -59,8 +61,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // modify font style and size
         let labeltext = pieView.data
-        let attribute = NSUIFont(name: "HelveticaNeue", size: 15.0)
+        let attribute = NSUIFont(name: "HelveticaNeue", size: 20.0)
         labeltext?.setValueFont(attribute!)
+        labeltext?.setValueTextColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
     }
     
     // MARK: =======Set up table view=======
@@ -72,9 +75,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 1
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as! TodayTableViewCell
         self.view.bringSubviewToFront(cell.todayStep)
+        
+//        cell.setSelected(false, animated: false)
+        
         if(indexPath.row==0){
             cell.todayStep.text = "Today's step: " + String(self.cell_todayStep)
             
@@ -121,6 +131,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             default:
                 break
             }
+//            let motionImage = UIImage(named: "running")
+//            cell.motionState.image = motionImage
+//            self.view.bringSubviewToFront(cell.motionState)
+//            cell.motionState.layer.zPosition = 1
+            
             
         }
         return cell;
@@ -165,27 +180,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                    print("%@",unwrappedActivity.description)
                     if(unwrappedActivity.walking){
                         self.cell_state = "Walking"
-                        self.label.text = "Walking"
+//                        self.label.text = "Walking"
                     }
                     else if(unwrappedActivity.running){
                         self.cell_state = "Running"
-                        self.label.text = "Running"
+//                        self.label.text = "Running"
                     }
                     else if(unwrappedActivity.cycling){
                         self.cell_state = "Cycling"
-                        self.label.text = "Cycling"
+//                        self.label.text = "Cycling"
                     }
                     else if(unwrappedActivity.automotive){
                         self.cell_state = "Automotive"
-                        self.label.text = "Automotive"
+//                        self.label.text = "Automotive"
                     }
                     else if(unwrappedActivity.stationary){
                         self.cell_state = "Stationary"
-                        self.label.text = "Stationary"
+//                        self.label.text = "Stationary"
                     }
                     else{
                         self.cell_state = "Unknown"
-                        self.label.text = "Unknown"
+//                        self.label.text = "Unknown"
                     }
                 }
             }
@@ -207,8 +222,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         stepNow = Int(self.goalSlider.value)
                     }
                     self.goalLabel.text = "\(stepNow)/\(Int(self.goalSlider.value))"
+//                    self.goalLabel.text = ""
+                    
                     todayStep += (data?.numberOfSteps.stringValue)!
-                    self.todayStepCounter.text=todayStep
+                    
+//                    self.todayStepCounter.text=todayStep
                     
                     // display in the cell
                     self.cell_todayStep = (data?.numberOfSteps.intValue)!
@@ -223,7 +241,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 DispatchQueue.main.async {
                     var todayStep = "Yesterday's Step: ";
                     todayStep += (data?.numberOfSteps.stringValue)!
-                    self.yesterdayStepCounter.text=todayStep
+                    
+//                    self.yesterdayStepCounter.text=todayStep
                     
                     // display in the cell
                     self.cell_yesterdayStep = (data?.numberOfSteps.intValue)!
@@ -244,7 +263,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 var todayStep = "Today's Step: ";
                 let combineStep = pedometerData.numberOfSteps.intValue+self!.todayCount
                 todayStep += String(combineStep)
-                self?.todayStepCounter.text=todayStep
+                
+//                self?.todayStepCounter.text=todayStep
+                
                 self?.goalLabel.text = "\(combineStep)/\(self!.stepGoal)"
                 print(pedometerData.numberOfSteps.stringValue)
                 
@@ -268,8 +289,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             stepNow = currentValue
         }
         goalLabel.text = "\(stepNow)/\(currentValue)"
+        
         defaults.set(currentValue, forKey: "stepGoal")
         self.stepGoal=Float(currentValue)
+        
+        if(self.todayCount < currentValue){
+            updateChart()
+        }
+        
+        
     }
 }
 

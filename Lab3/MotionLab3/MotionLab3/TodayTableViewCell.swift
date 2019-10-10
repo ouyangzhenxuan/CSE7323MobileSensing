@@ -12,6 +12,7 @@ class TodayTableViewCell: UITableViewCell {
 
     @IBOutlet weak var todayStep: UILabel!
     @IBOutlet weak var todayImage: UIImageView!
+    @IBOutlet weak var motionState: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
