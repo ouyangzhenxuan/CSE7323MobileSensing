@@ -1,0 +1,275 @@
+//
+//  ViewController.swift
+//  MotionLab3
+//
+//  Created by 梅沈潇 on 10/9/19.
+//  Copyright © 2019 梅沈潇. All rights reserved.
+//
+
+import UIKit
+import CoreMotion
+import Charts
+
+
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var pieView: PieChartView!
+    
+    var todayStep_entry = PieChartDataEntry(value: 0.0)
+    var yesterdayStep_entry = PieChartDataEntry(value: 0.0)
+    var numberOfDownloaadsDataEntries = [PieChartDataEntry]()
+    
+    // MARK: =======Set up pie chart=======
+    func setupPieChart(){
+        pieView.chartDescription?.enabled = false
+        pieView.drawHoleEnabled = false
+        pieView.rotationAngle = 0
+//        pieView.rotationEnabled = true
+        pieView.isUserInteractionEnabled = true
+        pieView.legend.enabled = false
+        todayStep_entry.label = "Today's Step"
+        yesterdayStep_entry.label = "Step Goal"
+        
+        // update data in the chart
+        updateChart()
+    }
+    
+    func updateChart(){
+        
+        // get the step data
+        todayStep_entry.value = Double(self.cell_todayStep)
+        yesterdayStep_entry.value = Double(self.stepGoal)
+        
+        // set up char dataset
+        numberOfDownloaadsDataEntries = [todayStep_entry, yesterdayStep_entry]
+        let charDataSet = PieChartDataSet(entries: numberOfDownloaadsDataEntries, label: nil)
+        let charData = PieChartData(dataSet: charDataSet)
+        
+        // set up colors for data entry
+        let colors = [#colorLiteral(red: 1, green: 0.08598016948, blue: 0, alpha: 1),#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)]
+        charDataSet.colors = colors
+        
+        // display value for each data entry
+        charDataSet.drawValuesEnabled = true
+        
+        // set up data for pie chart
+        pieView.data = charData
+        
+        // modify font style and size
+        let labeltext = pieView.data
+        let attribute = NSUIFont(name: "HelveticaNeue", size: 15.0)
+        labeltext?.setValueFont(attribute!)
+    }
+    
+    // MARK: =======Set up table view=======
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return 3
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int{  // Default is 1 if not implemented
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as! TodayTableViewCell
+        self.view.bringSubviewToFront(cell.todayStep)
+        if(indexPath.row==0){
+            cell.todayStep.text = "Today's step: " + String(self.cell_todayStep)
+            
+            // make the text label above the image
+            cell.todayStep.layer.zPosition = 1
+            
+            // change the background color
+            cell.todayImage.backgroundColor = #colorLiteral(red: 1, green: 0.7861487269, blue: 0.8041584492, alpha: 1)
+            
+        }else if(indexPath.row==1){
+            cell.todayStep.text = "Yesterday's step: " + String(self.cell_yesterdayStep)
+            
+            // make the text label above the image
+            cell.todayStep.layer.zPosition = 1
+            
+            // change the background color
+            cell.todayImage.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+        }else if(indexPath.row==2){
+            cell.todayStep.text = "You are " + self.cell_state + " now"
+            
+            // make the text label above the image
+            cell.todayStep.layer.zPosition = 1
+            
+            // change the background color
+            switch(self.cell_state){
+            case "Walking":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+                break
+            case "Running":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+                break
+            case "Cycling":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                break
+            case "Unknown":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                break
+            case "Automotive":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 1, green: 0.08598016948, blue: 0, alpha: 1)
+                break
+            case "Stationary":
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+                break
+            default:
+                break
+            }
+            
+        }
+        return cell;
+    }
+    
+
+    let defaults = UserDefaults.standard
+    let activityManager = CMMotionActivityManager()
+    let pedometer = CMPedometer()
+    var stepGoal = UserDefaults.standard.float(forKey: "stepGoal")
+    var todayCount=0
+    var cell_yesterdayStep=0
+    var cell_todayStep=0
+    var cell_state: String = ""
+    
+    @IBOutlet weak var goalSlider: UISlider!
+    @IBOutlet weak var goalLabel: UILabel!
+    @IBOutlet weak var todayStepCounter: UILabel!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var yesterdayStepCounter: UILabel!
+    // MARK: ======UI Lifecycle Methods======
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.goalSlider.setValue(self.stepGoal, animated: true)
+        checkStep()
+        startActivityMonitoring()
+        if CMPedometer.isStepCountingAvailable() {
+            startCountingSteps()
+        }
+        setupPieChart()
+        
+    }
+    
+    // MARK: ======Motion Methods======
+    func startActivityMonitoring(){
+        if CMMotionActivityManager.isActivityAvailable(){
+            self.activityManager.startActivityUpdates(to: OperationQueue.main)
+            {(activity:CMMotionActivity?)->Void in
+                if let unwrappedActivity = activity {
+//                    print("%@",unwrappedActivity.description)
+                    if(unwrappedActivity.walking){
+                        self.cell_state = "Walking"
+                        self.label.text = "Walking"
+                    }
+                    else if(unwrappedActivity.running){
+                        self.cell_state = "Running"
+                        self.label.text = "Running"
+                    }
+                    else if(unwrappedActivity.cycling){
+                        self.cell_state = "Cycling"
+                        self.label.text = "Cycling"
+                    }
+                    else if(unwrappedActivity.automotive){
+                        self.cell_state = "Automotive"
+                        self.label.text = "Automotive"
+                    }
+                    else if(unwrappedActivity.stationary){
+                        self.cell_state = "Stationary"
+                        self.label.text = "Stationary"
+                    }
+                    else{
+                        self.cell_state = "Unknown"
+                        self.label.text = "Unknown"
+                    }
+                }
+            }
+        }
+    }
+
+    func checkStep(){
+        let date = Date();
+//        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+//        let newDate = cal.startOfDay(for: date)
+        if CMPedometer.isStepCountingAvailable() {
+            let calendar = Calendar.current
+            pedometer.queryPedometerData(from: calendar.startOfDay(for: Date()), to: Date()) { (data, error) in
+                DispatchQueue.main.async {
+                    var todayStep = "Today's Step: ";
+                    self.todayCount=(data?.numberOfSteps.intValue)!
+                    var stepNow = self.todayCount
+                    if(self.todayCount>Int(self.goalSlider.value)){
+                        stepNow = Int(self.goalSlider.value)
+                    }
+                    self.goalLabel.text = "\(stepNow)/\(Int(self.goalSlider.value))"
+                    todayStep += (data?.numberOfSteps.stringValue)!
+                    self.todayStepCounter.text=todayStep
+                    
+                    // display in the cell
+                    self.cell_todayStep = (data?.numberOfSteps.intValue)!
+                    
+                }
+            }
+            var dateComponents = DateComponents()
+            dateComponents.setValue(-1, for: .day) // -1 day
+            let yesterday = Calendar.current.date(byAdding: dateComponents, to: date)
+            
+            pedometer.queryPedometerData(from: calendar.startOfDay(for: yesterday!), to: calendar.startOfDay(for: Date())) { (data, error) in
+                DispatchQueue.main.async {
+                    var todayStep = "Yesterday's Step: ";
+                    todayStep += (data?.numberOfSteps.stringValue)!
+                    self.yesterdayStepCounter.text=todayStep
+                    
+                    // display in the cell
+                    self.cell_yesterdayStep = (data?.numberOfSteps.intValue)!
+                    self.tableView.reloadData()
+                    self.updateChart()
+                }
+            }
+        }
+        
+    }
+
+    func startCountingSteps() {
+        pedometer.startUpdates(from: Date()) {
+            [weak self] pedometerData, error in
+            guard let pedometerData = pedometerData, error == nil else { return }
+            
+            DispatchQueue.main.async {
+                var todayStep = "Today's Step: ";
+                let combineStep = pedometerData.numberOfSteps.intValue+self!.todayCount
+                todayStep += String(combineStep)
+                self?.todayStepCounter.text=todayStep
+                self?.goalLabel.text = "\(combineStep)/\(self!.stepGoal)"
+                print(pedometerData.numberOfSteps.stringValue)
+                
+                // display in the cell
+                self!.cell_todayStep = combineStep
+                
+                // reload table view data
+                self!.tableView.reloadData()
+                
+                // update the pie chart data
+                self!.updateChart()
+                
+            }
+        }
+    }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let currentValue = Int(sender.value)
+        var stepNow = self.todayCount
+        if(self.todayCount>currentValue){
+            stepNow = currentValue
+        }
+        goalLabel.text = "\(stepNow)/\(currentValue)"
+        defaults.set(currentValue, forKey: "stepGoal")
+        self.stepGoal=Float(currentValue)
+    }
+}
+
