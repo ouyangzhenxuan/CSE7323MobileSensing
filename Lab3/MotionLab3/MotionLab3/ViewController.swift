@@ -40,7 +40,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // get the step data
         todayStep_entry.value = Double(self.cell_todayStep)
-        goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
+//        goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
+        
+        if(Double(self.cell_todayStep) >= Double(self.stepGoal)){
+            goalStep_entry.value = 0.0
+        }else{
+            goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
+        }
+//        self.goalLabel.text = "\(self.cell_todayStep)" + "/" + "\(self.stepGoal)"
         goalStep_entry.label = "Remaining Goal"
         
         
@@ -301,8 +308,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if(self.todayCount < currentValue){
             updateChart()
+//        }
+        }else{
+            self.cell_todayStep = currentValue;
+            self.stepGoal = Float(currentValue);
+            updateChart();
         }
-        
+    
         
     }
 }
