@@ -143,11 +143,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             default:
                 break
             }
-//            let motionImage = UIImage(named: "running")
-//            cell.motionState.image = motionImage
-//            self.view.bringSubviewToFront(cell.motionState)
-//            cell.motionState.layer.zPosition = 1
-            
             
         }
         return cell;
@@ -181,6 +176,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             startCountingSteps()
         }
         setupPieChart()
+        
+//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sky.jpg")!)
         
     }
     
@@ -235,11 +232,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         stepNow = Int(self.goalSlider.value)
                     }
                     self.goalLabel.text = "\(stepNow)/\(Int(self.goalSlider.value))"
-//                    self.goalLabel.text = ""
                     
                     todayStep += (data?.numberOfSteps.stringValue)!
                     
-//                    self.todayStepCounter.text=todayStep
                     
                     // display in the cell
                     self.cell_todayStep = (data?.numberOfSteps.intValue)!
