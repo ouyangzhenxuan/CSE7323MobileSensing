@@ -282,6 +282,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self?.goalLabel.text = "\(combineStep)/\(self!.stepGoal)"
                 print(pedometerData.numberOfSteps.stringValue)
                 
+                NSLog("todayCount: \(self!.todayCount)");
+                
                 // display in the cell
                 self!.cell_todayStep = combineStep
                 
@@ -296,6 +298,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
+        
+        // reset the self.todayCount value
+        self.checkStep()
+        
         let currentValue = Int(sender.value)
         var stepNow = self.todayCount
         if(self.todayCount>currentValue){
