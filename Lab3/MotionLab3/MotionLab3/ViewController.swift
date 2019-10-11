@@ -4,7 +4,7 @@
 //
 //  Created by 梅沈潇 on 10/9/19.
 //  Copyright © 2019 梅沈潇. All rights reserved.
-//
+//  Lab3 Module A
 
 import UIKit
 import CoreMotion
@@ -68,23 +68,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: =======Set up table view=======
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        // return number of rows in each section
         return 3
     }
     
     func numberOfSections(in tableView: UITableView) -> Int{  // Default is 1 if not implemented
+        // return number of sections
         return 1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        // when a row is selected, make it unselected immediately
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        //Returns a reusable table-view cell object located by its identifier.
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as! TodayTableViewCell
+        
+        // bring the todayStep label above the background imageView
         self.view.bringSubviewToFront(cell.todayStep)
         
-//        cell.setSelected(false, animated: false)
-        
+        // set cell style for each row
         if(indexPath.row==0){
             cell.todayStep.text = "Today's step: " + String(self.cell_todayStep)
             
@@ -92,7 +97,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.todayStep.layer.zPosition = 1
             
             // change the background color
-            cell.todayImage.backgroundColor = #colorLiteral(red: 1, green: 0.7861487269, blue: 0.8041584492, alpha: 1)
+            cell.todayImage.backgroundColor = #colorLiteral(red: 0.5204460025, green: 0.8825983405, blue: 0.9786363244, alpha: 1)
             
         }else if(indexPath.row==1){
             cell.todayStep.text = "Yesterday's step: " + String(self.cell_yesterdayStep)
@@ -117,7 +122,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.todayImage.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
                 break
             case "Cycling":
-                cell.todayImage.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                cell.todayImage.backgroundColor = #colorLiteral(red: 0.9928941131, green: 0.5036882162, blue: 0.9914329648, alpha: 1)
                 break
             case "Unknown":
                 cell.todayImage.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
@@ -149,13 +154,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var todayCount=0
     var cell_yesterdayStep=0
     var cell_todayStep=0
-    var cell_state: String = ""
+    var cell_state: String! = ""
     
     @IBOutlet weak var goalSlider: UISlider!
     @IBOutlet weak var goalLabel: UILabel!
     @IBOutlet weak var todayStepCounter: UILabel!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var yesterdayStepCounter: UILabel!
+    
     // MARK: ======UI Lifecycle Methods======
     override func viewDidLoad() {
         super.viewDidLoad()
