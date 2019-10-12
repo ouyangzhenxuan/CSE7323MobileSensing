@@ -154,6 +154,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let pedometer = CMPedometer()
     var stepGoal = UserDefaults.standard.float(forKey: "stepGoal")
     var todayCount=0
+    var todayCombineCount=0
     var cell_yesterdayStep=0
     var cell_todayStep=0
     var cell_state: String! = ""
@@ -167,17 +168,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: ======UI Lifecycle Methods======
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
+        // initialize slider value
         self.goalSlider.setValue(self.stepGoal, animated: true)
+        
+        // initialize step data
         checkStep()
+        
+        // start monitoring activity
         startActivityMonitoring()
         if CMPedometer.isStepCountingAvailable() {
             startCountingSteps()
         }
-        setupPieChart()
         
-//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sky.jpg")!)
+        // initialize the chart
+        setupPieChart()
         
     }
     
@@ -187,30 +192,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.activityManager.startActivityUpdates(to: OperationQueue.main)
             {(activity:CMMotionActivity?)->Void in
                 if let unwrappedActivity = activity {
-//                    print("%@",unwrappedActivity.description)
                     if(unwrappedActivity.walking){
                         self.cell_state = "Walking"
-//                        self.label.text = "Walking"
                     }
                     else if(unwrappedActivity.running){
                         self.cell_state = "Running"
-//                        self.label.text = "Running"
                     }
                     else if(unwrappedActivity.cycling){
                         self.cell_state = "Cycling"
-//                        self.label.text = "Cycling"
                     }
                     else if(unwrappedActivity.automotive){
                         self.cell_state = "Automotive"
-//                        self.label.text = "Automotive"
                     }
                     else if(unwrappedActivity.stationary){
                         self.cell_state = "Stationary"
-//                        self.label.text = "Stationary"
                     }
                     else{
                         self.cell_state = "Unknown"
-//                        self.label.text = "Unknown"
                     }
                 }
             }
@@ -219,10 +217,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func checkStep(){
         let date = Date();
-//        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
-//        let newDate = cal.startOfDay(for: date)
         if CMPedometer.isStepCountingAvailable() {
             let calendar = Calendar.current
+            
+            // get step of today
             pedometer.queryPedometerData(from: calendar.startOfDay(for: Date()), to: Date()) { (data, error) in
                 DispatchQueue.main.async {
                     var todayStep = "Today's Step: ";
@@ -232,12 +230,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         stepNow = Int(self.goalSlider.value)
                     }
                     self.goalLabel.text = "\(stepNow)/\(Int(self.goalSlider.value))"
-                    
                     todayStep += (data?.numberOfSteps.stringValue)!
                     
-                    
-                    // display in the cell
+                    // update display variable of table view cell
                     self.cell_todayStep = (data?.numberOfSteps.intValue)!
+                    
+                    // update the combine count
+                    self.todayCombineCount = self.todayCount
                     
                 }
             }
@@ -245,16 +244,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             dateComponents.setValue(-1, for: .day) // -1 day
             let yesterday = Calendar.current.date(byAdding: dateComponents, to: date)
             
+            // get step of yesterday
             pedometer.queryPedometerData(from: calendar.startOfDay(for: yesterday!), to: calendar.startOfDay(for: Date())) { (data, error) in
                 DispatchQueue.main.async {
                     var todayStep = "Yesterday's Step: ";
                     todayStep += (data?.numberOfSteps.stringValue)!
                     
-//                    self.yesterdayStepCounter.text=todayStep
-                    
-                    // display in the cell
+                    // update tableview cell variable
                     self.cell_yesterdayStep = (data?.numberOfSteps.intValue)!
+                    
+                    // update tableview
                     self.tableView.reloadData()
+                    
+                    // update the chart
                     self.updateChart()
                 }
             }
@@ -268,16 +270,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             guard let pedometerData = pedometerData, error == nil else { return }
             
             DispatchQueue.main.async {
-                var todayStep = "Today's Step: ";
+                var todayStep = "Today's Step: "
+                
+                // get today step count
                 let combineStep = pedometerData.numberOfSteps.intValue+self!.todayCount
                 todayStep += String(combineStep)
                 
-//                self?.todayStepCounter.text=todayStep
-                
-                self?.goalLabel.text = "\(combineStep)/\(self!.stepGoal)"
+                // update goal label
+                self?.goalLabel.text = "\(combineStep)/\(Int(self!.stepGoal))"
                 print(pedometerData.numberOfSteps.stringValue)
                 
-                NSLog("todayCount: \(self!.todayCount)");
+                self?.todayCombineCount = combineStep
                 
                 // display in the cell
                 self!.cell_todayStep = combineStep
@@ -294,29 +297,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         
-        // reset the self.todayCount value
-        self.checkStep()
-        
         let currentValue = Int(sender.value)
-        var stepNow = self.todayCount
-        if(self.todayCount>currentValue){
+        var stepNow = self.todayCombineCount
+        NSLog("step Now/today count: \(stepNow)")
+        
+        // if we have reached the current goal, make them the same value
+        if(self.todayCombineCount>currentValue){
             stepNow = currentValue
+            self.cell_todayStep = currentValue;
+            self.stepGoal = Float(currentValue);
         }
-        goalLabel.text = "\(stepNow)/\(currentValue)"
         
         defaults.set(currentValue, forKey: "stepGoal")
         self.stepGoal=Float(currentValue)
         
-        if(self.todayCount < currentValue){
-            updateChart()
-//        }
-        }else{
-            self.cell_todayStep = currentValue;
-            self.stepGoal = Float(currentValue);
-            updateChart();
-        }
-    
-        
+        // update tableview
+        updateChart();
+        goalLabel.text = "\(stepNow)/\(currentValue)"
     }
 }
 

@@ -40,7 +40,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1000" minValue="1000" maxValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="fYV-hV-s2I">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="200" minValue="200" maxValue="5000" translatesAutoresizingMaskIntoConstraints="NO" id="fYV-hV-s2I">
                                 <rect key="frame" x="18" y="433" width="378" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="374" id="4T8-uF-S8T"/>
@@ -93,21 +93,10 @@
                                                         <constraint firstAttribute="height" constant="99" id="o4d-gE-7CS"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2cJ-59-nFy">
-                                                    <rect key="frame" x="254" y="10" width="100" height="93"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="93" id="T5d-th-tpm"/>
-                                                        <constraint firstAttribute="width" constant="100" id="dKt-Vn-m6h"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2cJ-59-nFy" firstAttribute="leading" secondItem="Kei-LZ-FdE" secondAttribute="leading" constant="254" id="2GG-lB-j5D"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Cq1-dD-ihz" secondAttribute="bottom" constant="34" id="7KO-jF-MdW"/>
                                                 <constraint firstAttribute="trailing" secondItem="0S1-Bi-ln7" secondAttribute="trailing" id="Cdp-00-YuV"/>
-                                                <constraint firstAttribute="trailing" secondItem="2cJ-59-nFy" secondAttribute="trailing" constant="20" id="E45-4d-vtL"/>
-                                                <constraint firstAttribute="bottom" secondItem="2cJ-59-nFy" secondAttribute="bottom" constant="10.5" id="LjB-7e-PCk"/>
-                                                <constraint firstItem="2cJ-59-nFy" firstAttribute="top" secondItem="Kei-LZ-FdE" secondAttribute="top" constant="10" id="g0l-EF-UUF"/>
                                                 <constraint firstItem="Cq1-dD-ihz" firstAttribute="leading" secondItem="Kei-LZ-FdE" secondAttribute="leadingMargin" constant="10" id="mu3-j9-dIV"/>
                                                 <constraint firstItem="0S1-Bi-ln7" firstAttribute="top" secondItem="Kei-LZ-FdE" secondAttribute="top" constant="7" id="nuZ-T4-a4S"/>
                                                 <constraint firstItem="Cq1-dD-ihz" firstAttribute="top" secondItem="Kei-LZ-FdE" secondAttribute="topMargin" constant="35" id="wYK-Pq-VNd"/>
@@ -115,7 +104,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="motionState" destination="2cJ-59-nFy" id="Llm-qz-wAU"/>
                                             <outlet property="todayImage" destination="0S1-Bi-ln7" id="teq-PS-Z4F"/>
                                             <outlet property="todayStep" destination="Cq1-dD-ihz" id="M59-Ya-5XL"/>
                                         </connections>
