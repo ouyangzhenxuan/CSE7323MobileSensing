@@ -170,6 +170,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         // initialize slider value
+//        print(self.goalSlider)
         self.goalSlider.setValue(self.stepGoal, animated: true)
         
         // initialize step data

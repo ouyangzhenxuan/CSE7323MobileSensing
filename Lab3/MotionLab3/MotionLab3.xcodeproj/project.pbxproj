@@ -15,6 +15,10 @@
 		16993AE4234E8368008A2F63 /* MotionLab3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16993AE3234E8368008A2F63 /* MotionLab3Tests.swift */; };
 		16993AEF234E8368008A2F63 /* MotionLab3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16993AEE234E8368008A2F63 /* MotionLab3UITests.swift */; };
 		30BEC3DB234F00F80085FBB2 /* TodayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BEC3DA234F00F80085FBB2 /* TodayTableViewCell.swift */; };
+		30D6298B2352882D00B10C17 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D629872352882D00B10C17 /* GameScene.swift */; };
+		30D6298C2352882D00B10C17 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D629882352882D00B10C17 /* GameViewController.swift */; };
+		30D6298D2352882D00B10C17 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 30D629892352882D00B10C17 /* GameScene.sks */; };
+		30D6298E2352882D00B10C17 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 30D6298A2352882D00B10C17 /* Actions.sks */; };
 		507134C7B4E1E38ABAC1E037 /* Pods_MotionLab3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527EEFFF9471FC2F9FEC945F /* Pods_MotionLab3.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +54,10 @@
 		16993AEE234E8368008A2F63 /* MotionLab3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionLab3UITests.swift; sourceTree = "<group>"; };
 		16993AF0234E8368008A2F63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30BEC3DA234F00F80085FBB2 /* TodayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTableViewCell.swift; sourceTree = "<group>"; };
+		30D629872352882D00B10C17 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		30D629882352882D00B10C17 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		30D629892352882D00B10C17 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		30D6298A2352882D00B10C17 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		527EEFFF9471FC2F9FEC945F /* Pods_MotionLab3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MotionLab3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90990A31580E70E979033DC4 /* Pods-MotionLab3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionLab3.debug.xcconfig"; path = "Target Support Files/Pods-MotionLab3/Pods-MotionLab3.debug.xcconfig"; sourceTree = "<group>"; };
 		B7D35161D79126D2AAACE74A /* Pods-MotionLab3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionLab3.release.xcconfig"; path = "Target Support Files/Pods-MotionLab3/Pods-MotionLab3.release.xcconfig"; sourceTree = "<group>"; };
@@ -106,6 +114,10 @@
 		16993ACD234E8365008A2F63 /* MotionLab3 */ = {
 			isa = PBXGroup;
 			children = (
+				30D6298A2352882D00B10C17 /* Actions.sks */,
+				30D629892352882D00B10C17 /* GameScene.sks */,
+				30D629872352882D00B10C17 /* GameScene.swift */,
+				30D629882352882D00B10C17 /* GameViewController.swift */,
 				16993ACE234E8365008A2F63 /* AppDelegate.swift */,
 				16993AD0234E8365008A2F63 /* ViewController.swift */,
 				16993AD2234E8365008A2F63 /* Main.storyboard */,
@@ -258,9 +270,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30D6298D2352882D00B10C17 /* GameScene.sks in Resources */,
 				16993AD9234E8368008A2F63 /* LaunchScreen.storyboard in Resources */,
 				16993AD6234E8368008A2F63 /* Assets.xcassets in Resources */,
 				16993AD4234E8365008A2F63 /* Main.storyboard in Resources */,
+				30D6298E2352882D00B10C17 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,8 +341,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30D6298C2352882D00B10C17 /* GameViewController.swift in Sources */,
 				16993AD1234E8365008A2F63 /* ViewController.swift in Sources */,
 				30BEC3DB234F00F80085FBB2 /* TodayTableViewCell.swift in Sources */,
+				30D6298B2352882D00B10C17 /* GameScene.swift in Sources */,
 				16993ACF234E8365008A2F63 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
