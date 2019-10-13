@@ -12,6 +12,8 @@ import GameplayKit
 
 class GameViewController: UIViewController, GameViewControllerDelegate {
     
+    var gameLifeCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,9 +25,12 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
                 
                 let gameScene = scene as! GameScene
                 gameScene.gameViewControllerDelegate = self
-                
+                gameScene.userData = NSMutableDictionary()
+                gameScene.userData?.setValue(self.gameLifeCount, forKey: "gameLifeCount")
                 // Present the scene
                 view.presentScene(scene)
+                
+                
             }
             
             view.ignoresSiblingOrder = true

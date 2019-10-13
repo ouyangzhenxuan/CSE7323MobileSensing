@@ -58,6 +58,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     override func didMove(to view: SKView) {
         
+        if let gameLifeCount = self.userData?.value(forKey: "gameLifeCount") {
+            print("gameLifeCount is :\(gameLifeCount)")
+        }
+        
         self.isLost=false
         physicsWorld.contactDelegate = self
         let background = SKSpriteNode(imageNamed: "sky.jpg")

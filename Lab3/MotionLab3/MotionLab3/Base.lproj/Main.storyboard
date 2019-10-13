@@ -141,7 +141,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="dTH-FI-W9D" kind="presentation" id="ypP-WN-Wk6"/>
+                                    <segue destination="dTH-FI-W9D" kind="presentation" identifier="gameSegue" id="ypP-WN-Wk6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -192,7 +192,7 @@
         <!--Game View Controller-->
         <scene sceneID="VrD-Et-pNK">
             <objects>
-                <viewController id="dTH-FI-W9D" customClass="GameViewController" customModule="HKBTCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dTH-FI-W9D" customClass="GameViewController" customModule="MotionLab3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="d7d-a9-Uyw" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

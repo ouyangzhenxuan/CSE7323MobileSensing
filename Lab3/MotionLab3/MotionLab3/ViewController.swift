@@ -316,5 +316,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         updateChart();
         goalLabel.text = "\(stepNow)/\(currentValue)"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "gameSegue"){
+            if let destinationVC = segue.destination as? GameViewController {
+                destinationVC.gameLifeCount = self.cell_todayStep / 100
+            }
+        }
+    }
 }
 
