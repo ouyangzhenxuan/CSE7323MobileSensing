@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addFinishButton(){
-        self.finishButton = self.childNode(withName: "minion") as? SKSpriteNode
+        self.finishButton = self.childNode(withName: "finishBtn") as? SKSpriteNode
         self.finishButton?.isHidden = false
         NSLog("add finish button")
         self.finishButton?.zPosition=1
@@ -185,7 +185,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             n.position = pos
             n.strokeColor = SKColor.green
             self.addChild(n)
-            NSLog("in touch down")
         }
     }
     
@@ -226,7 +225,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let location = t.location(in: self)
             
-            if(self.atPoint(location).name == "minion"){
+            if(self.atPoint(location).name == "finishBtn"){
                 gameViewControllerDelegate?.finishGame(inputProperty: "call game view controller method")
             }
         }
