@@ -588,4 +588,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
+    
+    override func willMove(from view: SKView) {
+        SKTAudio.sharedInstance().pauseBackgroundMusic() // Pause the music
+    }
 }
