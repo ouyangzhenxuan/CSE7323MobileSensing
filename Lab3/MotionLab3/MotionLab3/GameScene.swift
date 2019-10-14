@@ -210,7 +210,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if(self.isLost!){
             addChild((self.jetNode)!)
-            self.finishButton?.removeFromParent()
+//            self.finishButton?.removeFromParent()
             self.jetNode?.isHidden=false
             self.label?.text="STAR WAR"
             self.jetNode?.physicsBody?.isDynamic=true
@@ -218,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.score=0
             self.scoreBoard?.text="Your Score is: \(self.score)"
 //            self.scoreBoard?.isHidden=false
-            addChild(self.finishButton!)
+//            addChild(self.finishButton!)
         }
         for t in touches {
             self.touchDown(atPoint: t.location(in: self))
