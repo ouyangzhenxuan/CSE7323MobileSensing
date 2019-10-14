@@ -1,0 +1,6 @@
+framework module Pods_HKBTCN_HKBTCNUITests {
+  umbrella header "Pods-HKBTCN-HKBTCNUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
