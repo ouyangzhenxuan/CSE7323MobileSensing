@@ -17,6 +17,10 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // First set the orientation back to portrait
+        let portrait_orientation = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(portrait_orientation, forKey: "orientation")
+        
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
@@ -58,7 +62,6 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     
     // finish the game modal and return to ViewController
     func finishGame(inputProperty:String) {
-        print("inputProperty is: ",inputProperty)
         self.dismiss(animated: true, completion: nil)
         if let view = self.view as! SKView? {
             view.presentScene(nil);

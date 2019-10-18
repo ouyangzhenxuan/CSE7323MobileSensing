@@ -158,9 +158,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var goalSlider: UISlider!
     @IBOutlet weak var goalLabel: UILabel!
-    @IBOutlet weak var todayStepCounter: UILabel!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var yesterdayStepCounter: UILabel!
+//    @IBOutlet weak var todayStepCounter: UILabel!
+//    @IBOutlet weak var label: UILabel!
+//    @IBOutlet weak var yesterdayStepCounter: UILabel!
     
     // MARK: ======UI Lifecycle Methods======
     override func viewDidLoad() {
