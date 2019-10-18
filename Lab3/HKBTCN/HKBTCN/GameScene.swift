@@ -16,32 +16,30 @@ protocol GameViewControllerDelegate: class {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var gameViewControllerDelegate:GameViewControllerDelegate?
+    
     private var label : SKLabelNode?
     private var hp: SKLabelNode?
     private var scoreBoard: SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     private var hpIcon: SKSpriteNode?
     private var jetNode: SKSpriteNode?
     private var bossNode: SKSpriteNode?
     private var bulletNode: SKSpriteNode?
     private var boss1Node: SKSpriteNode?
     private var bbulletNode:SKSpriteNode?
-    
     private var finishButton: SKSpriteNode?
-    
     private var isLost: Bool?
-    
-    var gameViewControllerDelegate:GameViewControllerDelegate?
-    
-    var bossX: CGFloat = 0.0
-    var bossY: CGFloat = 0.0
-    var bossNumber = 0
-    var bossHP = 30
-    var score = 0
-    var jet_hp = 0
-    var physic:SKPhysicsBody?
+    private var bossX: CGFloat = 0.0
+    private var bossY: CGFloat = 0.0
+    private var bossNumber = 0
+    private var bossHP = 30
+    private var score = 0
+    private var jet_hp = 0
+    private var physic:SKPhysicsBody?
     private var isBoss: Bool?
+    
     let motion = CMMotionManager()
+    
     func startMotionUpdates(){
         // some internal inconsistency here: we need to ask the device manager for device
         
@@ -69,13 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func playBgm(){
-        // For background audio (playing continuously)
-        SKTAudio.sharedInstance().playBackgroundMusic("game_music.mp3") // Start the music
-        //        SKTAudio.sharedInstance().pauseBackgroundMusic() // Pause the music
-        //        SKTAudio.sharedInstance().resumeBackgroundMusic() // Resume the music
-        
-        // For short sounds
-        //        SKTAudio.sharedInstance().playSoundEffect("sound.wav") // Play the sound once
+        SKTAudio.sharedInstance().playBackgroundMusic("game_music.mp3")
     }
     
     func stopBgm(){
@@ -114,14 +106,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        
         physicsWorld.contactDelegate = self
         let background = SKSpriteNode(imageNamed: "sky.jpg")
         background.zPosition=0
-//        background.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(background)
-        physicsWorld.gravity = .zero
         self.startMotionUpdates()
+        
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         self.scoreBoard = self.childNode(withName: "//scoreLabel") as? SKLabelNode
@@ -190,21 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.bossX = (self.boss1Node?.position.x)!
         self.bossY = (self.boss1Node?.position.y)!
-        setGame()
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
+        setGame()    }
     
     func addFinishButton(){
         self.finishButton = self.childNode(withName: "finishBtn") as? SKSpriteNode
@@ -255,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addEnemy(){
-        if(self.score >= 2) {
+        if(self.score >= 30) {
             if(self.bossNumber == 0){
                 self.bossNumber = 1
                 self.isBoss = true
@@ -277,9 +253,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.addChild(n)
             }
         }
-        
-        // Add the monster to the scene
-//        addChild(enemy)
     }
     func addBoss(){
         if (!self.isLost!){
@@ -309,39 +282,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
     }
-
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let label = self.label {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
-        
-//        self.finishButton?.removeFromParent()
-        
         if(self.bossNumber == -1){
             if(self.childNode(withName: "jet") == nil){
             addChild((self.jetNode)!)
@@ -372,30 +317,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.removeAction(forKey: "stopB")
                 setGame()
             }
-//            self.scoreBoard?.isHidden=false
-            
         }
-//        addChild(self.finishButton!)
         for t in touches {
-            self.touchDown(atPoint: t.location(in: self))
             let location = t.location(in: self)
             
             if(self.atPoint(location).name == "finishBtn"){
                 gameViewControllerDelegate?.finishGame(inputProperty: "call game view controller method")
             }
         }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     
@@ -429,8 +358,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.isLost=true
             SKTAudio.sharedInstance().playSoundEffect("game_over.mp3")
             stopBgm()
-//            self.scoreBoard?.isHidden=true
-            //        SKAction.stop()
         }
     }
     
@@ -452,7 +379,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.removeFromParent()
             self.score+=1
             self.scoreBoard?.text="Your Score is: \(self.score)"
-            //        SKAction.stop()
         }
     }
     func hitBoss(bullet: SKSpriteNode, boss: SKSpriteNode) {
@@ -476,6 +402,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             SKTAudio.sharedInstance().playSoundEffect("enemy1_down.mp3")
             }
     }
+    
     func bossDefeat(bullet: SKSpriteNode,boss: SKSpriteNode){
         SKTAudio.sharedInstance().playSoundEffect("enemy3_down.mp3")
         let x = boss.position.x
@@ -510,11 +437,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-//        print("contact")
         if contact.bodyA.node?.name == "jet"{
             if contact.bodyB.node?.name == "boss"
             {
                 crash(jet: contact.bodyA.node as! SKSpriteNode, enemy: contact.bodyB.node as! SKSpriteNode)
+            }
+        }
+        if contact.bodyB.node?.name == "jet"{
+            if contact.bodyA.node?.name == "boss"
+            {
+                crash(jet: contact.bodyB.node as! SKSpriteNode, enemy: contact.bodyA.node as! SKSpriteNode)
             }
         }
         if contact.bodyA.node?.name == "bullet"{
@@ -567,18 +499,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 contact.bodyB.node?.removeFromParent()
             }
         }
-        if contact.bodyA.node?.name == "bullet"{
-            if contact.bodyB.node?.name == "boss1"
-            {
-                contact.bodyA.node?.removeFromParent()
-            }
-        }
-        if contact.bodyB.node?.name == "bullet"{
-            if contact.bodyA.node?.name == "boss1"
-            {
-                contact.bodyB.node?.removeFromParent()
-            }
-        }
+
     }
     
     func random() -> CGFloat {

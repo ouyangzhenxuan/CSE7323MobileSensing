@@ -26,12 +26,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         pieView.chartDescription?.enabled = false
         pieView.drawHoleEnabled = false
         pieView.rotationAngle = 0
-//        pieView.rotationEnabled = true
         pieView.isUserInteractionEnabled = true
         pieView.legend.enabled = false
         todayStep_entry.label = "Today's Step"
         goalStep_entry.label = "Step Goal"
-        
+    
         // update data in the chart
         updateChart()
     }
@@ -40,14 +39,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // get the step data
         todayStep_entry.value = Double(self.cell_todayStep)
-//        goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
         
         if(Double(self.cell_todayStep) >= Double(self.stepGoal)){
             goalStep_entry.value = 0.0
         }else{
             goalStep_entry.value = Double(self.stepGoal) - Double(self.cell_todayStep)
         }
-//        self.goalLabel.text = "\(self.cell_todayStep)" + "/" + "\(self.stepGoal)"
         goalStep_entry.label = "Remaining Goal"
         
         
