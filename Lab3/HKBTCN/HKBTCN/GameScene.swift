@@ -23,10 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var scoreBoard: SKLabelNode?
     private var hpIcon: SKSpriteNode?
     private var jetNode: SKSpriteNode?
-    private var bossNode: SKSpriteNode?
+    private var minionNode: SKSpriteNode?
     private var bulletNode: SKSpriteNode?
-    private var boss1Node: SKSpriteNode?
-    private var bbulletNode:SKSpriteNode?
+    private var bossNode: SKSpriteNode?
+    private var bossbulletNode:SKSpriteNode?
     private var finishButton: SKSpriteNode?
     private var isLost: Bool?
     private var bossX: CGFloat = 0.0
@@ -37,6 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var jet_hp = 0
     private var physic:SKPhysicsBody?
     private var isBoss: Bool?
+    private var powerUp:Bool?
     
     let motion = CMMotionManager()
     
@@ -85,8 +86,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.jet_hp = 5
         
         if let gameLifeCount = self.userData?.value(forKey: "gameLifeCount") {
-            print("gameLifeCount is :\(gameLifeCount)")
             self.jet_hp = gameLifeCount as! Int
+        }
+        if let isPowerUp = self.userData?.value(forKey: "powerUp"){
+            self.powerUp = isPowerUp as? Bool
         }
         
         self.bossHP = 30
@@ -95,14 +98,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hp?.text = "X\(self.jet_hp)"
         self.scoreBoard?.text="Your Score is: \(self.score)"
         self.label?.text="STAR WAR"
-        self.boss1Node?.physicsBody = nil
-        self.boss1Node?.zPosition=1
-        self.boss1Node?.isHidden=true
-        self.boss1Node?.physicsBody?.isDynamic=false
+        self.bossNode?.physicsBody = nil
+        self.bossNode?.zPosition=1
+        self.bossNode?.isHidden=true
+        self.bossNode?.physicsBody?.isDynamic=false
         let rotateAction = SKAction.rotate(toAngle:0, duration: 0)
         let actionMove = SKAction.move(to: CGPoint(x: (self.bossX), y: (self.bossY)),
                                        duration: TimeInterval(0))
-        self.boss1Node?.run(SKAction.sequence([actionMove,rotateAction]))
+        self.bossNode?.run(SKAction.sequence([actionMove,rotateAction]))
     }
     
     override func didMove(to view: SKView) {
@@ -116,26 +119,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         self.scoreBoard = self.childNode(withName: "//scoreLabel") as? SKLabelNode
         self.hp = self.childNode(withName: "//hpLabel") as? SKLabelNode
-        self.bossNode = self.childNode(withName: "boss") as? SKSpriteNode
+        self.minionNode = self.childNode(withName: "boss") as? SKSpriteNode
         self.bulletNode = self.childNode(withName: "bullet") as? SKSpriteNode
         self.hpIcon = self.childNode(withName: "hp1") as? SKSpriteNode
-        self.bbulletNode = self.childNode(withName: "bbullet") as? SKSpriteNode
-        self.bulletNode?.zPosition=1
-        self.bulletNode?.isHidden=true
-        self.bulletNode?.physicsBody?.isDynamic=false
-        self.bbulletNode?.zPosition=1
-        self.bbulletNode?.isHidden=true
-        self.bbulletNode?.physicsBody?.isDynamic=false
-        //        self.bossNode = self.childNode(withName: "bullet") as? SKSpriteNode
-        self.bossNode?.zPosition=1
-        self.bossNode?.isHidden=true
-        self.bossNode?.physicsBody?.isDynamic=false
-        self.hpIcon?.zPosition=1
-        self.hpIcon?.isHidden=false
-        self.hpIcon?.physicsBody?.isDynamic=false
-        self.boss1Node = self.childNode(withName: "boss1") as? SKSpriteNode
-        self.physic = self.boss1Node?.physicsBody
+        self.bossbulletNode = self.childNode(withName: "bbullet") as? SKSpriteNode
+        self.bossNode = self.childNode(withName: "boss1") as? SKSpriteNode
+        self.physic = self.bossNode?.physicsBody
+        
+//        self.bulletNode?.zPosition=1
+//        self.bulletNode?.isHidden=true
+//        self.bulletNode?.physicsBody?.isDynamic=false
+//        self.bossbulletNode?.zPosition=1
+//        self.bossbulletNode?.isHidden=true
+//        self.bossbulletNode?.physicsBody?.isDynamic=false
+//        self.minionNode?.zPosition=1
+//        self.minionNode?.isHidden=true
+//        self.minionNode?.physicsBody?.isDynamic=false
+//        self.hpIcon?.zPosition=1
+//        self.hpIcon?.isHidden=false
+//        self.hpIcon?.physicsBody?.isDynamic=false
+        
+        
         addJet()
+        
         
         // add the return button
         addFinishButton()
@@ -154,6 +160,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ])
         ))
     
+        
+        if let label = self.bulletNode {
+            label.zPosition=1
+            label.isHidden=true
+            label.physicsBody?.isDynamic=false
+        }
+        
+        if let label = self.bossbulletNode {
+            label.zPosition=1
+            label.isHidden=true
+            label.physicsBody?.isDynamic=false
+        }
+        
+        if let label = self.minionNode {
+            label.zPosition=1
+            label.isHidden=true
+            label.physicsBody?.isDynamic=false
+        }
+        
+        if let label = self.hpIcon {
+            label.zPosition=1
+            label.isHidden=true
+            label.physicsBody?.isDynamic=false
+        }
+        
+        ////////////////////
         
         if let label = self.label {
             label.alpha = 0.0
@@ -178,9 +210,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             label.text="Your Score is: \(score)"
         }
         
-        self.bossX = (self.boss1Node?.position.x)!
-        self.bossY = (self.boss1Node?.position.y)!
-        setGame()    }
+        self.bossX = (self.bossNode?.position.x)!
+        self.bossY = (self.bossNode?.position.y)!
+        setGame()
+        
+    }
     
     func addFinishButton(){
         self.finishButton = self.childNode(withName: "finishBtn") as? SKSpriteNode
@@ -194,33 +228,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.jetNode?.zPosition=1
     }
     
+//    func addBullet(){
+//        if (!self.isLost!){
+//            if let n = self.bulletNode?.copy() as! SKSpriteNode? {
+//                n.isHidden=false
+//                n.physicsBody?.isDynamic=true
+//                n.position.x=(self.jetNode?.position.x)!
+//                let actualDuration = CGFloat(1.0)
+//
+//                // Create the actions
+//                let actionMove = SKAction.move(to: CGPoint(x: n.position.x, y: size.height),
+//                                               duration: TimeInterval(actualDuration))
+//                let actionMoveDone = SKAction.removeFromParent()
+//                n.run(SKAction.sequence([actionMove, actionMoveDone]))
+//                self.addChild(n)
+//            }
+//        }
+//    }
+    
     func addBullet(){
         if (!self.isLost!){
-            if let n = self.bulletNode?.copy() as! SKSpriteNode? {
-                n.isHidden=false
-                n.physicsBody?.isDynamic=true
-                n.position.x=(self.jetNode?.position.x)!
-                let actualDuration = CGFloat(1.0)
-
-                // Create the actions
-                let actionMove = SKAction.move(to: CGPoint(x: n.position.x, y: size.height),
-                                               duration: TimeInterval(actualDuration))
-                let actionMoveDone = SKAction.removeFromParent()
-                n.run(SKAction.sequence([actionMove, actionMoveDone]))
-                self.addChild(n)
+            if(self.powerUp!){
+                if let n = self.bulletNode?.copy() as! SKSpriteNode? {
+                    n.isHidden=false
+                    n.physicsBody?.isDynamic=true
+                    n.position.x=(self.jetNode?.position.x)! - 10
+                    let actualDuration = CGFloat(1.0)
+                    
+                    // Create the actions
+                    let actionMove = SKAction.move(to: CGPoint(x: n.position.x, y: size.height),
+                                                   duration: TimeInterval(actualDuration))
+                    let actionMoveDone = SKAction.removeFromParent()
+                    n.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    self.addChild(n)
+                }
+                if let m = self.bulletNode?.copy() as! SKSpriteNode? {
+                    m.isHidden=false
+                    m.physicsBody?.isDynamic=true
+                    m.position.x=(self.jetNode?.position.x)! + 10
+                    let actualDuration = CGFloat(1.0)
+                    
+                    // Create the actions
+                    let actionMove = SKAction.move(to: CGPoint(x: m.position.x, y: size.height),
+                                                   duration: TimeInterval(actualDuration))
+                    let actionMoveDone = SKAction.removeFromParent()
+                    m.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    self.addChild(m)
+                }
+            }
+            else{
+                if let n = self.bulletNode?.copy() as! SKSpriteNode? {
+                    n.isHidden=false
+                    n.physicsBody?.isDynamic=true
+                    n.position.x=(self.jetNode?.position.x)!
+                    let actualDuration = CGFloat(1.0)
+                    
+                    // Create the actions
+                    let actionMove = SKAction.move(to: CGPoint(x: n.position.x, y: size.height),
+                                                   duration: TimeInterval(actualDuration))
+                    let actionMoveDone = SKAction.removeFromParent()
+                    n.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    self.addChild(n)
+                }
             }
         }
     }
-    func addBBullet(){
+    
+    func addBossBullet(){
         if (!self.isLost! && self.isBoss!){
-            if let n = self.bbulletNode?.copy() as! SKSpriteNode? {
+            if let n = self.bossbulletNode?.copy() as! SKSpriteNode? {
                 n.isHidden=false
                 n.physicsBody?.isDynamic=true
-                n.position.x=(self.boss1Node?.position.x)!
-                n.position.y=(self.boss1Node?.position.y)!
+                n.position.x=(self.bossNode?.position.x)!
+                n.position.y=(self.bossNode?.position.y)!
                 let actualDuration = CGFloat(1.0)
                 // Create the actions
-                let actionMove = SKAction.move(to: CGPoint(x: tan(self.boss1Node!.zRotation)*size.height, y: -size.height),
+                let actionMove = SKAction.move(to: CGPoint(x: tan(self.bossNode!.zRotation)*size.height, y: -size.height),
                                                duration: TimeInterval(actualDuration))
                 let actionMoveDone = SKAction.removeFromParent()
                 n.run(SKAction.sequence([actionMove, actionMoveDone]))
@@ -231,7 +314,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addEnemy(){
-        if(self.score >= 30) {
+        if(self.score >= 3) {
             if(self.bossNumber == 0){
                 self.bossNumber = 1
                 self.isBoss = true
@@ -239,8 +322,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if (!self.isLost! && !self.isBoss!){
-            if let n = self.bossNode?.copy() as! SKSpriteNode? {
-                n.position.x=random(min: CGFloat((self.bossNode?.size.width)!/2-size.width/2), max: CGFloat(size.width/2-(self.bossNode?.size.width)!/2))
+            if let n = self.minionNode?.copy() as! SKSpriteNode? {
+                n.position.x=random(min: CGFloat((self.minionNode?.size.width)!/2-size.width/2), max: CGFloat(size.width/2-(self.minionNode?.size.width)!/2))
                 n.isHidden=false
                 n.physicsBody?.isDynamic=true
                 let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
@@ -256,29 +339,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func addBoss(){
         if (!self.isLost!){
-            self.boss1Node?.position.x = CGFloat(self.bossX)
-            self.boss1Node?.position.y = CGFloat(self.bossY)
-            self.boss1Node?.isHidden = false
-            self.boss1Node?.physicsBody?.isDynamic = true
+            self.bossNode?.position.x = CGFloat(self.bossX)
+            self.bossNode?.position.y = CGFloat(self.bossY)
+            self.bossNode?.isHidden = false
+            self.bossNode?.physicsBody?.isDynamic = true
             
             let actualDuration = CGFloat(1.5)
             
-            let actionMove = SKAction.move(to: CGPoint(x: ((self.boss1Node?.position.x)!), y: ((self.boss1Node?.position.y)!)-418),
+            let actionMove = SKAction.move(to: CGPoint(x: ((self.bossNode?.position.x)!), y: ((self.bossNode?.position.y)!)-418),
                                            duration: TimeInterval(actualDuration))
             let rotateAction = SKAction.rotate(toAngle: .pi / 4, duration: 2)
             let rotateAction2 = SKAction.rotate(toAngle: -.pi / 4, duration: 2)
             let repeatRotation = SKAction.repeatForever(SKAction.sequence([ rotateAction,rotateAction2]))
             run(SKAction.repeatForever(
                 SKAction.sequence([
-                    SKAction.run(addBBullet),
+                    SKAction.run(addBossBullet),
                     SKAction.wait(forDuration: 0.4)
                     ])
             ),withKey: "stopB")
             let addbody = SKAction.run {
-                self.boss1Node?.physicsBody = self.physic
+                self.bossNode?.physicsBody = self.physic
             }
-            self.bossNode?.zPosition = 2
-            self.boss1Node?.run(SKAction.sequence([actionMove,addbody,repeatRotation]),withKey:"stopR")
+            self.minionNode?.zPosition = 2
+            self.bossNode?.run(SKAction.sequence([actionMove,addbody,repeatRotation]),withKey:"stopR")
             
         }
     }
@@ -293,7 +376,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.jetNode?.isHidden=false
             self.jetNode?.physicsBody?.isDynamic=true
             }
-            self.boss1Node?.removeAction(forKey: "stopR")
+            self.bossNode?.removeAction(forKey: "stopR")
             self.removeAction(forKey: "stopB")
             setGame()
         }
@@ -313,7 +396,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.jetNode?.isHidden=false
                 self.jetNode?.physicsBody?.isDynamic=true
                 
-                self.boss1Node?.removeAction(forKey: "stopR")
+                self.bossNode?.removeAction(forKey: "stopR")
                 self.removeAction(forKey: "stopB")
                 setGame()
             }

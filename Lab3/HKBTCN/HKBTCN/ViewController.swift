@@ -168,6 +168,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // initialize slider value
 //        print(self.goalSlider)
+        self.cell_state = "Walking"
         self.goalSlider.setValue(self.stepGoal, animated: true)
         
         // initialize step data
@@ -314,10 +315,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         goalLabel.text = "\(stepNow)/\(currentValue)"
     }
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if (segue.identifier == "gameSegue"){
+//            if let destinationVC = segue.destination as? GameViewController {
+//                destinationVC.gameLifeCount = 5 + self.cell_todayStep / 1000
+//            }
+//        }
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "gameSegue"){
             if let destinationVC = segue.destination as? GameViewController {
-                destinationVC.gameLifeCount = self.cell_todayStep / 100
+                destinationVC.gameLifeCount = 5 + self.cell_todayStep / 1000
+                if(self.cell_todayStep>1500){
+                    destinationVC.isPowerUp = true
+                }
             }
         }
     }

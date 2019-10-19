@@ -13,6 +13,7 @@ import GameplayKit
 class GameViewController: UIViewController, GameViewControllerDelegate {
 
     var gameLifeCount = 0
+    var isPowerUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
                 gameScene.gameViewControllerDelegate = self
                 gameScene.userData = NSMutableDictionary()
                 gameScene.userData?.setValue(self.gameLifeCount, forKey: "gameLifeCount")
-                
+                gameScene.userData?.setValue(self.isPowerUp, forKey: "powerUp")
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -45,7 +46,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     }
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -62,6 +63,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     
     // finish the game modal and return to ViewController
     func finishGame(inputProperty:String) {
+        print("inputProperty is: ",inputProperty)
         self.dismiss(animated: true, completion: nil)
         if let view = self.view as! SKView? {
             view.presentScene(nil);
