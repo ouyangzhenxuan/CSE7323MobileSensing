@@ -56,8 +56,6 @@ class FaceViewController: UIViewController   {
         filterPinch.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
         filterPinch.setValue(10, forKey: "inputRadius")
         
-        
-        
         faceFilters.append(filterPinch)
         
     }
@@ -71,11 +69,10 @@ class FaceViewController: UIViewController   {
         var mouthCenter = CGPoint()
         
         self.bridge.setImage(retImage, withBounds: retImage.extent, andContext: self.videoManager.getCIContext())
+        self.bridge.setTransforms(self.videoManager.transform)
         //        print(features.count)
         for f in features {
             //set where to apply filter
-            
-            
             filterCenter.x = f.bounds.midX
             filterCenter.y = f.bounds.midY
             var stringList = [String]()
@@ -98,13 +95,25 @@ class FaceViewController: UIViewController   {
 
 //            self.bridge.display(displayString, withCenter: filterCenter)
             
-            var i = 0
-            for str in stringList{
-                self.bridge.display(str, withCenter: CGPoint.init(x: filterCenter.x + CGFloat(i*40), y: filterCenter.y + CGFloat(i*5)))
-                i += 1
+            
+            if UIDevice.current.orientation.isLandscape {
+                var i = 0
+                for str in stringList{
+                    self.bridge.display(str, withCenter: CGPoint.init(x: filterCenter.y + CGFloat(i*40),y: filterCenter.x + CGFloat(i*5)))
+                    i += 1
+                }
+            } else {
+                var i = 0
+                for str in stringList{
+                    self.bridge.display(str, withCenter: CGPoint.init(x: filterCenter.x + CGFloat(i*40), y: filterCenter.y + CGFloat(i*5)))
+                    i += 1
+                }
             }
         }
-        retImage = self.bridge.getImage()
+        
+        if let img = self.bridge.getImage() {
+            retImage = img
+        }
         
         for f in features {
             filterCenter.x = f.bounds.midX
@@ -152,6 +161,7 @@ class FaceViewController: UIViewController   {
                 retImage = mouthFilter.outputImage!
             }
         }
+        
         return retImage
     }
     
@@ -195,6 +205,11 @@ class FaceViewController: UIViewController   {
         return applyFiltersToFaces(inputImage: inputImage, features: f)
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.bridge.setTransforms(self.videoManager.transform)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         self.videoManager.stop()
     }
@@ -207,139 +222,3 @@ class FaceViewController: UIViewController   {
     
 }
 
-
-
-////
-////  ViewController.swift
-////  ImageLab
-////
-////  Created by Eric Larson
-////  Copyright © 2016 Eric Larson. All rights reserved.
-////
-//
-//import UIKit
-//import AVFoundation
-//
-//class ViewController: UIViewController   {
-//
-//    //MARK: Class Properties
-//    var filters : [CIFilter]! = nil
-//    var videoManager:VideoAnalgesic! = nil
-//    let pinchFilterIndex = 2
-//    var detector:CIDetector! = nil
-//
-//    //MARK: ViewController Hierarchy
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        self.view.backgroundColor = nil
-//        self.setupFilters()
-//
-//        self.videoManager = VideoAnalgesic.sharedInstance
-//        self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
-//
-//        // create dictionary for face detection
-//        // HINT: you need to manipulate these proerties for better face detection efficiency
-//        let optsDetector = [CIDetectorAccuracy:CIDetectorAccuracyLow, CIDetectorTracking:true] as [String : Any]
-//
-//        // setup a face detector in swift
-//        self.detector = CIDetector(ofType: CIDetectorTypeFace,
-//                                  context: self.videoManager.getCIContext(), // perform on the GPU is possible
-//            options: (optsDetector as [String : AnyObject]))
-//
-//        self.videoManager.setProcessingBlock(newProcessBlock: self.processImage)
-//
-//        if !videoManager.isRunning{
-//            videoManager.start()
-//        }
-//
-//    }
-//
-//    //MARK: Setup filtering
-//    func setupFilters(){
-//        filters = []
-//
-////        let filterPinch = CIFilter(name:"CIBumpDistortion")!
-//        let filterPinch = CIFilter(name: "CIBumpDistortion")!
-//
-//
-////        filterPinch.setValue(-0.5, forKey: "inputScale")
-//        filterPinch.setValue(CGVector.init(dx: 50, dy: 50), forKey: "inputCenter")
-//        filterPinch.setValue(50, forKey: "inputRadius")
-//
-////        filterPinch.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-//        filters.append(filterPinch)
-//
-//        let filterPinch2 = CIFilter(name:"CICircleSplashDistortion")!
-//        filterPinch.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-//        filterPinch2.setValue(75, forKey: "inputRadius")
-////        filters.append(filterPinch2)
-//
-//
-//
-//    }
-//
-//    //MARK: Apply filters and apply feature detectors
-//    func applyFiltersToFaces(inputImage:CIImage,features:[CIFaceFeature])->CIImage{
-//        var retImage = inputImage
-//        var filterCenter = CGPoint()
-//        var lefteyeCenter = CGPoint()
-//        var righteyeCenter = CGPoint()
-//
-//        for f in features {
-//            //set where to apply filter
-//
-//
-//            filterCenter.x = f.bounds.midX
-//            filterCenter.y = f.bounds.midY
-//            lefteyeCenter = f.leftEyePosition
-//            righteyeCenter = f.rightEyePosition
-//
-////            let combinedFilter = CIFilter(name: "CISourceOverCompositing")!
-////            combinedFilter.setValue(retImage, forKey: "inputImage")
-////            combinedFilter.setValue(inputImageB, forKey: "inputBackgroundImage")
-////            retImage = combinedFilter.outputImage!
-////            inputImage.cropped(to: f.bounds)
-//
-//            //do for each filter (assumes all filters have property, "inputCenter")
-//            for filt in filters{
-//                print(f.leftEyePosition)
-//                filt.setValue(retImage, forKey: kCIInputImageKey)
-//                filt.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
-//                // could also manipulate the radius of the filter based on face size!
-//                filt.setValue(f.bounds.size.width * f.bounds.size.height / 150, forKey: "inputRadius")
-//
-////                if(filt.name = )
-//
-//                retImage = filt.outputImage!
-//            }
-//        }
-//        return retImage
-//    }
-//
-//    func getFaces(img:CIImage) -> [CIFaceFeature]{
-//        // this ungodly mess makes sure the image is the correct orientation
-//        let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation]
-//        // get Face Features
-//        return self.detector.features(in: img, options: optsFace) as! [CIFaceFeature]
-//
-//    }
-//
-//    //MARK: Process image output
-//    func processImage(inputImage:CIImage) -> CIImage{
-//
-//        // detect faces
-//        let f = getFaces(img: inputImage)
-//
-//        // if no faces, just return original image
-//        if f.count == 0 { return inputImage }
-//
-//        //otherwise apply the filters to the faces
-//        return applyFiltersToFaces(inputImage: inputImage, features: f)
-//    }
-//
-//
-//
-//
-//}
-//

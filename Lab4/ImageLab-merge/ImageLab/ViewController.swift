@@ -167,6 +167,7 @@ class ViewController: UIViewController   {
         // use this code if you are using OpenCV and want to overwrite the displayed image via OpenCv
         // this is a BLOCKING CALL
         self.bridge.setImage(retImage, withBounds: retImage.extent, andContext: self.videoManager.getCIContext())
+        self.bridge.setTransforms(self.videoManager.transform)
         
         let pF=self.bridge.processFinger()
         

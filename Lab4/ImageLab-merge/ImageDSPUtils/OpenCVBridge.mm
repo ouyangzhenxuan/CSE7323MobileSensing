@@ -40,7 +40,6 @@ NSDate *start = [NSDate date];
     
     
     
-    
     switch (self.processType) {
         case 1:
         {
@@ -281,7 +280,7 @@ NSDate *start = [NSDate date];
     withCenter: (CGPoint)center{
 
     const char *c = [text UTF8String];
-    cv::putText(_image, c, cv::Point(center.y*0.6,center.x*0.6), FONT_HERSHEY_SIMPLEX, 0.7, Scalar::all(255), 2, 2);
+    cv::putText(_image, c, cv::Point(center.y*0.8,center.x*0.6), FONT_HERSHEY_SIMPLEX, 0.5, Scalar::all(255), 1, 2);
     
 }
 
