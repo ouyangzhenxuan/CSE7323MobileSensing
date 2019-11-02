@@ -11,8 +11,8 @@ import AVFoundation
 
 class FaceViewController: UIViewController   {
     //MARK: Class Properties
-    var faceFilters : [CIFilter]! = nil
-    var eyeFilters : [CIFilter]! = nil
+    @IBOutlet weak var cameraButton: UIButton!
+    
     var videoManager:VideoAnalgesic! = nil
     let pinchFilterIndex = 2
     let bridge = OpenCVBridge()
@@ -23,14 +23,12 @@ class FaceViewController: UIViewController   {
         super.viewDidLoad()
         
         self.view.backgroundColor = nil
-        self.setupFilters()
         
         self.videoManager = VideoAnalgesic.sharedInstance
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
         
         // create dictionary for face detection
-        // HINT: you need to manipulate these proerties for better face detection efficiency
-        let optsDetector = [CIDetectorAccuracy:CIDetectorAccuracyHigh, CIDetectorTracking:true,CIDetectorSmile:true,CIDetectorEyeBlink:true] as [String : Any]
+    let optsDetector = [CIDetectorAccuracy:CIDetectorAccuracyHigh, CIDetectorTracking:true,CIDetectorSmile:true,CIDetectorEyeBlink:true] as [String : Any]
         
         // setup a face detector in swift
         self.detector = CIDetector(ofType: CIDetectorTypeFace,
@@ -46,31 +44,21 @@ class FaceViewController: UIViewController   {
         self.bridge.processType=1
     }
     
-    //MARK: Setup filtering
-    func setupFilters(){
-        faceFilters = []
-        
-        //        let filterPinch = CIFilter(name:"CIGaussianBlur")!
-        let filterPinch = CIFilter(name:"CICrystallize")!
-        
-        filterPinch.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-        filterPinch.setValue(10, forKey: "inputRadius")
-        
-        faceFilters.append(filterPinch)
-        
-    }
-    
     //MARK: Apply filters and apply feature detectors
     func applyFiltersToFaces(inputImage:CIImage,features:[CIFaceFeature])->CIImage{
         var retImage = inputImage
+        
+        // get feature postion
+        
         var filterCenter = CGPoint()
         var leftEyeCenter = CGPoint()
         var rightEyeCenter = CGPoint()
         var mouthCenter = CGPoint()
         
         self.bridge.setImage(retImage, withBounds: retImage.extent, andContext: self.videoManager.getCIContext())
+        
+        //prepare texts to be displayed using cv::putText
         self.bridge.setTransforms(self.videoManager.transform)
-        //        print(features.count)
         for f in features {
             //set where to apply filter
             filterCenter.x = f.bounds.midX
@@ -92,10 +80,8 @@ class FaceViewController: UIViewController   {
                 displayString+="Not Blinking! "
                 stringList.append("Not Blinking! ")
             }
-
-//            self.bridge.display(displayString, withCenter: filterCenter)
             
-            
+            // switch the way it displays
             if UIDevice.current.orientation.isLandscape {
                 var i = 0
                 for str in stringList{
@@ -115,6 +101,8 @@ class FaceViewController: UIViewController   {
             retImage = img
         }
         
+        // apply filtes to each feature
+        
         for f in features {
             filterCenter.x = f.bounds.midX
             filterCenter.y = f.bounds.midY
@@ -122,67 +110,47 @@ class FaceViewController: UIViewController   {
             rightEyeCenter = f.rightEyePosition
             mouthCenter = f.mouthPosition
             //do for each filter (assumes all filters have property, "inputCenter")
-            for filt in faceFilters{
-                filt.setValue(retImage.cropped(to: f.bounds), forKey: kCIInputImageKey)
-                filt.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
-                let temp = filt.outputImage!
-                let combinedFilter = CIFilter(name: "CISourceOverCompositing")!
-                combinedFilter.setValue(temp, forKey: "inputImage")
-                combinedFilter.setValue(retImage, forKey: "inputBackgroundImage")
-                var combineImage = combinedFilter.outputImage!
-                
-                combinedFilter.setValue(drawImagesAndText(), forKey: "inputImage")
-                combinedFilter.setValue(combineImage, forKey: "inputBackgroundImage")
-                combineImage = combinedFilter.outputImage!
-                
-                //                let eyeImage = filt.outputImage!
-                let leftEyeFilter = CIFilter(name: "CIHoleDistortion")!
-                //                leftEyeFilter.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-                leftEyeFilter.setValue(5, forKey: "inputRadius")
-                leftEyeFilter.setValue(combineImage, forKey: "inputImage")
-                leftEyeFilter.setValue(CIVector(cgPoint: leftEyeCenter), forKey: "inputCenter")
-                let leftImage = leftEyeFilter.outputImage!
-                
-                
-                let rightEyeFilter = CIFilter(name: "CIHoleDistortion")!
-                //                RightEyeFilter.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-                rightEyeFilter.setValue(5, forKey: "inputRadius")
-                rightEyeFilter.setValue(leftImage, forKey: "inputImage")
-                rightEyeFilter.setValue(CIVector(cgPoint: rightEyeCenter), forKey: "inputCenter")
-                
-                let rightImage = rightEyeFilter.outputImage!
-                
-                let mouthFilter = CIFilter(name: "CIHoleDistortion")!
-                //                RightEyeFilter.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
-                mouthFilter.setValue(8, forKey: "inputRadius")
-                mouthFilter.setValue(rightImage, forKey: "inputImage")
-                mouthFilter.setValue(CIVector(cgPoint: mouthCenter), forKey: "inputCenter")
-                
-                retImage = mouthFilter.outputImage!
-            }
+            let filterPinch = CIFilter(name:"CICrystallize")!
+            
+            filterPinch.setValue(CGVector.init(dx: 100, dy: 100), forKey: "inputCenter")
+            filterPinch.setValue(10, forKey: "inputRadius")
+            // We only want to apply the filter to the face, not the entire image.
+            // So we use cropped function to only extract the face
+            filterPinch.setValue(retImage.cropped(to: f.bounds), forKey: kCIInputImageKey)
+            filterPinch.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
+            let temp = filterPinch.outputImage!
+            
+            // We use combineFilter to put the cropped image back to its original image
+            let combinedFilter = CIFilter(name: "CISourceOverCompositing")!
+            combinedFilter.setValue(temp, forKey: "inputImage")
+            combinedFilter.setValue(retImage, forKey: "inputBackgroundImage")
+            let combineImage = combinedFilter.outputImage!
+            
+            
+            let leftEyeFilter = CIFilter(name: "CIHoleDistortion")!
+            leftEyeFilter.setValue(5, forKey: "inputRadius")
+            leftEyeFilter.setValue(combineImage, forKey: "inputImage")
+            leftEyeFilter.setValue(CIVector(cgPoint: leftEyeCenter), forKey: "inputCenter")
+            let leftImage = leftEyeFilter.outputImage!
+            
+            
+            let rightEyeFilter = CIFilter(name: "CIHoleDistortion")!
+            rightEyeFilter.setValue(5, forKey: "inputRadius")
+            rightEyeFilter.setValue(leftImage, forKey: "inputImage")
+            rightEyeFilter.setValue(CIVector(cgPoint: rightEyeCenter), forKey: "inputCenter")
+            let rightImage = rightEyeFilter.outputImage!
+            
+            let mouthFilter = CIFilter(name: "CIHoleDistortion")!
+            mouthFilter.setValue(8, forKey: "inputRadius")
+            mouthFilter.setValue(rightImage, forKey: "inputImage")
+            mouthFilter.setValue(CIVector(cgPoint: mouthCenter), forKey: "inputCenter")
+            retImage = mouthFilter.outputImage!
         }
         
         return retImage
     }
     
-    func drawImagesAndText() -> CIImage{
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
-        let img = renderer.image { ctx in
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            let attrs: [NSAttributedString.Key: Any] = [
-                .font: UIFont.systemFont(ofSize: 36),
-                .paragraphStyle: paragraphStyle
-            ]
-            let string = "The best-laid schemes o'\nmice an' men gang aft agley"
-            let attributedString = NSAttributedString(string: string, attributes: attrs)
-            attributedString.draw(with: CGRect(x: 32, y: 32, width: 448, height: 448), options: .usesLineFragmentOrigin, context: nil)
-            let mouse = UIImage(named: "mouse")
-            mouse?.draw(at: CGPoint(x: 300, y: 150))
-        }
-        return CIImage(image: img)!
-    }
-    
+    //MARK: get faces using CIDetector
     func getFaces(img:CIImage) -> [CIFaceFeature]{
         // this ungodly mess makes sure the image is the correct orientation
         let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation,
@@ -205,20 +173,14 @@ class FaceViewController: UIViewController   {
         return applyFiltersToFaces(inputImage: inputImage, features: f)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        self.bridge.setTransforms(self.videoManager.transform)
+    @IBAction func switchCamera(_ sender: UIButton) {
+        self.videoManager.toggleCameraPosition()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.videoManager.stop()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        if let video = self.videoManager{
-//            video.start()
-//        }
-//    }
     
 }
 

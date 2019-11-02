@@ -136,49 +136,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqB-mz-Xht">
-                                <rect key="frame" x="155" y="824" width="104" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="104" id="ACq-yg-5mA"/>
-                                    <constraint firstAttribute="width" constant="104" id="FaK-fC-fNm"/>
-                                    <constraint firstAttribute="width" constant="104" id="Jsw-pN-1GI"/>
-                                    <constraint firstAttribute="height" constant="30" id="LBA-RX-AMW"/>
-                                    <constraint firstAttribute="height" constant="30" id="hI0-zA-ZmE"/>
-                                    <constraint firstAttribute="height" constant="30" id="rvp-Eq-0zp"/>
-                                </constraints>
-                                <state key="normal" title="Toggle Camera"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ACq-yg-5mA"/>
-                                        <exclude reference="FaK-fC-fNm"/>
-                                        <exclude reference="Jsw-pN-1GI"/>
-                                        <exclude reference="LBA-RX-AMW"/>
-                                        <exclude reference="hI0-zA-ZmE"/>
-                                        <exclude reference="rvp-Eq-0zp"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="ACq-yg-5mA"/>
-                                        <include reference="LBA-RX-AMW"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="FaK-fC-fNm"/>
-                                        <include reference="hI0-zA-ZmE"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Jsw-pN-1GI"/>
-                                        <include reference="rvp-Eq-0zp"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="switchCameraWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fFj-e0-kD1"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTs-Vk-N2j">
                                 <rect key="frame" x="44" y="197" width="327" height="42"/>
                                 <constraints>
@@ -256,9 +213,6 @@
                                 <variation key="heightClass=compact-widthClass=regular" constant="477"/>
                                 <variation key="heightClass=regular-widthClass=compact" constant="83"/>
                             </constraint>
-                            <constraint firstAttribute="trailingMargin" secondItem="HqB-mz-Xht" secondAttribute="trailing" constant="130" id="3KF-zI-mXg">
-                                <variation key="heightClass=regular-widthClass=compact" constant="135"/>
-                            </constraint>
                             <constraint firstItem="WhG-7z-8PG" firstAttribute="top" secondItem="mTs-Vk-N2j" secondAttribute="bottom" constant="8" id="9WQ-uO-fm2">
                                 <variation key="heightClass=compact-widthClass=compact" constant="-43"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="210"/>
@@ -266,16 +220,11 @@
                             <constraint firstItem="mTs-Vk-N2j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="99" id="C9E-1R-iex">
                                 <variation key="heightClass=regular-widthClass=compact" constant="24"/>
                             </constraint>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="leading" secondItem="GPp-gj-1gq" secondAttribute="trailing" constant="98" id="HN8-XU-ykz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="HqB-mz-Xht" secondAttribute="trailing" constant="23" id="JZ0-uZ-sJi">
-                                <variation key="heightClass=compact-widthClass=compact" constant="52"/>
-                            </constraint>
                             <constraint firstItem="mTs-Vk-N2j" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="210" id="Jn7-MB-Nv7">
                                 <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="8"/>
                                 <variation key="heightClass=regular-widthClass=compact" constant="83"/>
                             </constraint>
-                            <constraint firstAttribute="trailingMargin" secondItem="HqB-mz-Xht" secondAttribute="trailing" constant="35" id="LsZ-J3-dBZ"/>
                             <constraint firstItem="WhG-7z-8PG" firstAttribute="top" secondItem="mTs-Vk-N2j" secondAttribute="bottom" constant="24" id="QYR-fs-yAq">
                                 <variation key="heightClass=compact-widthClass=compact" constant="36"/>
                             </constraint>
@@ -283,9 +232,6 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="83"/>
                             </constraint>
                             <constraint firstItem="mTs-Vk-N2j" firstAttribute="leading" secondItem="GPp-gj-1gq" secondAttribute="trailing" constant="15" id="Sqv-EH-nIR"/>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="140" id="US5-Rt-hTi">
-                                <variation key="heightClass=regular-widthClass=compact" constant="135"/>
-                            </constraint>
                             <constraint firstItem="GPp-gj-1gq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WYn-H8-bIa"/>
                             <constraint firstItem="WhG-7z-8PG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="84" id="YFV-bh-sJF">
                                 <variation key="heightClass=compact-widthClass=compact" constant="383"/>
@@ -302,10 +248,6 @@
                             </constraint>
                             <constraint firstItem="WhG-7z-8PG" firstAttribute="leading" secondItem="GPp-gj-1gq" secondAttribute="trailing" id="a3e-qV-q2l">
                                 <variation key="heightClass=compact-widthClass=compact" constant="5"/>
-                            </constraint>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="top" secondItem="WhG-7z-8PG" secondAttribute="bottom" constant="108" id="aRJ-Z6-lPy"/>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="top" secondItem="GPp-gj-1gq" secondAttribute="bottom" constant="39" id="c9e-9F-oGY">
-                                <variation key="heightClass=regular-widthClass=compact" constant="49"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="mTs-Vk-N2j" secondAttribute="trailing" constant="2" id="dbj-eB-PNB"/>
                             <constraint firstItem="mTs-Vk-N2j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="115" id="ddH-0y-aGv">
@@ -326,14 +268,8 @@
                             <constraint firstAttribute="trailing" secondItem="WhG-7z-8PG" secondAttribute="trailing" constant="-9" id="ngG-Ac-UWv">
                                 <variation key="heightClass=compact-widthClass=compact" constant="22"/>
                             </constraint>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="leading" secondItem="GPp-gj-1gq" secondAttribute="trailing" constant="51" id="nwd-ja-INE">
-                                <variation key="heightClass=compact-widthClass=compact" constant="58"/>
-                            </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="GPp-gj-1gq" secondAttribute="trailing" constant="31" id="oNK-nF-zlZ">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                            </constraint>
-                            <constraint firstItem="HqB-mz-Xht" firstAttribute="top" secondItem="WhG-7z-8PG" secondAttribute="bottom" constant="123.5" id="ooS-RF-DAQ">
-                                <variation key="heightClass=compact-widthClass=compact" constant="115.5"/>
                             </constraint>
                             <constraint firstItem="WhG-7z-8PG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="68" id="ozX-rS-AGk">
                                 <variation key="heightClass=regular-widthClass=compact" constant="84"/>
@@ -390,15 +326,6 @@
                                 <exclude reference="u9s-Wc-RG5"/>
                                 <exclude reference="z41-ca-15O"/>
                                 <exclude reference="zP1-xK-Q6D"/>
-                                <exclude reference="3KF-zI-mXg"/>
-                                <exclude reference="HN8-XU-ykz"/>
-                                <exclude reference="JZ0-uZ-sJi"/>
-                                <exclude reference="LsZ-J3-dBZ"/>
-                                <exclude reference="US5-Rt-hTi"/>
-                                <exclude reference="aRJ-Z6-lPy"/>
-                                <exclude reference="c9e-9F-oGY"/>
-                                <exclude reference="nwd-ja-INE"/>
-                                <exclude reference="ooS-RF-DAQ"/>
                                 <exclude reference="doT-eH-5a0"/>
                                 <exclude reference="wz7-Ln-hNx"/>
                             </mask>
@@ -422,9 +349,6 @@
                                 <exclude reference="viB-7s-pAP"/>
                                 <include reference="z41-ca-15O"/>
                                 <include reference="zP1-xK-Q6D"/>
-                                <include reference="JZ0-uZ-sJi"/>
-                                <include reference="nwd-ja-INE"/>
-                                <include reference="ooS-RF-DAQ"/>
                                 <include reference="wz7-Ln-hNx"/>
                             </mask>
                         </variation>
@@ -447,9 +371,6 @@
                                 <exclude reference="Yr2-EL-cOS"/>
                                 <include reference="hNM-0W-Ht3"/>
                                 <exclude reference="viB-7s-pAP"/>
-                                <include reference="HN8-XU-ykz"/>
-                                <include reference="LsZ-J3-dBZ"/>
-                                <include reference="aRJ-Z6-lPy"/>
                                 <include reference="doT-eH-5a0"/>
                             </mask>
                         </variation>
@@ -471,14 +392,10 @@
                                 <include reference="s8L-jD-aSD"/>
                                 <include reference="u9s-Wc-RG5"/>
                                 <exclude reference="viB-7s-pAP"/>
-                                <include reference="3KF-zI-mXg"/>
-                                <include reference="US5-Rt-hTi"/>
-                                <include reference="c9e-9F-oGY"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="cameraButton" destination="HqB-mz-Xht" id="4vc-g3-44d"/>
                         <outlet property="chtChart" destination="GPp-gj-1gq" id="6K0-do-QuG"/>
                         <outlet property="measureButton" destination="mTs-Vk-N2j" id="YQH-Wk-eHD"/>
                         <outlet property="secondLabel" destination="WhG-7z-8PG" id="hGi-mE-SkO"/>
@@ -580,9 +497,31 @@
                     <view key="view" contentMode="scaleToFill" id="EIb-LA-kp9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHP-tE-bIb">
+                                <rect key="frame" x="155" y="736" width="104" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="LgJ-7j-p3k"/>
+                                    <constraint firstAttribute="width" constant="104" id="eVV-5T-4BT"/>
+                                </constraints>
+                                <state key="normal" title="Toggle Camera"/>
+                                <connections>
+                                    <action selector="switchCamera:" destination="sJj-DN-HGF" eventType="touchUpInside" id="Heh-h0-d3c"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ULN-EZ-AUR" firstAttribute="top" secondItem="MHP-tE-bIb" secondAttribute="bottom" constant="96" id="1je-zO-IMo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MHP-tE-bIb" secondAttribute="trailing" constant="135" id="Lmz-nw-jxu"/>
+                            <constraint firstItem="MHP-tE-bIb" firstAttribute="leading" secondItem="EIb-LA-kp9" secondAttribute="leadingMargin" constant="135" id="OiG-W7-nBR"/>
+                            <constraint firstItem="MHP-tE-bIb" firstAttribute="top" secondItem="YPU-LQ-yjj" secondAttribute="bottom" constant="648" id="zsO-GS-FyX"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cameraButton" destination="MHP-tE-bIb" id="59b-yI-pzD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dDk-ri-VwG" sceneMemberID="firstResponder"/>
             </objects>

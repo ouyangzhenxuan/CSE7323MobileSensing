@@ -10,17 +10,15 @@ import UIKit
 import AVFoundation
 import Charts
 
+// Module B part
 class ViewController: UIViewController   {
 
-    @IBOutlet weak var cameraButton: UIButton!
-    @IBOutlet weak var flashButton: UIButton!
-    
     @IBOutlet weak var chtChart: LineChartView!
-    
     @IBOutlet weak var measureButton: UIButton!
     @IBOutlet weak var secondLabel: UILabel!
     
     //MARK: Class Properties
+    // initial variables for heart rate detection
     var filters : [CIFilter]! = nil
     var videoManager:VideoAnalgesic! = nil
     var detector:CIDetector! = nil
@@ -49,11 +47,11 @@ class ViewController: UIViewController   {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //function to set chart to virtualize heart rate
         self.setCharts()
         
         self.view.backgroundColor = nil
-        self.setupFilters()
-        
+        // set up video manager
         self.videoManager = VideoAnalgesic.sharedInstance
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
         
@@ -75,59 +73,64 @@ class ViewController: UIViewController   {
         }
         
         self.bridge.processType = 1
-        
-//        let timer = Timer(timeInterval: 1.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
-//        let timer1 = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateCharts), userInfo: nil, repeats: true)
-    
     }
     
+    // when view will appear, run the graph
     override func viewWillAppear(_ animated: Bool) {
         runGraphTimer()
     }
     
+    // function to run the timer to run graph
     func runGraphTimer(){
         self.graphTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateCharts), userInfo: nil, repeats: true)
     }
     
+    // function to stop the graph timer when complete
     func stopGraphTimer(){
         self.graphTimer?.invalidate()
         self.graphTimer = nil
     }
     
+    // function to run timer to calculate time that finger puts on the screen
     func runHeartRateTimer() {
+        self.redness = []
         self.heartRateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self,   selector: (#selector(ViewController.updateHeartRateTimer)), userInfo: nil, repeats: true)
     }
     
+    // function to stop the heart rate timer
     func killHeartRateTimer() {
         heartRateTimer!.invalidate()
     }
     
+    // function that heart rate timer will use to count time every 0.1 second
     @objc func updateHeartRateTimer() {
         self.seconds += 0.1
     }
     
+    // algorithm to calculate heart rate
     func heartRateCal(){
-        //        var peakVal = [Float]()
-        //        var incrementElement = self.redness[0]
         var count:Float = 0.0
         let size = self.redness.count
         let bufferSize=10
         for i in 1...(size-1-bufferSize) {
             let mid = i+bufferSize/2
-            var localMax = self.redness[i]
-            var maxInd = i
+            var localMin = self.redness[i]
+            var minInd = i
             for j in i+1...(i+bufferSize){
-                if self.redness[j]>localMax {
-                    localMax=self.redness[j]
-                    maxInd=j
+                if self.redness[j]>localMin {
+                    localMin=self.redness[j]
+                    minInd=j
                 }
             }
-            if mid == maxInd {
+            if mid == minInd {
                 count+=1
             }
         }
+        
+        // We do not collect data from the first two second for the sake of accuracy
         let bpm = count/(self.seconds-2)*60.0
         
+        // once get the final result, shown on the screen
         self.secondLabel.text = "Your heart rate is " + String(format: "%.1f", bpm)
         self.measureButton.isHidden = false
         self.measure = false
@@ -135,6 +138,7 @@ class ViewController: UIViewController   {
         self.redness = []
     }
     
+    // button function to start measure heart rate
     @IBAction func startMeasure(_ sender: Any) {
         self.measureButton.isHidden = true
         self.seconds = 0
@@ -146,12 +150,14 @@ class ViewController: UIViewController   {
         return (0..<n).map { _ in .random(in: 1...80) }
     }
     
+    // function to set up the heart rate chart
     @objc func setCharts(){
         chtChart.chartDescription?.text = "My awesome chart"
         chtChart.backgroundColor = #colorLiteral(red: 1, green: 0.7861487269, blue: 0.8041584492, alpha: 1)
         
     }
     
+    // function to update chart based on the data sending back from openCV
     @objc func updateCharts(){
         var lineChartEntry = [ChartDataEntry]()
         print("Timer running")
@@ -182,6 +188,7 @@ class ViewController: UIViewController   {
     }
     
     //MARK: Process image output
+    // function processImage to process the camera result
     func processImage(inputImage:CIImage) -> CIImage{
         
         var retImage = inputImage
@@ -191,28 +198,36 @@ class ViewController: UIViewController   {
         self.bridge.setImage(retImage, withBounds: retImage.extent, andContext: self.videoManager.getCIContext())
         self.bridge.setTransforms(self.videoManager.transform)
         
+        // call processfinger function to return redness results
         let pF=self.bridge.processFinger()
         
+        // if there is a finger, start measure
         if(pF>0){
+            // turn on the flash
             self.videoManager.turnOnFlashwithLevel(0.1)
+            // if time is greater than 15, stop timing
             DispatchQueue.main.async {
                 if(self.seconds >= 15 && self.measure){
                     self.killHeartRateTimer()
                     self.heartRateCal()
                 }
+                // if time is greater than 2 seconds, start collecting data
                 else if(self.seconds>2 && self.measure){
                     self.redness.append(pF)
                 }
+                // if timing button is pressed, call timer function to start timing
                 if(!self.timing && self.measure){
                     if(!self.isFinger){
                         self.isFinger = true}
                     self.timing = true
                     self.runHeartRateTimer()
                 }
+                // show the time on the screen
                 if(self.measure){
                     self.secondLabel.text = String(self.seconds);
                 }
             }
+        // if there is no finger on the screen, turn off the flash and clear the data
         }else{
             self.videoManager.turnOffFlash()
             DispatchQueue.main.async {
@@ -233,72 +248,7 @@ class ViewController: UIViewController   {
         return retImage
     }
     
-    //MARK: Setup filtering
-    func setupFilters(){
-        filters = []
-        
-        let filterPinch = CIFilter(name:"CIBumpDistortion")!
-        filterPinch.setValue(-0.5, forKey: "inputScale")
-        filterPinch.setValue(75, forKey: "inputRadius")
-        filters.append(filterPinch)
-        
-    }
-    
-    //MARK: Apply filters and apply feature detectors
-    func applyFiltersToFaces(inputImage:CIImage,features:[CIFaceFeature])->CIImage{
-        var retImage = inputImage
-        var filterCenter = CGPoint()
-        
-        for f in features {
-            //set where to apply filter
-            filterCenter.x = f.bounds.midX
-            filterCenter.y = f.bounds.midY
-            
-            //do for each filter (assumes all filters have property, "inputCenter")
-            for filt in filters{
-                filt.setValue(retImage, forKey: kCIInputImageKey)
-                filt.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
-                // could also manipualte the radius of the filter based on face size!
-                retImage = filt.outputImage!
-            }
-        }
-        return retImage
-    }
-    
-    func getFaces(img:CIImage) -> [CIFaceFeature]{
-        // this ungodly mess makes sure the image is the correct orientation
-        let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation]
-        // get Face Features
-        return self.detector.features(in: img, options: optsFace) as! [CIFaceFeature]
-        
-    }
-    
-    
-    
-    //MARK: Convenience Methods for UI Flash and Camera Toggle
-    @IBAction func flash(sender: AnyObject) {
-        if(self.videoManager.toggleFlash()){
-            self.flashSlider.value = 1.0
-        }
-        else{
-            self.flashSlider.value = 0.0
-        }
-//        self.videoManager.toggleFlash()
-    }
-    
-    @IBAction func switchCamera(sender: AnyObject) {
-        self.videoManager.toggleCameraPosition()
-    }
-    
-    @IBAction func setFlashLevel(sender: UISlider) {
-        if(sender.value>0.0){
-            self.videoManager.turnOnFlashwithLevel(sender.value)
-        }
-        else if(sender.value==0.0){
-            self.videoManager.turnOffFlash()
-        }
-    }
-    
+    // function to stop video manager and timer when leave the module
     override func viewWillDisappear(_ animated: Bool) {
         self.videoManager.stop()
         if(self.timing){
