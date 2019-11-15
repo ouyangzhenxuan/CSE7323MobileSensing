@@ -97,7 +97,7 @@ class CMLViewController: UIViewController {
             }
             displayLabelResponse(outputRf.classLabel)
             setDelayedWaitingToTrue(2.0)
-            
+//            displayLabelResponse(outputSvm.classLabel)
 //            if(outputRf.classLabel == outputSvm.classLabel){
 //                displayLabelResponse(outputSvm.classLabel)
 //                // dont predict again for a bit
