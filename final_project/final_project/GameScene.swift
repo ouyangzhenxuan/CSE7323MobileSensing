@@ -16,27 +16,13 @@ import UIKit
 protocol ActionDelegate {
     func actionBegin()
     func actionDone()
-    func getPredictedAction()->String
+    func updatePredictedAction()
+    func getPredictedAction() -> String
 }
 
 class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
     
     // MARK: Machine Learning part
-    var ringBuffer = RingBuffer()
-    let animation = CATransition()
-    let motion = CMMotionManager()
-    
-    let motionOperationQueue = OperationQueue()
-    
-    var magValue = 0.1
-    var isCalibrating = false
-    
-    var isWaitingForMotionData = true
-    
-    var modelRf = RandomForestAccel()
-    var modelSvm = SVMAccel()
-    var modelPipe = PipeAccel()
-    
     let theAction = ActionPredict.sharedInstance
     // ML part
     
@@ -54,13 +40,21 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         case ("A"):
             actionJump()
         case ("B"):
-            actionJump()
+//            actionJump()
             theAction.actionBegin()
+            DispatchQueue.main.asyncAfter(deadline: .now()+1.5, execute: {
+                print("delay 1.5s : \(self.theAction.getPredictedAction())")
+                if(self.theAction.getPredictedAction() == "droppingdown"){
+                    self.actionJump()
+                }
+            })
         case "stop right","stop left":
             self.left = false;
             self.right = false;
         default:
             print("otro boton \(String(describing: command))")
+            
+            
         }
     }
     
@@ -76,26 +70,6 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         }
     }
     
-//    func actionBegin(){
-//        print("action begins")
-////        _ = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
-////        startMotionUpdates()
-//        theAction.test()
-//    }
-//    
-//    func actionDone(){
-//        print("action done")
-//        stopMotionUpdates()
-//    }
-    
-    func returnSomething(name: String) -> String{
-        return name
-    }
-    
-    @objc func fire(){
-        print("fire")
-    }
-    
     var player: SKSpriteNode?
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -106,7 +80,6 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         setupControls(camera: camera!, scene: self)
         self.player = childNode(withName: "Robin") as! SKSpriteNode
         self.player?.physicsBody?.restitution = 0.0
-
         
         for node in self.children{
             if(node.name == "map"){
@@ -117,8 +90,6 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
                 break
             }
         }
-        
-//        self.startMotionUpdates()
     }
     
     func setupControls(camera : SKCameraNode, scene: SKScene) {
@@ -197,101 +168,5 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         }
             
     }
-    
-    // MARK: ML handler functions
-    // MARK: Core Motion Updates
-//    func startMotionUpdates(){
-//        // some internal inconsistency here: we need to ask the device manager for device
-//
-//        if self.motion.isDeviceMotionAvailable{
-//            self.motion.deviceMotionUpdateInterval = 1.0/200
-//            self.motion.startDeviceMotionUpdates(to: motionOperationQueue, withHandler: self.handleMotion )
-//        }
-//    }
-//
-//    func stopMotionUpdates(){
-//        if self.motion.isDeviceMotionAvailable{
-//            self.motion.stopDeviceMotionUpdates()
-//        }
-//    }
-//
-//    var handleMotionCount = 0
-//    func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
-//        if let accel = motionData?.userAcceleration {
-//            self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
-//            handleMotionCount += 1
-//            let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
-//            DispatchQueue.main.async{
-//                //show magnitude via indicator
-////                self.largeMotionMagnitude.progress = Float(mag)/0.2
-//            }
-//            if handleMotionCount > 100{
-//                handleMotionCount = 0
-//                // buffer up a bit more data and then notify of occurrence
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-//                    // something large enough happened to warrant
-//                    self.largeMotionEventOccurred()
-//                })
-//                stopMotionUpdates()
-//            }
-//        }
-//    }
-//
-//    //MARK: Calibration procedure
-//    func largeMotionEventOccurred(){
-//
-//        if(self.isWaitingForMotionData)
-//        {
-//            self.isWaitingForMotionData = false
-//            //predict a label
-//            let seq = toMLMultiArray(self.ringBuffer.getDataAsVector())
-//            guard let outputRf = try? modelRf.prediction(input: seq) else {
-//                fatalError("Unexpected runtime error.")
-//            }
-//
-//            guard let outputSvm = try? modelSvm.prediction(input: seq) else {
-//                fatalError("Unexpected runtime error.")
-//            }
-//
-//            guard let outputPipe = try? modelPipe.prediction(input: seq) else {
-//                fatalError("Unexpected runtime error.")
-//            }
-////            displayLabelResponse(outputRf.classLabel)
-//            print(outputRf.classLabel)
-//            setDelayedWaitingToTrue(2.0)
-//            //            displayLabelResponse(outputSvm.classLabel)
-//            //            if(outputRf.classLabel == outputSvm.classLabel){
-//            //                displayLabelResponse(outputSvm.classLabel)
-//            //                // dont predict again for a bit
-//            //                setDelayedWaitingToTrue(2.0)
-//            //            }
-//            //            else{
-//            //                displayLabelResponse("Unknown")
-//            //                self.isWaitingForMotionData = true
-//            //            }
-//
-//
-//
-//        }
-//    }
-//
-//    func setDelayedWaitingToTrue(_ time:Double){
-//        DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
-//            self.isWaitingForMotionData = true
-//        })
-//    }
-//
-//    // convert to ML Multi array
-//    // https://github.com/akimach/GestureAI-CoreML-iOS/blob/master/GestureAI/GestureViewController.swift
-//    private func toMLMultiArray(_ arr: [Double]) -> MLMultiArray {
-//        guard let sequence = try? MLMultiArray(shape:[150], dataType:MLMultiArrayDataType.double) else {
-//            fatalError("Unexpected runtime error. MLMultiArray could not be created")
-//        }
-//        let size = Int(truncating: sequence.shape[0])
-//        for i in 0..<size {
-//            sequence[i] = NSNumber(floatLiteral: arr[i])
-//        }
-//        return sequence
-//    }
     
 }

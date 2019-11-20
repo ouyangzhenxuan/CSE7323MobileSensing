@@ -33,8 +33,8 @@ class ActionPredict: ActionDelegate {
     var isWaitingForMotionData = true
     
     var modelRf = RandomForestAccel()
-    var modelSvm = SVMAccel()
-    var modelPipe = PipeAccel()
+//    var modelSvm = SVMAccel()
+//    var modelPipe = PipeAccel()
     
     var predictedAction = "Nothing now!"
     var isPredicting = false
@@ -53,14 +53,18 @@ class ActionPredict: ActionDelegate {
         self.isPredicting = false
     }
     
-    func getPredictedAction()->String {
+    func updatePredictedAction() {
 //        print("get predicted action")
         if self.isPredicting == true{
-            return "It's predicting right now, the result isn't available"
+            self.predictedAction = "It's still predicting right now, the result isn't available"
         }
-        let currentAction = self.predictedAction
+//        let currentAction = self.predictedAction
         self.predictedAction = "Nothing now"
-        return currentAction
+//        return currentAction
+    }
+    
+    func getPredictedAction() -> String {
+        return self.predictedAction
     }
     
     // MARK: Core Motion Updates
@@ -84,22 +88,16 @@ class ActionPredict: ActionDelegate {
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let accel = motionData?.userAcceleration {
             self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
-//            let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
             handleMotionCount += 1
-            DispatchQueue.main.async{
-                //show magnitude via indicator
-//                self.largeMotionMagnitude.progress = Float(mag)/0.2
-            }
-            if handleMotionCount >= 80{
+            if handleMotionCount >= 100{
                 handleMotionCount = 0
                 // buffer up a bit more data and then notify of occurrence
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
                     // something large enough happened to warrant
                     self.largeMotionEventOccurred()
                     self.actionDone()
+                    print(self.getPredictedAction())
                 })
-                // action is done and stop updating motion datas
-                
             }
         }
     }
@@ -116,13 +114,13 @@ class ActionPredict: ActionDelegate {
                 fatalError("Unexpected runtime error.")
             }
             
-            guard let outputSvm = try? modelSvm.prediction(input: seq) else {
-                fatalError("Unexpected runtime error.")
-            }
-            
-            guard let outputPipe = try? modelPipe.prediction(input: seq) else {
-                fatalError("Unexpected runtime error.")
-            }
+//            guard let outputSvm = try? modelSvm.prediction(input: seq) else {
+//                fatalError("Unexpected runtime error.")
+//            }
+//
+//            guard let outputPipe = try? modelPipe.prediction(input: seq) else {
+//                fatalError("Unexpected runtime error.")
+//            }
 
             // update predicted action
             self.predictedAction = outputRf.classLabel
@@ -151,18 +149,7 @@ class ActionPredict: ActionDelegate {
             self.isWaitingForMotionData = true
         })
     }
-    
-//    func setAsCalibrating(_ label: UILabel){
-//        label.layer.add(animation, forKey:nil)
-//        label.backgroundColor = UIColor.red
-//    }
-//
-//    func setAsNormal(_ label: UILabel){
-//        label.layer.add(animation, forKey:nil)
-//        label.backgroundColor = UIColor.white
-//    }
-    
-    
+
     // convert to ML Multi array
     // https://github.com/akimach/GestureAI-CoreML-iOS/blob/master/GestureAI/GestureViewController.swift
     private func toMLMultiArray(_ arr: [Double]) -> MLMultiArray {

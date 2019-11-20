@@ -115,6 +115,7 @@ class TouchInputNode : SKSpriteNode {
                     pressedButtons.append(button)
                     if ((inputDelegate) != nil){
                         inputDelegate?.follow(command: button.name!)
+                        
                     }
 //                    if button.name == "A" {
                     
@@ -203,9 +204,9 @@ class TouchInputNode : SKSpriteNode {
                         if ((inputDelegate) != nil){
                             inputDelegate?.follow(command: "stop \(String(describing: button.name!))")
                         }
+//                        print("in the location: \(theAction.getPredictedAction())")
                         
-                        print(theAction.getPredictedAction())
-                        
+                        print("button name = \(button.name)")
                     }
                 }
                 else if (button.contains(previousLocation)) {
