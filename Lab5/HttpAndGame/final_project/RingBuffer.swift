@@ -47,5 +47,18 @@ class RingBuffer: NSObject {
     }
     
     
+    func getSumDataAsVector()->[Double]{
+        var allVals = [Double](repeating:0, count:BUFFER_SIZE)
+        
+        for i in 0..<BUFFER_SIZE {
+            let idx = (head+i)%BUFFER_SIZE
+            allVals[i] = x[idx] + y[idx] + z[idx]
+            
+        }
+        
+        return allVals
+    }
+    
+    
 
 }

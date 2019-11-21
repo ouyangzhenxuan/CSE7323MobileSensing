@@ -12,8 +12,6 @@ import CoreMotion
 import CoreML
 
 
-
-
 class ActionPredict: ActionDelegate {
     
     // make it a shared instance, only one instance can exist at an application

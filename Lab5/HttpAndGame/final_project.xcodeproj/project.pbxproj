@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30620972238726C200B83B2B /* AccelerationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30620971238726C200B83B2B /* AccelerationViewController.swift */; };
 		308D5FF72380DC8800134A2B /* RandomForestAccel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 308D5FF22380DC8800134A2B /* RandomForestAccel.mlmodel */; };
 		308D5FF82380DC8800134A2B /* ActionPredict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308D5FF32380DC8800134A2B /* ActionPredict.swift */; };
 		308D5FF92380DC8800134A2B /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308D5FF42380DC8800134A2B /* RingBuffer.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30620971238726C200B83B2B /* AccelerationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationViewController.swift; sourceTree = "<group>"; };
 		308D5FF22380DC8800134A2B /* RandomForestAccel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RandomForestAccel.mlmodel; sourceTree = "<group>"; };
 		308D5FF32380DC8800134A2B /* ActionPredict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPredict.swift; sourceTree = "<group>"; };
 		308D5FF42380DC8800134A2B /* RingBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				D27522FA2377782900332B57 /* MyTileSet.sks */,
 				D27522D523761A9B00332B57 /* LaunchScreen.storyboard */,
 				D27522D823761A9B00332B57 /* Info.plist */,
+				30620971238726C200B83B2B /* AccelerationViewController.swift */,
 			);
 			path = final_project;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				D277CF3B237B3723006A2925 /* TouchInputNode.swift in Sources */,
 				D27522CD23761A9800332B57 /* GameScene.swift in Sources */,
 				308DDA0E2380DF9400D0F896 /* TableViewController.swift in Sources */,
+				30620972238726C200B83B2B /* AccelerationViewController.swift in Sources */,
 				308DDA102380E25C00D0F896 /* ViewController.swift in Sources */,
 				D27522CF23761A9800332B57 /* GameViewController.swift in Sources */,
 				308D5FFB2380DC8800134A2B /* PipeAccel.mlmodel in Sources */,

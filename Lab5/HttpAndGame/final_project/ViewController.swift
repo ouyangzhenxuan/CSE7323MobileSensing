@@ -15,7 +15,7 @@
 //    ifconfig |grep inet   
 // to see what your public facing IP address is, the ip address can be used here
 //let SERVER_URL = "http://erics-macbook-pro.local:8000" // change this for your server name!!!
-let SERVER_URL = "http://192.168.1.15:8000" // change this for your server name!!!
+let SERVER_URL = "http://10.8.154.41:8000" // change this for your server name!!!
 // 10.8.150.132
 import UIKit
 import CoreMotion
@@ -124,12 +124,14 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
     
     // MARK: button hold-down and touch-up event
     @objc func buttonDown(_ sender: UIButton) {
+        print("button down")
         self.handleMotionCount = 0
         self.isPredicting = true
         startMotionUpdates()
     }
     
     @objc func buttonUp(_ sender: UIButton) {
+        print("button up")
         self.stopMotionUpdates()
         // In case the player doesn't hold the button for enouogh time, it will still predict something
         if(self.isPredicting == true){
@@ -269,7 +271,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
                 // send data to the server with label
                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                     // Put your code which should be executed with a delay here
-                    self.sendFeatures(self.ringBuffer.getDataAsVector(),
+                    self.sendFeatures(self.ringBuffer.getSumDataAsVector(),
                                       withLabel: self.calibrationStage)
                     self.nextCalibrationStage()
                 }
@@ -277,11 +279,12 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
         }
         else
         {
+//            print("is waiting data? \(self.isWaitingForMotionData)")
             if(self.isWaitingForMotionData)
             {
                 self.isWaitingForMotionData = false
                 //predict a label
-                getPrediction(self.ringBuffer.getDataAsVector())
+                getPrediction(self.ringBuffer.getSumDataAsVector())
                 // dont predict again for a bit
                 setDelayedWaitingToTrue(2.0)
                 
@@ -358,7 +361,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
         setDelayedWaitingToTrue(2.0)
         
         // set this and it will update UI
-        dsid = 8
+        dsid = 10
         // update the stepper value
         let ds: Double = Double(dsid)
         stepper.value=ds
