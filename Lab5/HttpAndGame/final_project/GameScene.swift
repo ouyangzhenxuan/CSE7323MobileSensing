@@ -78,11 +78,10 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
                 }else if(self.theAction.getPredictedAction() == "throwing"){
                     self.throwItem()
                 }else if(self.theAction.getPredictedAction() == "pickingup"){
-                    self.actionPickup()
+                    self.pickupItem()
                 }
             })
         case "stop right":
-            
             self.player?.texture = SKTexture(imageNamed: "robin")
             self.right = false
             self.left = false
@@ -118,8 +117,8 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
                     }
                 }
             }
-            if(nearnode?.name != nil&&nearest<40){
-                if((touchControlNode?.setinventory(tex: nearnode!.texture!,category:(nearnode?.physicsBody?.categoryBitMask)!))!){
+            if(nearnode?.name != nil && nearest<40){
+                if((touchControlNode?.setinventory(tex: nearnode!.texture!, category:(nearnode?.physicsBody?.categoryBitMask)!))!){
                     callText(text: "You Pick Up the ",object:(nearnode?.name!)!)
                     nearnode?.removeFromParent()}
             }
@@ -190,7 +189,7 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
     // MARK: Pickup Function
     // start the pickup action
     // player will pick up nearest pickable item
-    func actionPickup(){
+    func pickupItem(){
         var nearest = 99999
         var nearnode: SKSpriteNode? = nil
         for node in self.children{
@@ -203,7 +202,7 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
             }
         }
         if(nearnode?.name != nil&&nearest<40){
-            if((touchControlNode?.setinventory(tex: nearnode!.texture!,category:nearnode!.physicsBody!.categoryBitMask))!){
+            if((touchControlNode?.setinventory(tex: nearnode!.texture!, category:nearnode!.physicsBody!.categoryBitMask))!){
                 callText(text: "You Pick Up the ",object:(nearnode?.name!)!)
                 nearnode?.removeFromParent()}
         }

@@ -11,13 +11,13 @@ import SpriteKit
 // class that set up on screen ui control
 class TouchInputNode : SKSpriteNode {
     // initial variables
-    var alphaUnpressed:CGFloat = 0.7
-    var alphaPressed:CGFloat   = 1.0
+    var alphaunpressed:CGFloat = 0.7
+    var alphapressed:CGFloat   = 1.0
     
-    var pressedButtons = [SKSpriteNode]()
+    var pressedbuttons = [SKSpriteNode]()
     
-    let buttonDirLeft   = SKSpriteNode(imageNamed: "leftbutton")
-    let buttonDirRight  = SKSpriteNode(imageNamed: "rightbutton")
+    let buttondirleft   = SKSpriteNode(imageNamed: "leftbutton")
+    let buttondirright  = SKSpriteNode(imageNamed: "rightbutton")
     
     let buttonA = SKSpriteNode(imageNamed: "jumpbutton")
     let buttonB = SKSpriteNode(imageNamed: "actionbutton")
@@ -64,11 +64,11 @@ class TouchInputNode : SKSpriteNode {
     func setupControls(size : CGSize) {
         
 
-        addButton(button: buttonDirLeft,
+        addButton(button: buttondirleft,
                   position: CGPoint(x: -(size.width / 3 ) - 50, y: -size.height / 3),
                   name: "left",
                   scale: 0.8)
-        addButton(button: buttonDirRight,
+        addButton(button: buttondirright,
                   position: CGPoint(x: -(size.width / 3 ) + 25, y: -size.height / 3),
                   name: "right",
                   scale: 0.8)
@@ -158,7 +158,7 @@ class TouchInputNode : SKSpriteNode {
         button.setScale(scale)
         button.name = name
         button.zPosition = 10
-        button.alpha = alphaUnpressed
+        button.alpha = alphaunpressed
         self.addChild(button)
     }
     
@@ -176,7 +176,6 @@ class TouchInputNode : SKSpriteNode {
                 self.item_category[i] = Int(category)
                 full = true
                 return full
-                break
             }
         }
         return full
@@ -191,13 +190,13 @@ class TouchInputNode : SKSpriteNode {
                     self.inventory_background[i].colorBlendFactor = 1.0
                     self.inventory_background[i].alpha = 2
                     self.inventory_background[self.selected].colorBlendFactor = 0
-                    self.inventory_background[self.selected].alpha = alphaUnpressed
+                    self.inventory_background[self.selected].alpha = alphaunpressed
                     self.selected = i
                     break
                 }
                 else if(self.selected == i){
                     self.inventory_background[self.selected].colorBlendFactor = 0
-                    self.inventory_background[self.selected].alpha = alphaUnpressed
+                    self.inventory_background[self.selected].alpha = alphaunpressed
                     self.selected = -1
                     break
                 }
@@ -237,7 +236,7 @@ class TouchInputNode : SKSpriteNode {
                     self.items[self.selected] = false
                     self.item_category[self.selected] = 0
                     self.inventory_background[self.selected].colorBlendFactor = 0
-                    self.inventory_background[self.selected].alpha = alphaUnpressed
+                    self.inventory_background[self.selected].alpha = alphaunpressed
                     self.selected = -1
                     return item
                 
@@ -254,23 +253,23 @@ class TouchInputNode : SKSpriteNode {
             
             let location = t.location(in: parent!)
             // for all 4 buttons
-            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2,buttonB] {
+            for button in [ buttondirleft, buttondirright, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2,buttonB] {
                 // I check if they are already registered in the list
-                if button.contains(location) && pressedButtons.index(of: button) == nil {
-                    pressedButtons.append(button)
+                if button.contains(location) && pressedbuttons.index(of: button) == nil {
+                    pressedbuttons.append(button)
                     if ((inputDelegate) != nil){
                         inputDelegate?.follow(command: button.name!)
                     }
                     
                     
                 }
-                if pressedButtons.index(of: button) == nil {
+                if pressedbuttons.index(of: button) == nil {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaUnpressed}
+                        button.alpha = alphaunpressed}
                 }
                 else {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaPressed}
+                        button.alpha = alphapressed}
                 }
             }
             
@@ -283,14 +282,14 @@ class TouchInputNode : SKSpriteNode {
             
             let location = t.location(in: parent!)
             let previousLocation = t.previousLocation(in: parent!)
-            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
+            for button in [ buttondirleft, buttondirright, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
                 // if I get off the button where my finger was before
                 if button.contains(previousLocation)
                     && !button.contains(location) {
                     // I remove it from the list
-                    let index = pressedButtons.index(of: button)
+                    let index = pressedbuttons.index(of: button)
                     if index != nil {
-                        pressedButtons.remove(at: index!)
+                        pressedbuttons.remove(at: index!)
                         
                         if ((inputDelegate) != nil){
                             inputDelegate?.follow(command: "cancel \(String(describing: button.name!))")
@@ -301,20 +300,20 @@ class TouchInputNode : SKSpriteNode {
                     // if I get on the button where I wasn't previously
                 else if !button.contains(previousLocation)
                     && button.contains(location)
-                    && pressedButtons.index(of: button) == nil {
+                    && pressedbuttons.index(of: button) == nil {
                     // I add it to the list
-                    pressedButtons.append(button)
+                    pressedbuttons.append(button)
                     if ((inputDelegate) != nil){
                         inputDelegate?.follow(command: button.name!)
                     }
                 }
-                if pressedButtons.index(of: button) == nil {
+                if pressedbuttons.index(of: button) == nil {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaUnpressed}
+                        button.alpha = alphaunpressed}
                 }
                 else {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaPressed}
+                        button.alpha = alphapressed}
                 }
             }
         }
@@ -336,32 +335,32 @@ class TouchInputNode : SKSpriteNode {
         for touch in touches! {
             let location = touch.location(in: parent!)
             let previousLocation = touch.previousLocation(in: parent!)
-            for button in [buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
+            for button in [buttondirleft, buttondirright, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
                 if button.contains(location) {
-                    let index = pressedButtons.index(of: button)
+                    let index = pressedbuttons.index(of: button)
                     if index != nil {
-                        pressedButtons.remove(at: index!)
+                        pressedbuttons.remove(at: index!)
                         if ((inputDelegate) != nil){
                             inputDelegate?.follow(command: "stop \(String(describing: button.name!))")
                         }
                     }
                 }
                 else if (button.contains(previousLocation)) {
-                    let index = pressedButtons.index(of: button)
+                    let index = pressedbuttons.index(of: button)
                     if index != nil {
-                        pressedButtons.remove(at: index!)
+                        pressedbuttons.remove(at: index!)
                         if ((inputDelegate) != nil){
                             inputDelegate?.follow(command: "stop \(String(describing: button.name!))")
                         }
                     }
                 }
-                if pressedButtons.index(of: button) == nil {
+                if pressedbuttons.index(of: button) == nil {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaUnpressed}
+                        button.alpha = alphaunpressed}
                 }
                 else {
                     if(!self.inventory.contains(button)){
-                        button.alpha = alphaPressed}
+                        button.alpha = alphapressed}
                 }
             }
         }

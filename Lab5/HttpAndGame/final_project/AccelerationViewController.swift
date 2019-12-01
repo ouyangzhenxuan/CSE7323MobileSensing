@@ -15,6 +15,9 @@ class AccelerationViewController: UIViewController {
     @IBOutlet weak var xdata: UILabel!
     @IBOutlet weak var ydata: UILabel!
     @IBOutlet weak var zdata: UILabel!
+    @IBOutlet weak var gx: UILabel!
+    @IBOutlet weak var gy: UILabel!
+    @IBOutlet weak var gz: UILabel!
     
     var motion = CMMotionManager()
     let motionOperationQueue = OperationQueue()
@@ -34,9 +37,37 @@ class AccelerationViewController: UIViewController {
                 let x = theData.acceleration.x
                 let y = theData.acceleration.y
                 let z = theData.acceleration.z
+                
                 self.xdata.text = String(format: "%.2f", x)
                 self.ydata.text = String(format: "%.2f", y)
                 self.zdata.text = String(format: "%.2f", z)
+                
+                
+                
+            }
+        })
+        motion.deviceMotionUpdateInterval = 0.01
+        motion.startDeviceMotionUpdates(to: OperationQueue.main, withHandler: {(data, error) in
+            if let theData = data{
+                self.view.reloadInputViews()
+                let x = theData.gravity.x
+                let y = theData.gravity.y
+                let z = theData.gravity.z
+                
+                //self.gx.text = String(format: "%.2f", x)
+                self.gy.text = String(format: "%.2f", y)
+                self.gz.text = String(format: "%.2f", z)
+                
+                let proj = sqrt(fabs(
+                                theData.userAcceleration.x*theData.gravity.x +
+                                theData.userAcceleration.y*theData.gravity.y +
+                                theData.userAcceleration.z*theData.gravity.z
+                                ))
+                let transform = CGAffineTransform.init(rotationAngle: .pi/2)
+//                let gravPerpendicular =
+            
+                
+                self.gx.text = String(format: "%.2f", proj)
                 
             }
         })

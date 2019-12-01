@@ -120,7 +120,7 @@ class UpdateKNNModelForDatasetId(BaseHandler):
         l=[];
         for a in self.db.labeledinstances.find({"dsid":dsid}): 
             l.append(a['label'])
-
+        print(len(l))
         current_n_neighbors = vals
 
         # fit the model to the data

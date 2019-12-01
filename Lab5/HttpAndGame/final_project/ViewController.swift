@@ -15,7 +15,7 @@
 //    ifconfig |grep inet   
 // to see what your public facing IP address is, the ip address can be used here
 //let SERVER_URL = "http://erics-macbook-pro.local:8000" // change this for your server name!!!
-let SERVER_URL = "http://10.8.154.41:8000" // change this for your server name!!!
+let SERVER_URL = "http://192.168.1.15:8000" // change this for your server name!!!
 
 import UIKit
 import CoreMotion
@@ -58,6 +58,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
     @IBOutlet weak var knnButton: UIButton!
     @IBOutlet weak var svmButton: UIButton!
     @IBOutlet weak var recordMotionButton: UIButton!
+    @IBOutlet weak var recordbuttonImage: UIImageView!
     
     // MARK: Class Properties with Observers
     enum CalibrationStage {
@@ -225,7 +226,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
                 self.largeMotionMagnitude.progress = Float(mag)/0.2
             }
             
-            // when count reaches 100, can be possible to enter predict mode
+            
             if(self.isCalibrating == true){
                 if(mag > self.magValue){
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
@@ -240,6 +241,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
             }else if(self.isPredicting == true){
                 // when it's predicting, only upload the sensor data when handleMotionCount reaches 100
                 print(handleMotionCount)
+                // when count reaches 100, can be possible to enter predict mode
                 if(self.handleMotionCount >= 100){
                     self.handleMotionCount = 0
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
@@ -271,7 +273,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
                 // send data to the server with label
                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                     // Put your code which should be executed with a delay here
-                    self.sendFeatures(self.ringBuffer.getSumDataAsVector(),
+                    self.sendFeatures(self.ringBuffer.getDataAsVector(),
                                       withLabel: self.calibrationStage)
                     self.nextCalibrationStage()
                 }
@@ -284,7 +286,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
             {
                 self.isWaitingForMotionData = false
                 //predict a label
-                getPrediction(self.ringBuffer.getSumDataAsVector())
+                getPrediction(self.ringBuffer.getDataAsVector())
                 // dont predict again for a bit
                 setDelayedWaitingToTrue(2.0)
                 
