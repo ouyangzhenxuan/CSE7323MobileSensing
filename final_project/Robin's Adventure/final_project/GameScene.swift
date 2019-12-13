@@ -237,21 +237,32 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         
         if(nearnode?.name != nil&&nearest<40){
             if(nearnode?.name == "Ninja"){
-                if self.finishedUncle == true{
-                    return
-                }
-                self.ninjaHealed = self.isNinjaHealed()
-                if self.ninjaHealed == false{
-                    callText(text: "I need some water and mushrooms...")
-                    return
-                }
-                self.ninja?.texture = SKTexture.init(imageNamed: "ninja_left")
+                self.pickupNinja()
             }
             
             if((touchControlNode?.setinventory(tex: nearnode!.texture!, category:nearnode!.physicsBody!.categoryBitMask,name:nearnode!.name!))!){
                 callText(text: "You Pick Up the "+((nearnode?.name!)!))
                 nearnode?.removeFromParent()}
         }
+    }
+    
+    func pickupNinja(){
+        if self.finishedUncle == true{
+            return
+        }
+        self.ninjaHealed = self.isNinjaHealed()
+        if self.ninjaHealed == false{
+            callText(text: "I need some water and mushrooms...")
+            return
+        }
+        
+        self.stop5?.removeFromParent()
+        self.stop6?.removeFromParent()
+        self.stop7?.removeFromParent()
+        self.stop8?.removeFromParent()
+        self.ninjaEatFood()
+        self.player_speed = 100
+        self.ninja?.texture = SKTexture.init(imageNamed: "ninja_left")
     }
     
     // MARK: Didmove Function
@@ -603,47 +614,27 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         
         if contact.bodyA.node?.name == "Ninja" && contact.bodyB.categoryBitMask == 22 {
             print(contact.bodyB.node?.name)
-            print("hello")
-            //            if(contact.bodyA.node?.name=="Ninja"){
-            print("finish uncle&ninja")
             callText(text: "Ninja: Thank you, Robin!")
-            //                contact.bodyA.node?.removeFromParent()
-            self.finishedUncle=true
             
-            self.stop5?.removeFromParent()
-            self.stop6?.removeFromParent()
-            self.stop7?.removeFromParent()
-            self.stop8?.removeFromParent()
+            self.finishedUncle=true
             
             contact.bodyA.node?.physicsBody?.contactTestBitMask = 0
             contact.bodyA.node?.physicsBody?.collisionBitMask = 0
             contact.bodyA.node?.physicsBody?.categoryBitMask = 0
             contact.bodyA.node?.physicsBody?.pinned = true
             contact.bodyA.node?.physicsBody?.isDynamic = false
-//            self.ninjaHealed = false
-//            }
         }
         if contact.bodyA.categoryBitMask == 22 && contact.bodyB.node?.name == "Ninja" {
             print(contact.bodyB.node?.name)
-            print("hello")
-            //            if(contact.bodyA.node?.name=="Ninja"){
-            print("finish uncle&ninja")
             callText(text: "Ninja: Thank you, Robin!")
-            //                contact.bodyB.node?.removeFromParent()
-            self.finishedUncle=true
             
-            self.stop5?.removeFromParent()
-            self.stop6?.removeFromParent()
-            self.stop7?.removeFromParent()
-            self.stop8?.removeFromParent()
+            self.finishedUncle=true
             
             contact.bodyB.node?.physicsBody?.contactTestBitMask = 0
             contact.bodyB.node?.physicsBody?.collisionBitMask = 0
             contact.bodyB.node?.physicsBody?.categoryBitMask = 0
             contact.bodyB.node?.physicsBody?.pinned = true
             contact.bodyB.node?.physicsBody?.isDynamic = false
-//            self.ninjaHealed = false
-//            }
         }
         
     }
@@ -685,17 +676,6 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
         }
     }
     
-//    func pickupNinja(ninjaNode: SKSpriteNode){
-//        if ninjaNode != nil{
-//
-//        }
-//        if(ninjaNode.name == "Ninja"){
-//            if isNinjaHealed() == false{
-//                callText(text: "I need some water and mushrooms...")
-//                return
-//            }
-//        }
-//    }
     var ninjaHealed = false
     func isNinjaHealed() -> Bool{
         var water = false
@@ -715,9 +695,22 @@ class GameScene: SKScene,ControlInputDelegate,SKPhysicsContactDelegate{
     
     func ninjaEatFood(){
         let item_amount = self.touchControlNode?.itemName.count
-//        for i in 0...item_amount{
-//            return
-//        }
+        var haveWater = true
+        var haveMushroom = true
+        for i in stride(from: 0, to: item_amount!, by: 1){
+            if(self.touchControlNode?.itemName[i] == "water" && haveWater){
+                self.touchControlNode?.selected = i
+                self.touchControlNode?.useItem()
+                haveWater = false
+                self.touchControlNode?.selected = -1
+            }
+            if(self.touchControlNode?.itemName[i] == "mushroom" && haveMushroom){
+                self.touchControlNode?.selected = i
+                self.touchControlNode?.useItem()
+                haveMushroom = false
+                self.touchControlNode?.selected = -1
+            }
+        }
     }
     
     
