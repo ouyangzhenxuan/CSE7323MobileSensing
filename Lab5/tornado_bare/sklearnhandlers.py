@@ -209,6 +209,7 @@ class PredictOneFromDatasetId(BaseHandler):
             if(tmp):
 
                 self.clf[dsid] = pickle.loads(tmp['model'])
+                print(self.clf[dsid])
                 print('We are using model: ',str(dsid))
                 predLabel = self.clf[dsid].predict(fvals)
                 self.write_json({"prediction":str(predLabel)})
