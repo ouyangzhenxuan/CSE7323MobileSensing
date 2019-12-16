@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../final_project/MainMenu.sks">
+   </FileRef>
+   <FileRef
+      location = "group:../final_project/MainMenu.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../final_project/MSButtonNode.swift">
+   </FileRef>
+   <FileRef
       location = "self:final_project.xcodeproj">
    </FileRef>
 </Workspace>

@@ -12,8 +12,6 @@ import CoreMotion
 import CoreML
 
 
-
-
 class ActionPredict: ActionDelegate {
     
     // make it a shared instance, only one instance can exist at an application
@@ -32,7 +30,7 @@ class ActionPredict: ActionDelegate {
     
     var isWaitingForMotionData = true
     
-    var modelRf = RandomForestAccel()
+    var modelRf = SVMAccel9()
     
     var predictedAction = "Nothing now!"
     var isPredicting = false
@@ -122,6 +120,7 @@ class ActionPredict: ActionDelegate {
 
             // update predicted action
             self.predictedAction = outputRf.classLabel
+            
             print("The prediction is: \(outputRf.classLabel)")
             setDelayedWaitingToTrue(2.0)
             

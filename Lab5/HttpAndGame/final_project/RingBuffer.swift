@@ -52,13 +52,23 @@ class RingBuffer: NSObject {
         
         for i in 0..<BUFFER_SIZE {
             let idx = (head+i)%BUFFER_SIZE
-            allVals[i] = x[idx] + y[idx] + z[idx]
+//            let proj = sqrt(fabs(
+//                theData.userAcceleration.x*theData.gravity.x +
+//                    theData.userAcceleration.y*theData.gravity.y +
+//                    theData.userAcceleration.z*theData.gravity.z
+//            ))
+            allVals[i] = sqrt(fabs(x[idx] + y[idx] + z[idx]))
             
         }
         
         return allVals
     }
     
+    func clearBuffer(){
+        self.x.removeAll()
+        self.y.removeAll()
+        self.z.removeAll()
+    }
     
 
 }

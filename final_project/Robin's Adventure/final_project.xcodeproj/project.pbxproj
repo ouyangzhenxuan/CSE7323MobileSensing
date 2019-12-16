@@ -14,6 +14,7 @@
 		308D5FFB2380DC8800134A2B /* PipeAccel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 308D5FF62380DC8800134A2B /* PipeAccel.mlmodel */; };
 		308DDA0E2380DF9400D0F896 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308DDA0D2380DF9400D0F896 /* TableViewController.swift */; };
 		308DDA102380E25C00D0F896 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308DDA0F2380E25C00D0F896 /* ViewController.swift */; };
+		30CEF15423A5B7E00081BA61 /* HttpPredictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEF15323A5B7E00081BA61 /* HttpPredictController.swift */; };
 		D27522C723761A9800332B57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27522C623761A9800332B57 /* AppDelegate.swift */; };
 		D27522C923761A9800332B57 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D27522C823761A9800332B57 /* GameScene.sks */; };
 		D27522CB23761A9800332B57 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D27522CA23761A9800332B57 /* Actions.sks */; };
@@ -26,6 +27,12 @@
 		D27522ED23761A9B00332B57 /* final_projectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27522EC23761A9B00332B57 /* final_projectUITests.swift */; };
 		D27522FB2377782900332B57 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = D27522FA2377782900332B57 /* MyTileSet.sks */; };
 		D277CF3B237B3723006A2925 /* TouchInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D277CF3A237B3723006A2925 /* TouchInputNode.swift */; };
+		D2F4263023A5B311001F9017 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F4262D23A5B310001F9017 /* MainMenu.swift */; };
+		D2F4263123A5B311001F9017 /* MSButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F4262E23A5B310001F9017 /* MSButtonNode.swift */; };
+		D2F4263223A5B311001F9017 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = D2F4262F23A5B310001F9017 /* MainMenu.sks */; };
+		D2F4263623A5B391001F9017 /* RandomForestAccel9.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D2F4263323A5B391001F9017 /* RandomForestAccel9.mlmodel */; };
+		D2F4263723A5B391001F9017 /* PipeAccel9.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D2F4263423A5B391001F9017 /* PipeAccel9.mlmodel */; };
+		D2F4263823A5B391001F9017 /* SVMAccel9.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D2F4263523A5B391001F9017 /* SVMAccel9.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +60,7 @@
 		308D5FF62380DC8800134A2B /* PipeAccel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = PipeAccel.mlmodel; sourceTree = "<group>"; };
 		308DDA0D2380DF9400D0F896 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		308DDA0F2380E25C00D0F896 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		30CEF15323A5B7E00081BA61 /* HttpPredictController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpPredictController.swift; sourceTree = "<group>"; };
 		D27522C323761A9800332B57 /* final_project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = final_project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27522C623761A9800332B57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D27522C823761A9800332B57 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -71,6 +79,12 @@
 		D27522EE23761A9B00332B57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D27522FA2377782900332B57 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		D277CF3A237B3723006A2925 /* TouchInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInputNode.swift; sourceTree = "<group>"; };
+		D2F4262D23A5B310001F9017 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		D2F4262E23A5B310001F9017 /* MSButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSButtonNode.swift; sourceTree = "<group>"; };
+		D2F4262F23A5B310001F9017 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		D2F4263323A5B391001F9017 /* RandomForestAccel9.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RandomForestAccel9.mlmodel; sourceTree = "<group>"; };
+		D2F4263423A5B391001F9017 /* PipeAccel9.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = PipeAccel9.mlmodel; sourceTree = "<group>"; };
+		D2F4263523A5B391001F9017 /* SVMAccel9.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SVMAccel9.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,13 +135,20 @@
 		D27522C523761A9800332B57 /* final_project */ = {
 			isa = PBXGroup;
 			children = (
+				D2F4263423A5B391001F9017 /* PipeAccel9.mlmodel */,
+				D2F4263323A5B391001F9017 /* RandomForestAccel9.mlmodel */,
+				D2F4263523A5B391001F9017 /* SVMAccel9.mlmodel */,
 				308DDA0F2380E25C00D0F896 /* ViewController.swift */,
 				308D5FF32380DC8800134A2B /* ActionPredict.swift */,
+				30CEF15323A5B7E00081BA61 /* HttpPredictController.swift */,
 				308D5FF62380DC8800134A2B /* PipeAccel.mlmodel */,
 				308D5FF22380DC8800134A2B /* RandomForestAccel.mlmodel */,
 				308D5FF42380DC8800134A2B /* RingBuffer.swift */,
 				308D5FF52380DC8800134A2B /* SVMAccel.mlmodel */,
 				D27522C623761A9800332B57 /* AppDelegate.swift */,
+				D2F4262F23A5B310001F9017 /* MainMenu.sks */,
+				D2F4262D23A5B310001F9017 /* MainMenu.swift */,
+				D2F4262E23A5B310001F9017 /* MSButtonNode.swift */,
 				D27522C823761A9800332B57 /* GameScene.sks */,
 				D27522CA23761A9800332B57 /* Actions.sks */,
 				D27522CC23761A9800332B57 /* GameScene.swift */,
@@ -270,6 +291,7 @@
 				D27522C923761A9800332B57 /* GameScene.sks in Resources */,
 				D27522D423761A9B00332B57 /* Assets.xcassets in Resources */,
 				D27522D723761A9B00332B57 /* LaunchScreen.storyboard in Resources */,
+				D2F4263223A5B311001F9017 /* MainMenu.sks in Resources */,
 				D27522CB23761A9800332B57 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,17 +317,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F4263823A5B391001F9017 /* SVMAccel9.mlmodel in Sources */,
 				308D5FF72380DC8800134A2B /* RandomForestAccel.mlmodel in Sources */,
 				D277CF3B237B3723006A2925 /* TouchInputNode.swift in Sources */,
 				D27522CD23761A9800332B57 /* GameScene.swift in Sources */,
 				308DDA0E2380DF9400D0F896 /* TableViewController.swift in Sources */,
+				D2F4263723A5B391001F9017 /* PipeAccel9.mlmodel in Sources */,
 				308DDA102380E25C00D0F896 /* ViewController.swift in Sources */,
+				30CEF15423A5B7E00081BA61 /* HttpPredictController.swift in Sources */,
 				D27522CF23761A9800332B57 /* GameViewController.swift in Sources */,
 				308D5FFB2380DC8800134A2B /* PipeAccel.mlmodel in Sources */,
+				D2F4263023A5B311001F9017 /* MainMenu.swift in Sources */,
 				D27522C723761A9800332B57 /* AppDelegate.swift in Sources */,
 				308D5FF92380DC8800134A2B /* RingBuffer.swift in Sources */,
 				308D5FFA2380DC8800134A2B /* SVMAccel.mlmodel in Sources */,
 				308D5FF82380DC8800134A2B /* ActionPredict.swift in Sources */,
+				D2F4263123A5B311001F9017 /* MSButtonNode.swift in Sources */,
+				D2F4263623A5B391001F9017 /* RandomForestAccel9.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

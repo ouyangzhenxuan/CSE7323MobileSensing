@@ -11,10 +11,15 @@ import SpriteKit
 // class that set up on screen ui control
 class TouchInputNode : SKSpriteNode {
     // initial variables
+    var pausePressed = false
     var alphaUnpressed:CGFloat = 0.7
     var alphaPressed:CGFloat   = 1.0
     
     var pressedButtons = [SKSpriteNode]()
+    
+    let buttonPause = SKSpriteNode(imageNamed: "pausebutton")
+    let buttonResume = SKSpriteNode(imageNamed: "resumebutton")
+    let buttonExit = SKSpriteNode(imageNamed: "exitbutton")
     
     let buttonDirLeft   = SKSpriteNode(imageNamed: "leftbutton")
     let buttonDirRight  = SKSpriteNode(imageNamed: "rightbutton")
@@ -64,7 +69,11 @@ class TouchInputNode : SKSpriteNode {
     // function that creates all buttons with their position and size
     func setupControls(size : CGSize) {
         
-
+        addButton(button: buttonPause,
+                  position: CGPoint(x: -(size.width / 3 ) - 50, y: size.height / 3 + 20),
+                  name: "pause",
+                  scale: 0.8)
+        
         addButton(button: buttonDirLeft,
                   position: CGPoint(x: -(size.width / 3 ) - 50, y: -size.height / 3),
                   name: "left",
@@ -256,7 +265,8 @@ class TouchInputNode : SKSpriteNode {
             
             let location = t.location(in: parent!)
             // for all 4 buttons
-            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2,buttonB] {
+            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2,buttonB,buttonPause,
+                buttonExit,buttonResume] {
                 // I check if they are already registered in the list
                 if button.contains(location) && pressedButtons.index(of: button) == nil {
                     pressedButtons.append(button)
@@ -285,7 +295,8 @@ class TouchInputNode : SKSpriteNode {
             
             let location = t.location(in: parent!)
             let previousLocation = t.previousLocation(in: parent!)
-            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
+            for button in [ buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB, buttonPause,
+                buttonExit,buttonResume] {
                 // if I get off the button where my finger was before
                 if button.contains(previousLocation)
                     && !button.contains(location) {
@@ -338,7 +349,8 @@ class TouchInputNode : SKSpriteNode {
         for touch in touches! {
             let location = touch.location(in: parent!)
             let previousLocation = touch.previousLocation(in: parent!)
-            for button in [buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB] {
+            for button in [buttonDirLeft, buttonDirRight, buttonA,inventory1_item,inventory2_item,inventory3_item,inventory4_item,inventory5_item,inventory6_item,motionbutton,motionbutton2, buttonB, buttonPause,
+                buttonExit,buttonResume] {
                 if button.contains(location) {
                     let index = pressedButtons.index(of: button)
                     if index != nil {
@@ -367,6 +379,30 @@ class TouchInputNode : SKSpriteNode {
                 }
             }
         }
+        
+    }
+    
+    func pauseMenuPopUp(){
+        if(!self.pausePressed){
+            addButton(button: buttonResume,
+                      position: CGPoint(x: 0, y: 20),
+                      name: "resume",
+                      scale: 0.8)
+            
+            addButton(button: buttonExit,
+                      position: CGPoint(x: 0, y: -20),
+                      name: "exit",
+                      scale: 0.8)
+            self.pausePressed = true
+        }
+        
+    }
+    
+    func pauseMenuDisappear(){
+        
+        self.buttonExit.removeFromParent()
+        self.buttonResume.removeFromParent()
+        self.pausePressed = false
         
     }
 }

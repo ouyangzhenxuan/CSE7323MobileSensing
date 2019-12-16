@@ -120,7 +120,7 @@ class UpdateKNNModelForDatasetId(BaseHandler):
         l=[];
         for a in self.db.labeledinstances.find({"dsid":dsid}): 
             l.append(a['label'])
-        print(len(l))
+        print("Now we have amount of sets: ", len(l))
         current_n_neighbors = vals
 
         # fit the model to the data
@@ -194,6 +194,11 @@ class PredictOneFromDatasetId(BaseHandler):
         vals = data['feature'];
         fvals = [float(val) for val in vals];
         fvals = np.array(fvals).reshape(1, -1)
+
+
+        print("Each set of data has features amount: ", len(fvals[0]))
+
+        # print(fvals[0])
         dsid  = data['dsid']
 
         # load the model from the database (using pickle)

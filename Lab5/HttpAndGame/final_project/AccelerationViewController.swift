@@ -19,6 +19,7 @@ class AccelerationViewController: UIViewController {
     @IBOutlet weak var gy: UILabel!
     @IBOutlet weak var gz: UILabel!
     
+    @IBOutlet weak var theSum: UILabel!
     var motion = CMMotionManager()
     let motionOperationQueue = OperationQueue()
     
@@ -46,7 +47,7 @@ class AccelerationViewController: UIViewController {
                 
             }
         })
-        motion.deviceMotionUpdateInterval = 0.01
+        motion.deviceMotionUpdateInterval = 0.2
         motion.startDeviceMotionUpdates(to: OperationQueue.main, withHandler: {(data, error) in
             if let theData = data{
                 self.view.reloadInputViews()
@@ -68,6 +69,17 @@ class AccelerationViewController: UIViewController {
             
                 
                 self.gx.text = String(format: "%.2f", proj)
+                
+                self.gx.text = String(format: "%.2f", (theData.userAcceleration.x-theData.gravity.x)*theData.gravity.x)
+                self.gy.text = String(format: "%.2f", (theData.userAcceleration.y-theData.gravity.y)*theData.gravity.y)
+                self.gz.text = String(format: "%.2f", (theData.userAcceleration.z-theData.gravity.z)*theData.gravity.z)
+                
+                self.gx.text = String(format: "%.2f", (theData.userAcceleration.x-theData.gravity.x))
+                self.gy.text = String(format: "%.2f", (theData.userAcceleration.y-theData.gravity.y))
+                self.gz.text = String(format: "%.2f", (theData.userAcceleration.z-theData.gravity.z))
+                
+                self.theSum.text = String(format: "%.2f", proj)
+
                 
             }
         })

@@ -18,13 +18,21 @@ class GameViewController: UIViewController,GameViewControllerDelegate {
         let portrait_orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(portrait_orientation, forKey: "orientation")
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+//             Load the SKScene from 'GameScene.sks'
+//            if let scene = SKScene(fileNamed: "GameScene") {
+//                // Set the scale mode to scale to fit the window
+//                scene.scaleMode = .aspectFill
+//
+//                let gameScene = scene as! GameScene
+//                gameScene.gameViewControllerDelegate = self
+//                // Present the scene
+//                view.presentScene(scene)
+//            }
+            
+            // Load the SKScene from 'MainMenu.sks'
+            if let scene = MainMenu(fileNamed: "MainMenu") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                
-                let gameScene = scene as! GameScene
-                gameScene.gameViewControllerDelegate = self
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -52,9 +60,20 @@ class GameViewController: UIViewController,GameViewControllerDelegate {
         return true
     }
     
-    func finishGame(inputProperty:String) {
-        
-        
-        
+    func finishGame(inputProperty: String) {
+        print("inputProperty is: ",inputProperty)
+//        self.dismiss(animated: true, completion: nil)
+//        if let view = self.view as! SKView? {
+//            view.presentScene(nil)
+//            if let scene = MainMenu(fileNamed: "MainMenu") {
+//
+//                let gameScene = scene as! MainMenu
+//                // Set the scale mode to scale to fit the window
+//                scene.scaleMode = .aspectFill
+//                // Present the scene
+//                view.presentScene(scene)
+//            }
+//
+//        }
     }
 }

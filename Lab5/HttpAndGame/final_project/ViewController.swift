@@ -15,7 +15,7 @@
 //    ifconfig |grep inet   
 // to see what your public facing IP address is, the ip address can be used here
 //let SERVER_URL = "http://erics-macbook-pro.local:8000" // change this for your server name!!!
-let SERVER_URL = "http://192.168.1.15:8000" // change this for your server name!!!
+let SERVER_URL = "http://192.168.1.81:8000" // change this for your server name!!!
 
 import UIKit
 import CoreMotion
@@ -216,9 +216,26 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
     var updateTime = 0
     var handleMotionCount = 0
     
+    func handleMotion2(_ motionData:CMDeviceMotion?, error:Error?){
+        
+    }
+    
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let accel = motionData?.userAcceleration {
             handleMotionCount += 1
+//            print(self.ringBuffer.x)
+//            var theX = Double()
+//            var theY = Double()
+//            var theZ = Double()
+//
+//            if let grav = motionData?.gravity{
+//                theX = accel.x * grav.x
+//                theY = accel.y * grav.y
+//                theZ = accel.z * grav.z
+//            }
+//            print("theX: \(theX), theY: \(theY), theZ: \(theZ)")
+//            print(self.ringBuffer.x.count)
+//            self.ringBuffer.addNewData(xData: theX, yData: theY, zData: theZ)
             self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
             let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
             DispatchQueue.main.async{
@@ -363,7 +380,7 @@ class ViewController: UIViewController, URLSessionDelegate, UIPickerViewDelegate
         setDelayedWaitingToTrue(2.0)
         
         // set this and it will update UI
-        dsid = 10
+        dsid = 9
         // update the stepper value
         let ds: Double = Double(dsid)
         stepper.value=ds
